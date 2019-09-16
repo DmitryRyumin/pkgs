@@ -8,6 +8,7 @@ REQUIRED_PACKAGES = [
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
+
     setup(
         name = trml.__name__,
         packages = find_packages(),
@@ -21,7 +22,6 @@ with open('README.md', 'r') as fh:
         long_description_content_type = 'text/markdown',
         install_requires=REQUIRED_PACKAGES,
         keywords = ['shell'],
-        platforms = ['Windows', 'MacOS X'],
         classifiers = [
             'License :: OSI Approved :: MIT License',
             'Natural Language :: Russian',
