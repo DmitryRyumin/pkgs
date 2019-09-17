@@ -6,7 +6,7 @@ __title__ = 'trml'
 __summary__ = 'Работа с Shell'
 __uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/trml'
 
-__version__ = '2019.9.16rc0'
+__version__ = '2019.9.17rc6'
 
 __author__ = 'Dmitry Ryumin'
 __email__ = 'dl_03.03.1991@mail.ru'

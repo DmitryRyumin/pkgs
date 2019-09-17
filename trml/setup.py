@@ -39,4 +39,10 @@ with open('README.md', 'r') as fh:
             'Topic :: Software Development :: Libraries :: Python Modules',
         ],
         python_requires = '>=3.7',
+        entry_points = {
+            'console_scripts': [
+                'trml_add_line = trml.samples.add_line:main',
+                'trml_clear = trml.samples.clear:main',
+            ],
+        }
     )

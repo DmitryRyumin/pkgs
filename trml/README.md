@@ -8,7 +8,20 @@
 pip install trml
 ```
 
-## Класс для работы с Shell - [смотреть](https://github.com/DmitryRyumin/dl_libs/blob/master/shell/shell_.py)
+## Обновление
+
+```shell script
+pip install --upgrade trml
+```
+
+## Автоматические скрипты
+
+| Файлы | Описание|
+| ----- | ------- |
+| trml_add_line | Добавление линии во весь экран |
+| trml_clear | Очистка консоли |
+
+## Класс для работы с Shell - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/trml/trml/shell.py)
 
 <h4 align="center"><span style="color:#EC256F;">Примеры</span></h4>
 
