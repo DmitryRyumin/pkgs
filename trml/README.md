@@ -27,5 +27,5 @@ pip install --upgrade trml
 
 | Файлы | Аргументы командной строки | Ссылка | Описание|
 | ------- | -------------------------- | ------ | ------- |
-| add_line.py | - | [Смотреть](https://github.com/DmitryRyumin/dl_libs/blob/master/shell/samples/add_line.py) | Добавление линии во весь экран |
-| clear.py | - | [Смотреть](https://github.com/DmitryRyumin/dl_libs/blob/master/shell/samples/clear.py) | Очистка консоли |
+| add_line.py | - | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/trml/trml/samples/add_line.py) | Добавление линии во весь экран |
+| clear.py | - | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/trml/trml/samples/clear.py) | Очистка консоли |
