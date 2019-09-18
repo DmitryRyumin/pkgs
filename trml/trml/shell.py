@@ -48,7 +48,16 @@ class Shell:
         Добавление линии во весь экран
         """
 
-        command_shell = "printf '\n%*s\n\n' \"${COLUMNS:-$(tput cols)}\" '' | tr ' ' -"  # Команда выполнения в Shell
+        commands_shell = []  # Команды выполнения в Shell
 
-        if command_shell is not None:
-            subprocess.call(command_shell, shell = True)  # Добавление линии в Shell
+        # linux или OS X
+        if sys.platform == 'linux' or sys.platform == 'linux2' or sys.platform == 'darwin':
+            commands_shell.append("printf '\n%*s\n\n' \"${COLUMNS:-$(tput cols)}\" '' | tr ' ' -")
+        # Windows
+        elif sys.platform == 'win32':
+            commands_shell.append("echo.")
+            commands_shell.append("powershell -NoLogo -NoProfile -Command \"'-' * $Host.UI.RawUI.WindowSize.Width\"")
+
+        if len(commands_shell) > 0:
+            for command in commands_shell:
+                subprocess.call(command, shell = True)  # Добавление линии в Shell
