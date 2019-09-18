@@ -1,6 +1,7 @@
 # Работа с Shell
 
 [![PyPI version](https://badge.fury.io/py/trml.svg)](https://badge.fury.io/py/trml)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/trml)
 
 ## Установка
 
