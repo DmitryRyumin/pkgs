@@ -2,6 +2,8 @@
 
 [![PyPI version](https://badge.fury.io/py/trml.svg)](https://badge.fury.io/py/trml)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/trml)
+[![HitCount](http://hits.dwyl.io/DmitryRyumin/pkgs/tree/master/trml.svg)](http://hits.dwyl.io/DmitryRyumin/pkgs/tree/master/trml)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/trml)
 
 ## Установка
 
