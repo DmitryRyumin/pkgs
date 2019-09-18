@@ -4,7 +4,6 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/trml)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/trml)
 ![PyPI - Status](https://img.shields.io/pypi/status/trml)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/trml)
 ![PyPI - License](https://img.shields.io/pypi/l/trml)
 
 ## Установка
