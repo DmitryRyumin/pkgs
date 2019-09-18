@@ -32,6 +32,7 @@ with open('README.md', 'r') as fh:
             "Programming Language :: Python",
             'Programming Language :: Python :: 3.7',
             "Programming Language :: Python :: Implementation :: CPython",
+            "Development Status :: 5 - Production/Stable",
             'Intended Audience :: Developers',
             'Intended Audience :: Education',
             'Intended Audience :: Science/Research',
