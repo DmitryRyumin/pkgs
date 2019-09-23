@@ -18,7 +18,7 @@ pip install core2pkgs
 pip install --upgrade core2pkgs
 ```
 
-# Зависимости
+## Зависимости
 
 - `argparse`
 - `trml`

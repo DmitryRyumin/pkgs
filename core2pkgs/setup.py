@@ -1,28 +1,27 @@
 from setuptools import setup, find_packages
 
-import core2pkgs
+import filem
 
 REQUIRED_PACKAGES = [
-    'argparse',
-    'trml'
+    'core2pkgs'
 ]
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
 
     setup(
-        name = core2pkgs.__name__,
+        name = filem.__name__,
         packages = find_packages(),
-        license = core2pkgs.__license__,
-        version = core2pkgs.__version__,
-        author = core2pkgs.__author__,
-        author_email = core2pkgs.__email__,
-        url = core2pkgs.__uri__,
-        description = core2pkgs.__summary__,
+        license = filem.__license__,
+        version = filem.__version__,
+        author = filem.__author__,
+        author_email = filem.__email__,
+        url = filem.__uri__,
+        description = filem.__summary__,
         long_description = long_description,
         long_description_content_type = 'text/markdown',
         install_requires=REQUIRED_PACKAGES,
-        keywords = ['core2pkgs'],
+        keywords = ['filem'],
         classifiers = [
             'License :: OSI Approved :: MIT License',
             'Natural Language :: Russian',
@@ -43,5 +42,10 @@ with open('README.md', 'r') as fh:
             'Topic :: Software Development :: Libraries',
             'Topic :: Software Development :: Libraries :: Python Modules',
         ],
-        python_requires = '>=3.7'
+        python_requires = '>=3.7',
+        entry_points = {
+            'console_scripts': [
+                'filem_search_file = filem.samples.search_file:main',
+            ],
+        }
     )

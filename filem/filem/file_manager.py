@@ -14,7 +14,7 @@ import shutil  # Набор функций высокого уровня для 
 from datetime import datetime  # Работа со временем
 
 # Персональные
-from core2pkgs.core2pkgs import config as cfg
+from core2pkgs import config as cfg  # Глобальный файл настроек
 
 
 # ######################################################################################################################
@@ -59,7 +59,7 @@ class FileManager(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     # Поиск файла
-    def search(self, file, extension, create = False, out = True):
+    def search_file(self, file, extension, create = False, out = True):
         """
         Поиск файла
 
