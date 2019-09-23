@@ -24,9 +24,11 @@ pip install --upgrade filem
 - `argparse`
 - `trml`
 
-## Автоматические скрипты
+## Класс для работы с файлами - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/file_manager.py)
 
-| Файлы | Описание|
-| ----- | ------- |
-| filem_search_file | Поиск файла |
-| filem_clear_folder | Очистка директории |
+<h4 align="center"><span style="color:#EC256F;">Примеры</span></h4>
+
+| Файлы | Скрипт | Аргументы командной строки | Ссылка | Описание|
+| ----- | ------ | -------------------------- | ------ | ------- |
+| search_file.py | filem_search_file | `--file str` - Путь к файлу<br>`--create` - Создание файла в случае его отсутствия<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/search_file.py) | Поиск файла |
+| clear_folder.py | filem_clear_folder | `--path str` - Путь к директории<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/clear_folder.py) | Очистка директории |
