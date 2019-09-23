@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import filem
 
 REQUIRED_PACKAGES = [
-
+    'core2pkgs'
 ]
 
 with open('README.md', 'r') as fh:
@@ -45,6 +45,7 @@ with open('README.md', 'r') as fh:
         python_requires = '>=3.7',
         entry_points = {
             'console_scripts': [
+                'filem_search_file = filem.samples.search_file:main'
             ],
         }
     )

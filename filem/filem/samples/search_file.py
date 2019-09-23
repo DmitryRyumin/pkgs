@@ -16,7 +16,7 @@ import argparse  # Парсинг аргументов и параметров �
 
 # Персональные
 from trml.shell import Shell  # Работа с Shell
-from filem.file_manager import FileManagers  # Работа с файлами
+from filem.file_manager import FileManager  # Работа с файлами
 
 
 # ######################################################################################################################
@@ -39,7 +39,7 @@ def main():
     # Поиск файла
     _, ext = os.path.splitext(args['file'])  # Расширение файла
 
-    file_manager = FileManagers()  # Работа с файлами
+    file_manager = FileManager()  # Работа с файлами
 
     file_manager.search(args['file'], ext.replace('.', ''), args['create'])  # Поиск файла
 
