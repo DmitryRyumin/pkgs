@@ -2,16 +2,14 @@
 # -*- coding: utf-8 -*-
 
 """
-Поиск файла
+Очистка директории
 
-python filem/samples/search_file.py --file путь_к_файлу [--create --no_clear_shell]
+python filem/samples/clear_folder.py --path путь_к_директории [--no_clear_shell]
 """
 
 # ######################################################################################################################
 # Импорт необходимых инструментов
 # ######################################################################################################################
-import os  # Работа с файловой системой
-
 import argparse  # Парсинг аргументов и параметров командной строки
 
 # Персональные
@@ -26,8 +24,7 @@ def main():
     # Построение аргументов командой строки
     ap = argparse.ArgumentParser()
 
-    ap.add_argument('--file', required=True, help='Путь к файлу')
-    ap.add_argument('--create', action='store_true', help='Создание файла в случае его отсутствия')
+    ap.add_argument('--path', required=True, help='Путь к директории')
     ap.add_argument('--no_clear_shell', action='store_false', help='Не очищать консоль перед выполнением')
 
     args = vars(ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
@@ -36,12 +33,9 @@ def main():
     if args['no_clear_shell'] is True:
         Shell.clear()  # Очистка консоли
 
-    # Поиск файла
-    _, ext = os.path.splitext(args['file'])  # Расширение файла
-
     file_manager = FileManager()  # Работа с файлами
 
-    file_manager.search_file(args['file'], ext.replace('.', ''), args['create'])  # Поиск файла
+    file_manager.clear_folder(args['path'])  # Очистка директории
 
 
 if __name__ == "__main__":

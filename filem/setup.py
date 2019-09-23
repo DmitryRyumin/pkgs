@@ -45,7 +45,8 @@ with open('README.md', 'r') as fh:
         python_requires = '>=3.7',
         entry_points = {
             'console_scripts': [
-                'filem_search_file = filem.samples.search_file:main'
+                'filem_search_file = filem.samples.search_file:main',
+                'filem_clear_folder = filem.samples.clear_folder:main'
             ],
         }
     )
