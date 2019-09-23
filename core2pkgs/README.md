@@ -20,5 +20,8 @@ pip install --upgrade core2pkgs
 
 # Зависимости
 
-- `argparse 1.4.0+`
-- `trml 2019.9.18.1+`
+- `argparse`
+- `trml`
+
+## Классы с глобальными настройками - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/core2pkgs/core2pkgs/config.py)
+## Ядро для всех пакетов пользователя [DL](https://pypi.org/user/DL/) - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/core2pkgs/core2pkgs/core.py)

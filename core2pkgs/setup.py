@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 import core2pkgs
 
 REQUIRED_PACKAGES = [
-    'argparse >= 1.4.0',
-    'trml >= 2019.9.18.1'
+    'argparse',
+    'trml'
 ]
 
 with open('README.md', 'r') as fh:
