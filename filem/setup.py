@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 import filem
 
 REQUIRED_PACKAGES = [
-    'core2pkgs',
-    'pandas'
+    'core2pkgs >= 2019.9.23.1',
+    'pandas >= 0.25.1'
 ]
 
 with open('README.md', 'r') as fh:
