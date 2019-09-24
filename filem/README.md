@@ -39,3 +39,11 @@ pip install --upgrade filem
 | ------------- | -------------------------- | -------- |
 | [load_csv.py](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/load_csv.py)<br>`filem_load_csv` | `--file str` - Путь к файлу CSV<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Загрузка CSV файла |
 | [extract_columns_csv.py](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/extract_columns_csv.py)<br>`filem_extract_columns_csv` | `--file str` - Путь к файлу CSV<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--columns int=[0]` - Список номеров столбцов для извлечения (По умолчанию: все столбцы)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Извлечение указанных столбцов из CSV файла |
+
+### Класс для работы с JSON - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/json.py)
+
+<h4 align="center"><span style="color:#EC256F;">Примеры</span></h4>
+
+| Файлы/скрипты | Аргументы командной строки | Описания |
+| ------------- | -------------------------- | -------- |
+| [load_json.py](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/load_json.py)<br>`filem_load_json` | `--file str` - путь_к_файлу_JSON<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Загрузка JSON файла |

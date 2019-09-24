@@ -49,7 +49,8 @@ with open('README.md', 'r') as fh:
                 'filem_search_file = filem.samples.search_file:main',
                 'filem_clear_folder = filem.samples.clear_folder:main',
                 'filem_load_csv = filem.samples.load_csv:main',
-                'filem_extract_columns_csv = filem.samples.extract_columns_csv:main'
+                'filem_extract_columns_csv = filem.samples.extract_columns_csv:main',
+                'filem_load_json = filem.samples.joad_json:main',
             ],
         }
     )
