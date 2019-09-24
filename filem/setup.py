@@ -3,7 +3,8 @@ from setuptools import setup, find_packages
 import filem
 
 REQUIRED_PACKAGES = [
-    'core2pkgs'
+    'core2pkgs',
+    'pandas'
 ]
 
 with open('README.md', 'r') as fh:
@@ -46,7 +47,9 @@ with open('README.md', 'r') as fh:
         entry_points = {
             'console_scripts': [
                 'filem_search_file = filem.samples.search_file:main',
-                'filem_clear_folder = filem.samples.clear_folder:main'
+                'filem_clear_folder = filem.samples.clear_folder:main',
+                'filem_load_csv = filem.samples.load_csv:main',
+                'filem_extract_columns_csv = filem.samples.extract_columns_csv:main'
             ],
         }
     )
