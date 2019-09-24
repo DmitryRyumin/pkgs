@@ -26,16 +26,16 @@ pip install --upgrade filem
 
 <h4 align="center"><span style="color:#EC256F;">Примеры</span></h4>
 
-| Файлы | Скрипт | Аргументы командной строки | Ссылка | Описание|
-| ----- | ------ | -------------------------- | ------ | ------- |
-| search_file.py | filem_search_file | `--file str` - Путь к файлу<br>`--create` - Создание файла в случае его отсутствия<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/search_file.py) | Поиск файла |
-| clear_folder.py | filem_clear_folder | `--path str` - Путь к директории<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/clear_folder.py) | Очистка директории |
+| Файлы/скрипты | Аргументы командной строки | Ссылки | Описания |
+| ------------- | -------------------------- | ------ | -------- |
+| search_file.py<br>`filem_search_file` | `--file str` - Путь к файлу<br>`--create` - Создание файла в случае его отсутствия<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/search_file.py) | Поиск файла |
+| clear_folder.py<br>`filem_clear_folder` | `--path str` - Путь к директории<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/clear_folder.py) | Очистка директории |
 
 ### Класс для работы с CSV - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/csv.py)
 
 <h4 align="center"><span style="color:#EC256F;">Примеры</span></h4>
 
-| Файлы | Скрипт | Аргументы командной строки | Ссылка | Описание|
-| ----- | ------ | -------------------------- | ------ | ------- |
-| load_csv.py | filem_load_csv | `--file str` - Путь к файлу CSV<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/search_file.py) | Загрузка CSV файла |
-| extract_columns_csv.py | filem_extract_columns_csv | `--file str` - Путь к файлу CSV<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--columns int=[0]` - Список номеров столбцов для извлечения (По умолчанию: все столбцы)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/extract_columns_csv.py) | Извлечение указанных столбцов из CSV файла |
+| Файлы/скрипты | Аргументы командной строки | Ссылки | Описания |
+| ------------- | -------------------------- | ------ | -------- |
+| load_csv.py<br>`filem_load_csv` | `--file str` - Путь к файлу CSV<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/search_file.py) | Загрузка CSV файла |
+| extract_columns_csv.py<br>`filem_extract_columns_csv` | `--file str` - Путь к файлу CSV<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--columns int=[0]` - Список номеров столбцов для извлечения (По умолчанию: все столбцы)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | [Смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/extract_columns_csv.py) | Извлечение указанных столбцов из CSV файла |
