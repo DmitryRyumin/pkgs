@@ -1,5 +1,12 @@
 # Пакеты
 
+![GitHub followers](https://img.shields.io/github/followers/DmitryRyumin?style=social)
+
+![GitHub top language](https://img.shields.io/github/languages/top/DmitryRyumin/pkgs)
+![GitHub repo size](https://img.shields.io/github/repo-size/DmitryRyumin/pkgs)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DmitryRyumin/pkgs)
+![GitHub last commit](https://img.shields.io/github/last-commit/DmitryRyumin/pkgs)
+
 | Названия | Описания | Текущии версии | Версии Python | Лицензии |
 | -------- | -------- | -------------- | ------------- | -------- |
 | [trml](https://github.com/DmitryRyumin/pkgs/tree/master/trml) | Работа с Shell | ![PyPI](https://img.shields.io/pypi/v/trml)  | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/trml) | ![PyPI - License](https://img.shields.io/pypi/l/trml) |
