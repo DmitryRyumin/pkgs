@@ -1,7 +1,5 @@
 # Пакеты
 
-![GitHub followers](https://img.shields.io/github/followers/DmitryRyumin?style=social)
-
 ![GitHub top language](https://img.shields.io/github/languages/top/DmitryRyumin/pkgs)
 ![GitHub repo size](https://img.shields.io/github/repo-size/DmitryRyumin/pkgs)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DmitryRyumin/pkgs)
