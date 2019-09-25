@@ -3,8 +3,9 @@ from setuptools import setup, find_packages
 import filem
 
 REQUIRED_PACKAGES = [
-    'core2pkgs >= 2019.9.23.1',
-    'pandas >= 0.25.1'
+    'core2pkgs >= 2019.9.24.0',
+    'pandas >= 0.25.1',
+    'xmltodict >= 0.12.0',
 ]
 
 with open('README.md', 'r') as fh:
@@ -50,7 +51,7 @@ with open('README.md', 'r') as fh:
                 'filem_clear_folder = filem.samples.clear_folder:main',
                 'filem_load_csv = filem.samples.load_csv:main',
                 'filem_extract_columns_csv = filem.samples.extract_columns_csv:main',
-                'filem_load_json = filem.samples.joad_json:main',
+                'filem_load_json = filem.samples.load_json:main',
             ],
         }
     )

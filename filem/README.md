@@ -21,6 +21,8 @@ pip install --upgrade filem
 ## Зависимости
 
 - `core2pkgs`
+- `pandas`
+- `xmltodict`
 
 ## Класс для работы с файлами - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/file_manager.py)
 
