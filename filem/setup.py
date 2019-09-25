@@ -52,6 +52,7 @@ with open('README.md', 'r') as fh:
                 'filem_load_csv = filem.samples.load_csv:main',
                 'filem_extract_columns_csv = filem.samples.extract_columns_csv:main',
                 'filem_load_json = filem.samples.load_json:main',
+                'filem_load_xml = filem.samples.load_xml:main',
             ],
         }
     )
