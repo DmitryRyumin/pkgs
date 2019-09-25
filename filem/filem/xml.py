@@ -125,63 +125,44 @@ class Xml(Messages):
 
             return None
 
+        # Вывод сообщениЙ не нужен
+        if out is False:
+            return None
+
         # Значения словаря файла
         for key, val in data.items():
-            print(('\t' * cnt) + '"' + key + '": ')
+            #  Тег
+            print(('\t' * cnt) + '"' + key + '": ' +
+                  ('' if val is not None else self.red + 'Empty' + self.end))
 
             # Значение внутри списка
             if type(val) is list:
-                cnt += 1
+                cnt += 1  # Увеличение рекурсивного счетчика
 
+                # Пройтись по всему списку
                 for v in val:
-                    tmp = ''
+                    tmp = ''  # Вывод
 
-                    # Значения словаря файла
-                    for k_temp, v_temp in v.items():
-                        tmp += ' "' + k_temp + '" - ' + v_temp + ';'
+                    # Словарь
+                    if type(v) is dict:
+                        # Значения словаря файла
+                        for k_temp, v_temp in v.items():
+                            tmp += ' "' + k_temp + '" - ' + v_temp + ';'
 
-                    print(('\t' * cnt) + tmp[:-1])
+                    # Строка
+                    if type(v) is str:
+                        tmp += ' "#text" - ' + v + ';'
+
+                    if v is not None:
+                        print(('\t' * cnt) + tmp[:-1])
+                    else:
+                        print(('\t' * cnt) + self.red + 'Empty' + self.end)
+
+                cnt -= 1  # Уменьшение рекурсивного счетчика
 
             # Значение внутри словаря
             if type(val) is dict:
                 # Рекурсивный вызов функции
                 self.recursive_data_display(val, cnt + 1)
-
-        return None
-
-        res = ''
-
-        # Список
-        if type(data) is list:
-            # Значения списка файла
-            for val in data:
-                # Значение внутри словаря
-                if type(val) is dict:
-                    # Рекурсивный вызов функции
-                    self.recursive_data_display(val, cnt, parent)
-
-        # Список
-        if type(data) is dict:
-            # Значения словаря файла
-            for key, val in data.items():
-                parent = key  # Родительский ключ
-
-                # Значение внутри словаря
-                if type(val) is dict or type(val) is list:
-                    # Вывод сообщения
-                    if out is True:
-                        res += ('\t' * cnt) + '"' + key + '":'
-
-                    # Рекурсивный вызов функции
-                    self.recursive_data_display(val, cnt + 1)
-                else:
-                    # Обработка значений
-                    val = str(val) if type(val) is not list else ', '.join(str(v) for v in val)
-
-                    # Вывод сообщения
-                    if out is True:
-                        res += parent + ' "' + key + '" - ' + val
-
-        print(res)
 
         return None

@@ -133,6 +133,10 @@ class Json(Messages):
 
             return None
 
+        # Вывод сообщениЙ не нужен
+        if out is False:
+            return None
+
         # Значения словаря файла
         for key, val in data.items():
             # Значение внутри словаря
@@ -140,13 +144,9 @@ class Json(Messages):
                 # Обработка значений
                 val = str(val) if type(val) is not list else ', '.join(str(v) for v in val)
 
-                # Вывод сообщения
-                if out is True:
-                    print(('\t' * cnt) + '"' + key + '" - ' + val)
+                print(('\t' * cnt) + '"' + key + '" - ' + val)
             else:
-                # Вывод сообщения
-                if out is True:
-                    print(('\t' * cnt) + '"' + key + '":')
+                print(('\t' * cnt) + '"' + key + '":')
 
                 # Рекурсивный вызов функции
                 self.recursive_data_display(val, cnt + 1)
