@@ -6,7 +6,7 @@ __title__ = 'filem'
 __summary__ = 'Работа с файлами'
 __uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/filem'
 
-__version__ = '2019.9.25.1'
+__version__ = '2019.9.25.2'
 
 __author__ = 'Dmitry Ryumin'
 __email__ = 'dl_03.03.1991@mail.ru'
