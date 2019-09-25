@@ -20,9 +20,11 @@ pip install --upgrade filem
 
 ## Зависимости
 
-- `core2pkgs`
-- `pandas`
-- `xmltodict`
+| Пакеты | Минимальная версия | Текущая версия |
+| ------ | ------------------ | -------------- |
+`core2pkgs` | 2019.9.24.0 | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
+`pandas` | 0.25.1 | ![PyPI](https://img.shields.io/pypi/v/pandas) |
+`xmltodict` | 0.12.0 | ![PyPI](https://img.shields.io/pypi/v/xmltodict) |
 
 ## Класс для работы с файлами - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/file_manager.py)
 
