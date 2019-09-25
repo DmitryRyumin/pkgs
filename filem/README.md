@@ -49,3 +49,11 @@ pip install --upgrade filem
 | Файлы/скрипты | Аргументы командной строки | Описания |
 | ------------- | -------------------------- | -------- |
 | [load_json.py](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/load_json.py)<br>`filem_load_json` | `--file str` - путь_к_файлу_JSON<br>`--lines int=0` - Количество строк для отображения (По умолчанию: все строки)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Загрузка JSON файла |
+
+### Класс для работы с XML - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/xml.py)
+
+<h4 align="center"><span style="color:#EC256F;">Примеры</span></h4>
+
+| Файлы/скрипты | Аргументы командной строки | Описания |
+| ------------- | -------------------------- | -------- |
+| [load_json.py](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/load_xml.py)<br>`filem_load_xml` | `--file str` - путь_к_файлу_XML<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Загрузка XML файла |
