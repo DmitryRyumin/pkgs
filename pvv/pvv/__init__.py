@@ -6,7 +6,7 @@ __title__ = 'pvv'
 __summary__ = 'Воспроизведение фото/видео данных'
 __uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/pvv'
 
-__version__ = '2019.9.26.0'
+__version__ = '2019.9.27.0'
 
 __author__ = 'Dmitry Ryumin'
 __email__ = 'dl_03.03.1991@mail.ru'

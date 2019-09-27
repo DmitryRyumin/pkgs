@@ -3,7 +3,11 @@ from setuptools import setup, find_packages
 import pvv
 
 REQUIRED_PACKAGES = [
-
+    'core2pkgs >= 2019.9.25.0',
+    'filem >= 2019.9.25.2',
+    'PyOpenGL >= 3.1.0',
+    'argparse >= 1.4.0',
+    'opencv-contrib-python >= 4.1.1.26',
 ]
 
 with open('README.md', 'r') as fh:
@@ -45,6 +49,7 @@ with open('README.md', 'r') as fh:
         python_requires = '>=3.7',
         entry_points = {
             'console_scripts': [
+                'pvv_play = pvv.samples.play:main',
             ],
         }
     )
