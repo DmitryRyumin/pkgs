@@ -172,7 +172,7 @@ class Run(Messages):
         for key, val in config.items():
             # 1. Отображение метаданных
             # 2. Очистка буфера с изображением
-            # 3. Воспроизведение видеопотока с реальным колмчеством FPS
+            # 3. Воспроизведение видеопотока с реальным количеством FPS
             if key == 'metadata' or key == 'clear_image_buffer' or key == 'real_time':
                 # Проверка значения
                 if type(val) is not bool:
@@ -495,7 +495,7 @@ class Run(Messages):
 
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
 
-        # Принудительная задержка для воспроизведения видеопотока с реальным колмчеством FPS
+        # Принудительная задержка для воспроизведения видеопотока с реальным количеством FPS
         if self._args['real_time'] is True and self._source != self._formats_data[2]:
             end_time = time.time() - start_time  # Конец времени выполнения
 
