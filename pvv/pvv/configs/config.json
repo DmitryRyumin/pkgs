@@ -1,5 +1,5 @@
 {
-    "metadata": false,
+    "metadata": true,
     "window_name": "Window",
     "resize" : {
         "width": 0,
@@ -16,6 +16,6 @@
         "blue": 255
     },
     "labels_scale": 1.05,
-    "clear_image_buffer": true,
-    "real_time": false
+    "clear_image_buffer": false,
+    "real_time": true
 }

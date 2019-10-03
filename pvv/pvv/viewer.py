@@ -245,8 +245,8 @@ class Viewer(Messages):
                 ))
 
             # Очистка изображения из буфера
-            if self.clear_image_buffer is True:
-                self.image_buffer = None
+            # if self.clear_image_buffer is True:
+            #     self.image_buffer = None
         else:
             raise SystemExit(self._data_not_received.format(
                 self.red, datetime.now().strftime(self._format_time), self.end

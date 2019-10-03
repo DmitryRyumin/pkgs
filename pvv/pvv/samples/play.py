@@ -496,7 +496,7 @@ class Run(Messages):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
 
         # Принудительная задержка для воспроизведения видеопотока с реальным колмчеством FPS
-        if self._args['real_time'] is True:
+        if self._args['real_time'] is True and self._source != self._formats_data[2]:
             end_time = time.time() - start_time  # Конец времени выполнения
 
             delay = 1 / self._cap.get(cv2.CAP_PROP_FPS)  # Задержка
@@ -508,7 +508,7 @@ class Run(Messages):
         fps = round(1 / (time.time() - start_time), 2)  # FPS
 
         # Количество кадров больше 60
-        if fps > 60:
+        if fps > 60 and self._args['real_time'] is False:
             label_fps = self._frame_rate_static   # Текст с стическим FPS
         else:
             label_fps = self._frame_rate.format(fps)  # Текст с FPS
