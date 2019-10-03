@@ -4,7 +4,8 @@
 """
 Воспроизведение фото/видео данных
 
-python pvv/samples/play.py --file путь_к_фото_видео_файлу [--no_clear_shell]
+python pvv/samples/play.py --file путь_к_фото_видео_файлу [--config путь_к_конфигурационному_файлу --automatic_update
+    --frames_to_update 25 --no_clear_shell]
 """
 
 # ######################################################################################################################
@@ -117,13 +118,13 @@ class Run(Messages):
 
         ap.add_argument('--file', required = True, help = 'Путь к фото/видео файлу')
         ap.add_argument('--config', help = 'Путь к конфигурационному файлу')
-        ap.add_argument('--no_clear_shell', action = 'store_false', help = 'Не очищать консоль перед выполнением')
         ap.add_argument('--automatic_update', action = 'store_true',
                         help = 'Автоматическая проверка конфигурационного файла в момент работы программы '
                                '(работает при заданном --config')
         ap.add_argument('--frames_to_update', type = int, default = 25,
                         help = 'Через какое количество шагов проверять конфигурационный файл '
                                '(работает при --automatic_update, значение по умолчанию: %(default)s)')
+        ap.add_argument('--no_clear_shell', action = 'store_false', help = 'Не очищать консоль перед выполнением')
 
         return vars(ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
 

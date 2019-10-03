@@ -29,3 +29,11 @@ pip install --upgrade pvv
 `opencv-contrib-python` | `4.1.1.26` | ![PyPI](https://img.shields.io/pypi/v/opencv-contrib-python) | 
 `PyOpenGL` | `3.1.0` | ![PyPI](https://img.shields.io/pypi/v/PyOpenGL) |
 `argparse` | `1.4.0` | ![PyPI](https://img.shields.io/pypi/v/argparse) |
+
+## Класс для воспроизведения фото/видео данных - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/pvv/pvv/viewer.py)
+
+<h4 align="center"><span style="color:#EC256F;">Примеры</span></h4>
+
+| Файлы/скрипты | Аргументы командной строки | Описания |
+| ------------- | -------------------------- | -------- |
+| [play.py](https://github.com/DmitryRyumin/pkgs/blob/master/pvv/pvv/samples/play.py)<br>`pvv_play` | `--file str` - Путь к файлу<br>`--config str` - Путь к конфигурационному файлу<br>`--automatic_update` - Автоматическая проверка конфигурационного файла в момент работы программы (работает при заданном `--config`)<br>`--frames_to_update int=25` - Через какое количество шагов проверять конфигурационный файл (работает при `--automatic_update`)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Воспроизведение фото/видео данных |
