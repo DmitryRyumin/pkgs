@@ -24,7 +24,7 @@ pip install --upgrade filem
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`core2pkgs` | `2019.9.24.0` | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
+`core2pkgs` | `2019.9.25.0` | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
 `pandas` | `0.25.1` | ![PyPI](https://img.shields.io/pypi/v/pandas) |
 `xmltodict` | `0.12.0` | ![PyPI](https://img.shields.io/pypi/v/xmltodict) |
 
