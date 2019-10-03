@@ -6,6 +6,8 @@
 ![PyPI - Status](https://img.shields.io/pypi/status/filem)
 ![PyPI - License](https://img.shields.io/pypi/l/filem)
 
+## [История релизов](https://github.com/DmitryRyumin/pkgs/blob/master/filem/NOTES.md)
+
 ## Установка
 
 ```shell script

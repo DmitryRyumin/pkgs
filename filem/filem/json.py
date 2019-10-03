@@ -11,7 +11,9 @@
 import os    # Работа с файловой системой
 import json  # Кодирование и декодирование данные в удобном формате
 
-from datetime import datetime  # Работа со временем
+from datetime import datetime                # Работа со временем
+from types import ModuleType                 # Тип модуля
+import importlib.resources as pkg_resources  # Работа с ресурсами внутри пакетов
 
 # Персональные
 from filem.file_manager import FileManager  # Работа с файлами
@@ -31,6 +33,8 @@ class Messages(FileManager):
         super().__init__()  # Выполнение конструктора из суперкласса
 
         self._config_load = '[{}] Загрузка данных из файла "{}" ...'
+        self._config_load_resources = '[{}] Загрузка данных из ресурсов ...'
+        self._config_load_resources_not_found = '[{}{}{}] Ресурс не найден ...'
         self._invalid_file = '[{}{}{}] Необходимые значения в файле не найдены ...'
         self._config_empty = '[{}{}{}] Файл пуст ...'
 
@@ -102,6 +106,67 @@ class Json(Messages):
             # Печать
             if out is True:
                 print(self._config_empty.format(self._red, datetime.now().strftime(self._format_time), self._end))
+
+            return None
+
+        return config  # Результат
+
+    # Загрузка JSON файла из ресурсов модуля
+    def load_resources(self, module, file, out = True):
+        """
+        Загрузка JSON файла из ресурсов модуля
+
+        (module, str [, bool]) -> dict or None
+
+        Аргументы:
+            module - Модуль
+            file   - Файл JSON
+            out    - Печатать процесс выполнения
+
+        Возвращает словарь из json файла или None
+        """
+
+        # Проверка аргументов
+        if isinstance(module, ModuleType) is False or type(file) is not str or type(out) is not bool:
+            # Вывод сообщения
+            if out is True:
+                print(self._invalid_arguments.format(
+                    self.red, datetime.now().strftime(self._format_time), self.end,
+                    __class__.__name__ + '.' + self.load_resources.__name__
+                ))
+
+            return None
+
+        # Вывод сообщения
+        if out is True:
+            print(self._config_load_resources.format(datetime.now().strftime(self._format_time)))
+
+        # Ресурс с JSON файлом не найден
+        if pkg_resources.is_resource(module, file) is False:
+            # Вывод сообщения
+            if out is True:
+                print(self._config_load_resources_not_found.format(
+                    self.red, datetime.now().strftime(self._format_time), self.end
+                ))
+
+            return None
+
+        # Открытие файла
+        with pkg_resources.open_text(module, file, encoding='utf-8', errors='strict') as json_data_file:
+            try:
+                config = json.load(json_data_file)
+            except json.JSONDecodeError:
+                # Вывод сообщения
+                if out is True:
+                    print(self._invalid_file.format(self.red, datetime.now().strftime(self._format_time), self.end))
+
+                return None
+
+        # Файл пуст
+        if len(config) == 0:
+            # Печать
+            if out is True:
+                print(self._config_empty.format(self.red, datetime.now().strftime(self._format_time), self.end))
 
             return None
 

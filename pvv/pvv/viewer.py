@@ -47,13 +47,14 @@ class Viewer(Messages):
 
     def __init__(
             self,
-            window_name = 'Window',   # Имя окна
-            window_width = 1280,      # Ширина окна
-            window_height = 720,      # Высота окна
-            min_window_width = 100,   # Минимальная ширина окна
-            min_window_height = 100,  # Минимальная высота окна
-            move_window_x = 30,       # Перемещение окна по оси X
-            move_window_y = 30        # Перемещение окна по оси Y
+            window_name = 'Window',    # Имя окна
+            window_width = 1280,       # Ширина окна
+            window_height = 720,       # Высота окна
+            min_window_width = 100,    # Минимальная ширина окна
+            min_window_height = 100,   # Минимальная высота окна
+            move_window_x = 30,        # Перемещение окна по оси X
+            move_window_y = 30,        # Перемещение окна по оси Y
+            clear_image_buffer = True  # Очистка буфера с изображением
     ):
         super().__init__()  # Выполнение конструктора из суперкласса
 
@@ -67,6 +68,8 @@ class Viewer(Messages):
 
         self.move_window_x = move_window_x
         self.move_window_y = move_window_y
+
+        self.clear_image_buffer = clear_image_buffer
 
         self.image_buffer = None  # Буфер с изображением
         self._cnt = 0  # Счетчик кадров
@@ -144,6 +147,16 @@ class Viewer(Messages):
         else:
             self._move_window_y = y
 
+    # Получение результата очистки изображения из буфера
+    @property
+    def clear_image_buffer(self):
+        return self._clear_image_buffer
+
+    # Установка результата очистки изображения из буфера
+    @clear_image_buffer.setter
+    def clear_image_buffer(self, clear):
+        self._clear_image_buffer = clear
+
     # Получение изображения из буфера
     @property
     def image_buffer(self):
@@ -188,8 +201,6 @@ class Viewer(Messages):
                     for i in threading.enumerate():
                         if i.name == "MainThread":
                             if i.is_alive() is False:
-                                print(2)
-
                                 raise SystemExit(self._data_not_received.format(
                                     self.red, datetime.now().strftime(self._format_time), self.end
                                 ))
@@ -233,7 +244,9 @@ class Viewer(Messages):
                     self.red, datetime.now().strftime(self._format_time), self.end
                 ))
 
-            self.image_buffer = None
+            # Очистка изображения из буфера
+            if self.clear_image_buffer is True:
+                self.image_buffer = None
         else:
             raise SystemExit(self._data_not_received.format(
                 self.red, datetime.now().strftime(self._format_time), self.end

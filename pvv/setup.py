@@ -20,12 +20,15 @@ with open('README.md', 'r') as fh:
         version = pvv.__version__,
         author = pvv.__author__,
         author_email = pvv.__email__,
+        maintainer = pvv.__maintainer__,
+        maintainer_email = pvv.__maintainer_email__,
         url = pvv.__uri__,
         description = pvv.__summary__,
         long_description = long_description,
         long_description_content_type = 'text/markdown',
         install_requires=REQUIRED_PACKAGES,
         keywords = ['pvv'],
+        include_package_data = True,
         classifiers = [
             'License :: OSI Approved :: MIT License',
             'Natural Language :: Russian',
@@ -51,5 +54,5 @@ with open('README.md', 'r') as fh:
             'console_scripts': [
                 'pvv_play = pvv.samples.play:main',
             ],
-        }
+        },
     )
