@@ -18,8 +18,8 @@ import cv2       # Алгоритмы компьютерного зрения
 from datetime import datetime  # Работа со временем
 
 # Персональные
+import pvv                     # Воспроизведение фото/видео данных
 from core2pkgs import core     # Глобальный файл настроек
-import pvv
 from pvv.viewer import Viewer  # Воспроизведение фото/видео данных
 from pvv import configs        # Конфигурационные файлы
 from filem.json import Json    # Работа с JSON

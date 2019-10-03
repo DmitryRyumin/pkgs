@@ -4,7 +4,7 @@ import pvv
 
 REQUIRED_PACKAGES = [
     'core2pkgs >= 2019.9.25.0',
-    'filem >= 2019.9.25.2',
+    'filem >= 2019.10.3.0',
     'PyOpenGL >= 3.1.0',
     'argparse >= 1.4.0',
     'opencv-contrib-python >= 4.1.1.26',
