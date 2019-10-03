@@ -18,6 +18,8 @@ with open('README.md', 'r') as fh:
         version = filem.__version__,
         author = filem.__author__,
         author_email = filem.__email__,
+        maintainer = filem.__maintainer__,
+        maintainer_email = filem.__maintainer_email__,
         url = filem.__uri__,
         description = filem.__summary__,
         long_description = long_description,
