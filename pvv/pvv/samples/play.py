@@ -40,6 +40,8 @@ class Messages(core.Core):
         super().__init__()  # Выполнение конструктора из суперкласса
 
         self._run_web = '[{}] Запуск WEB камеры ...'
+        self._run_video = '[{}] Запуск видео ...'
+        self._show_photo = '[{}] Отображение фото ...'
         self._web_not_found = '[{}{}{}] WEB-камера не найдена ...'
         self._video_not_read = '[{}{}{}] Видео повреждено ...'
         self._photo_not_read = '[{}{}{}] Фото повреждено ...'
@@ -112,7 +114,7 @@ class Run(Messages):
 
     # Построение аргументов командной строки
     @staticmethod
-    def __build_args():
+    def _build_args():
         # Построение аргументов командой строки
         ap = argparse.ArgumentParser()
 
@@ -129,7 +131,7 @@ class Run(Messages):
         return vars(ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
 
     # Проверка JSON файла настроек на валидность
-    def __valid_json_config(self, config, out = True):
+    def _valid_json_config(self, config, out = True):
         """
         Проверка настроек JSON на валидность
 
@@ -261,7 +263,7 @@ class Run(Messages):
         return True  # Результат
 
     # Загрузка и проверка конфигурационного файла
-    def __load_config_json(self, out = True):
+    def _load_config_json(self, out = True):
         """
         Загрузка и проверка конфигурационного файла
 
@@ -289,7 +291,7 @@ class Run(Messages):
             return False
 
         # Проверка конфигурационного файла на валидность
-        res_valid_json_config = self.__valid_json_config(config_json, out)
+        res_valid_json_config = self._valid_json_config(config_json, out)
 
         # Конфигурационный файл не валидный
         if res_valid_json_config is False:
@@ -303,7 +305,7 @@ class Run(Messages):
         return True
 
     # Автоматическая проверка конфигурационного файла в момент работы программы
-    def __update_config_json(self):
+    def _update_config_json(self):
         """
         Автоматическая проверка конфигурационного файла в момент работы программы
 
@@ -320,7 +322,7 @@ class Run(Messages):
             curr_resize = self._args['resize']  # Текущее значение размеров окна
 
             # Загрузка и проверка конфигурационного файла не прошла
-            if self.__load_config_json(False) is False:
+            if self._load_config_json(False) is False:
                 # Конфигурационный файл был валидный на прошлой проверке
                 if self._automatic_update['invalid_config_file'] is False:
                     # Необходимые значения в конфигурационном файле не найдены в момент работы программы
@@ -350,7 +352,7 @@ class Run(Messages):
         self._frames_to_update += 1
 
     # Захват фото/видеоданных
-    def __grab_data(self, out = True):
+    def _grab_data(self, out = True):
         """
         Захват фото/видеоданных
 
@@ -415,6 +417,10 @@ class Run(Messages):
 
             # Воспроизведение видеопотока
             if ext.replace('.', '') in self._supported_video_formats:
+                # Вывод сообщения
+                if out is True:
+                    print(self._run_video.format(datetime.now().strftime(self._format_time)))
+
                 # Открытие камеры для захвата видеопотока
                 self._cap = cv2.VideoCapture(self._args['file'])
 
@@ -434,6 +440,10 @@ class Run(Messages):
 
             # Воспроизведение фото данных
             if ext.replace('.', '') in self._supported_photo_formats:
+                # Вывод сообщения
+                if out is True:
+                    print(self._show_photo.format(datetime.now().strftime(self._format_time)))
+
                 # Загрузка входного изображения
                 self._cap = cv2.imread(self._args['file'])
 
@@ -456,7 +466,7 @@ class Run(Messages):
         return True
 
     # Циклическое получение кадров из видеопотока
-    def __loop(self, out = True):
+    def _loop(self, out = True):
         """
         Циклическое получение кадров из фото/видеопотока
 
@@ -474,7 +484,7 @@ class Run(Messages):
 
         start_time = time.time()  # Отсчет времени выполнения
 
-        self.__update_config_json()  # Автоматическая проверка конфигурационного файла в момент работы программы
+        self._update_config_json()  # Автоматическая проверка конфигурационного файла в момент работы программы
 
         # Блокировка отображения повторных раз фото
         if self._frame_count > 1 and self._source == self._formats_data[2] and self._viewer.clear_image_buffer is False:
@@ -515,7 +525,9 @@ class Run(Messages):
 
         # Процесс нанесения информации на изображение
         # Размеры текста
-        labels_size = cv2.getTextSize(label_fps, self._labels_font, self._args['labels_scale'], self._labels_thickness)[0]
+        labels_size = cv2.getTextSize(
+            label_fps, self._labels_font, self._args['labels_scale'], self._labels_thickness
+        )[0]
 
         # Верхняя левая точка прямоугольника
         fps_point1 = (self._labels_base_coords[0], self._labels_base_coords[1])
@@ -557,12 +569,12 @@ class Run(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     def run(self):
-        self._args = self.__build_args()  # Построение аргументов командной строки
+        self._args = self._build_args()  # Построение аргументов командной строки
 
         self.clear_shell(self._args['no_clear_shell'])  # Очистка консоли перед выполнением
 
         # Загрузка и проверка конфигурационного файла
-        if self.__load_config_json() is False:
+        if self._load_config_json() is False:
             return False
 
         # Запуск
@@ -576,7 +588,7 @@ class Run(Messages):
             ))
 
         # Захват фото/видеоданных
-        if self.__grab_data() is False:
+        if self._grab_data() is False:
             return False
 
         self._viewer.window_name = self._args['window_name']  # Установка имени окна
@@ -589,7 +601,7 @@ class Run(Messages):
         self._viewer.window_width = self._args['resize']['width']  # Установка ширины окна 
         self._viewer.window_height = self._args['resize']['height']  # Установка высоты окна
 
-        self._viewer.set_loop(self.__loop)  # Циклическая функция извлечения изображений
+        self._viewer.set_loop(self._loop)  # Циклическая функция извлечения изображений
         self._viewer.start()  # Запуск
 
 

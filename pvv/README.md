@@ -24,8 +24,7 @@ pip install --upgrade pvv
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`filem` | `2019.10.3.0` | ![PyPI](https://img.shields.io/pypi/v/filem) | 
-`core2pkgs` | `2019.9.25.0` | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
+`filem` | `19.10.4.1` | ![PyPI](https://img.shields.io/pypi/v/filem) |
 `opencv-contrib-python` | `4.1.1.26` | ![PyPI](https://img.shields.io/pypi/v/opencv-contrib-python) | 
 `PyOpenGL` | `3.1.0` | ![PyPI](https://img.shields.io/pypi/v/PyOpenGL) |
 `argparse` | `1.4.0` | ![PyPI](https://img.shields.io/pypi/v/argparse) |
