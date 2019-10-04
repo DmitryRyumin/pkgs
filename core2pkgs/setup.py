@@ -17,6 +17,8 @@ with open('README.md', 'r') as fh:
         version = core2pkgs.__version__,
         author = core2pkgs.__author__,
         author_email = core2pkgs.__email__,
+        maintainer = core2pkgs.__maintainer__,
+        maintainer_email = core2pkgs.__maintainer_email__,
         url = core2pkgs.__uri__,
         description = core2pkgs.__summary__,
         long_description = long_description,
