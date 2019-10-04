@@ -6,6 +6,8 @@
 ![PyPI - Status](https://img.shields.io/pypi/status/trml)
 ![PyPI - License](https://img.shields.io/pypi/l/trml)
 
+## [История релизов](https://github.com/DmitryRyumin/pkgs/blob/master/trml/NOTES.md)
+
 ## Установка
 
 ```shell script

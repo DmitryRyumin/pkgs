@@ -16,6 +16,8 @@ with open('README.md', 'r') as fh:
         version = trml.__version__,
         author = trml.__author__,
         author_email = trml.__email__,
+        maintainer = trml.__maintainer__,
+        maintainer_email = trml.__maintainer_email__,
         url = trml.__uri__,
         description = trml.__summary__,
         long_description = long_description,
