@@ -593,7 +593,11 @@ class Run(Messages):
         self._viewer.start()  # Запуск
 
 
-if __name__ == "__main__":
-    main = Run()
+def main():
+    run = Run()
 
-    main.run()
+    run.run()
+
+
+if __name__ == "__main__":
+    main()
