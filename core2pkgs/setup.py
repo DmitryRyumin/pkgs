@@ -4,7 +4,7 @@ import core2pkgs
 
 REQUIRED_PACKAGES = [
     'argparse >= 1.4.0',
-    'trml >= 2019.9.24.1'
+    'trml >= 19.10.4.0'
 ]
 
 with open('README.md', 'r') as fh:

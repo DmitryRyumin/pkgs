@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import filem
 
 REQUIRED_PACKAGES = [
-    'core2pkgs >= 19.10.4.0',
+    'core2pkgs >= 19.10.4.1',
     'pandas >= 0.25.1',
     'xmltodict >= 0.12.0',
 ]
