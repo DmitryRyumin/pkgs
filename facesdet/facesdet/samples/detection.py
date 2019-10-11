@@ -23,6 +23,7 @@ import facesdet  # Поиск лиц
 
 from pvv.samples import play  # Пример воспроизведения фото/видео данных
 from facesdet.detection import Detection  # Поиск лиц
+from facesdet import configs  # Конфигурационные файлы
 
 
 # ######################################################################################################################
@@ -73,6 +74,8 @@ class Run(Messages):
 
     # Проверка JSON файла настроек на валидность
     def _valid_json_config(self, config, out = True):
+        super()._valid_json_config(config, out)
+
         return False
 
     # ------------------------------------------------------------------------------------------------------------------

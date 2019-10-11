@@ -265,20 +265,21 @@ class Run(Messages):
         return True  # Результат
 
     # Загрузка и проверка конфигурационного файла
-    def _load_config_json(self, out = True):
+    def _load_config_json(self, resources = configs, out = True):
         """
         Загрузка и проверка конфигурационного файла
 
-        ([bool]) -> bool
+        ([module, bool]) -> bool
 
         Аргументы:
-           out - Печатать процесс выполнения
+            resources - Модуль с ресурсами
+            out       - Печатать процесс выполнения
 
         Возвращает: True если файл загружен и валиден, в обратном случае False
         """
 
         # Проверка аргументов
-        if type(out) is not bool:
+        if type(out) is not bool or not isinstance(resources, ModuleType):
             return False
 
         # Конфигурационный файл передан
@@ -286,7 +287,7 @@ class Run(Messages):
             config_json = self._json.load(self._args['config'], False, out)  # Загрузка JSON файла
         else:
             # Загрузка JSON файла из ресурсов модуля
-            config_json = self._json.load_resources(configs, 'config.json', out)
+            config_json = self._json.load_resources(resources, 'config.json', out)
 
         # Конфигурационный файл не загружен
         if config_json is None:
@@ -324,7 +325,7 @@ class Run(Messages):
             curr_resize = self._args['resize']  # Текущее значение размеров окна
 
             # Загрузка и проверка конфигурационного файла не прошла
-            if self._load_config_json(False) is False:
+            if self._load_config_json(out = False) is False:
                 # Конфигурационный файл был валидный на прошлой проверке
                 if self._automatic_update['invalid_config_file'] is False:
                     # Необходимые значения в конфигурационном файле не найдены в момент работы программы
@@ -571,18 +572,19 @@ class Run(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     # Запуск
-    def run(self, metadata = pvv):
+    def run(self, metadata = pvv, resources = configs):
         """
         Запуск
 
-        ([module]) -> None
+        ([module, module]) -> None
 
         Аргументы:
-           metadata - Модуль из которого необходимо извлечь информацию
+           metadata  - Модуль из которого необходимо извлечь информацию
+           resources - Модуль с ресурсами
         """
 
         # Проверка аргументов
-        if not isinstance(metadata, ModuleType):
+        if not isinstance(metadata, ModuleType) or not isinstance(resources, ModuleType):
             return False
 
         self._args = self._build_args()  # Построение аргументов командной строки
@@ -590,7 +592,7 @@ class Run(Messages):
         self.clear_shell(self._args['no_clear_shell'])  # Очистка консоли перед выполнением
 
         # Загрузка и проверка конфигурационного файла
-        if self._load_config_json() is False:
+        if self._load_config_json(resources) is False:
             return False
 
         # Запуск

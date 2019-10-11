@@ -1,0 +1,34 @@
+{
+    "metadata": true,
+    "method" : "opencv_haar",
+    "min_neighbors" : 3,
+    "dnn" : "tf",
+    "size" : {
+        "width": 0,
+        "height": 0
+    },
+    "resize" : {
+        "width": 0,
+        "height": 0
+    },
+    "text_color" : {
+        "red": 0,
+        "green": 0,
+        "blue": 0
+    },
+    "background_color" : {
+        "red": 255,
+        "green": 255,
+        "blue": 255
+    },
+    "rectangle_color" : {
+        "red": 0,
+        "green": 255,
+        "blue": 0
+    },
+    "labels_scale": 1.05,
+    "clear_image_buffer": false,
+    "real_time": true,
+    "conf_threshold" : 0.5,
+    "draw_precent" : true
+}
