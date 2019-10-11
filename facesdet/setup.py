@@ -3,7 +3,9 @@ from setuptools import setup, find_packages
 import facesdet
 
 REQUIRED_PACKAGES = [
-
+    'pvv >= 19.10.4.1',
+    'numpy >= 1.17.2',
+    'dlib >= 19.18.0',
 ]
 
 with open('README.md', 'r') as fh:

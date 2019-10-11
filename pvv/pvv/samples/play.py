@@ -17,9 +17,11 @@ import argparse  # Парсинг аргументов и параметров �
 import cv2       # Алгоритмы компьютерного зрения
 
 from datetime import datetime  # Работа со временем
+from types import ModuleType   # Проверка объектов на модуль
 
 # Персональные
-import pvv                     # Воспроизведение фото/видео данных
+import pvv  # Воспроизведение фото/видео данных
+
 from core2pkgs import core     # Глобальный файл настроек
 from pvv.viewer import Viewer  # Воспроизведение фото/видео данных
 from pvv import configs        # Конфигурационные файлы
@@ -568,7 +570,21 @@ class Run(Messages):
     #  Внешние методы
     # ------------------------------------------------------------------------------------------------------------------
 
-    def run(self):
+    # Запуск
+    def run(self, metadata = pvv):
+        """
+        Запуск
+
+        ([module]) -> None
+
+        Аргументы:
+           metadata - Модуль из которого необходимо извлечь информацию
+        """
+
+        # Проверка аргументов
+        if not isinstance(metadata, ModuleType):
+            return False
+
         self._args = self._build_args()  # Построение аргументов командной строки
 
         self.clear_shell(self._args['no_clear_shell'])  # Очистка консоли перед выполнением
@@ -581,10 +597,10 @@ class Run(Messages):
         if self._args['metadata'] is True:
             print(self._metadata.format(
                 datetime.now().strftime(self._format_time),
-                pvv.__author__,
-                pvv.__email__,
-                pvv.__maintainer__,
-                pvv.__version__
+                metadata.__author__,
+                metadata.__email__,
+                metadata.__maintainer__,
+                metadata.__version__
             ))
 
         # Захват фото/видеоданных
