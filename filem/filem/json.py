@@ -32,10 +32,8 @@ class Messages(FileManager):
     def __init__(self):
         super().__init__()  # Выполнение конструктора из суперкласса
 
-        self._config_load = '[{}] Загрузка данных из файла "{}" ...'
-        self._config_load_resources = '[{}] Загрузка данных из ресурсов ...'
-        self._config_load_resources_not_found = '[{}{}{}] Ресурс не найден ...'
-        self._invalid_file = '[{}{}{}] Необходимые значения в файле не найдены ...'
+        self._load_data_resources = '[{}] Загрузка данных из ресурсов ...'
+        self._load_data_resources_not_found = '[{}{}{}] Ресурс не найден ...'
         self._config_empty = '[{}{}{}] Файл пуст ...'
 
 
@@ -88,7 +86,7 @@ class Json(Messages):
 
         # Вывод сообщения
         if out is True:
-            print(self._config_load.format(datetime.now().strftime(self._format_time), os.path.basename(file)))
+            print(self._load_data.format(datetime.now().strftime(self._format_time), os.path.basename(file)))
 
         # Открытие файла
         with open(file, mode = 'r', encoding = 'utf-8') as json_data_file:
@@ -139,13 +137,13 @@ class Json(Messages):
 
         # Вывод сообщения
         if out is True:
-            print(self._config_load_resources.format(datetime.now().strftime(self._format_time)))
+            print(self._load_data_resources.format(datetime.now().strftime(self._format_time)))
 
         # Ресурс с JSON файлом не найден
         if pkg_resources.is_resource(module, file) is False:
             # Вывод сообщения
             if out is True:
-                print(self._config_load_resources_not_found.format(
+                print(self._load_data_resources_not_found.format(
                     self.red, datetime.now().strftime(self._format_time), self.end
                 ))
 

@@ -14,7 +14,7 @@ import argparse   # Парсинг аргументов и параметров 
 import itertools  # Итераторы зацикливания
 
 # Персональные
-from trml.shell import Shell   # Работа с Shell
+from trml.shell import Shell  # Работа с Shell
 from filem.json import Json   # Работа с JSON
 
 
@@ -25,6 +25,7 @@ def main():
     # Построение аргументов командой строки
     ap = argparse.ArgumentParser()
 
+    # Добавление аргументов в парсер командной строки
     ap.add_argument('--file', required=True, help='Путь к файлу JSON')
     ap.add_argument('--lines', type=int, default=0, help='Количество строк для отображения')
     ap.add_argument('--create', action='store_true', help='Создание файла в случае его отсутствия')

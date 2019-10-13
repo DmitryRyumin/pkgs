@@ -30,8 +30,6 @@ class Messages(FileManager):
     def __init__(self):
         super().__init__()  # Выполнение конструктора из суперкласса
 
-        self._load_data = '[{}] Загрузка данных из файла "{}" ...'
-
         self._extract_all_columns = '[{}] Извлечение данных из всех столбцов "{}" ...'
         self._extract_columns = '[{}] Извлечение данных из столбцов "{}" ...'
         self._error_extract_columns = '[{}{}{}] Указаны неверные столбцы для извлечения ...'

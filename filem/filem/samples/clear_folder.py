@@ -13,7 +13,7 @@ python filem/samples/clear_folder.py --path путь_к_директории [--
 import argparse  # Парсинг аргументов и параметров командной строки
 
 # Персональные
-from trml.shell import Shell  # Работа с Shell
+from trml.shell import Shell                # Работа с Shell
 from filem.file_manager import FileManager  # Работа с файлами
 
 
@@ -24,6 +24,7 @@ def main():
     # Построение аргументов командой строки
     ap = argparse.ArgumentParser()
 
+    # Добавление аргументов в парсер командной строки
     ap.add_argument('--path', required=True, help='Путь к директории')
     ap.add_argument('--no_clear_shell', action='store_false', help='Не очищать консоль перед выполнением')
 

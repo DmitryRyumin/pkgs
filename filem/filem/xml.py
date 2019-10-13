@@ -32,9 +32,6 @@ class Messages(FileManager):
     def __init__(self):
         super().__init__()  # Выполнение конструктора из суперкласса
 
-        self._config_load = '[{}] Загрузка данных из файла "{}" ...'
-        self._invalid_file = '[{}{}{}] Необходимые значения в файле не найдены ...'
-
 
 # ######################################################################################################################
 # Работа с JSON
@@ -84,7 +81,7 @@ class Xml(Messages):
 
         # Вывод сообщения
         if out is True:
-            print(self._config_load.format(datetime.now().strftime(self._format_time), os.path.basename(file)))
+            print(self._load_data.format(datetime.now().strftime(self._format_time), os.path.basename(file)))
 
         # Открытие файла
         with open(file, encoding = 'utf-8') as fd:

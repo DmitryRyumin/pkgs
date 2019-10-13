@@ -24,6 +24,7 @@ def main():
     # Построение аргументов командой строки
     ap = argparse.ArgumentParser()
 
+    # Добавление аргументов в парсер командной строки
     ap.add_argument('--file', required=True, help='Путь к файлу CSV')
     ap.add_argument('--lines', type=int, default=0, help='Количество строк для отображения')
     ap.add_argument('--columns', type=int, nargs='+', default=[0],

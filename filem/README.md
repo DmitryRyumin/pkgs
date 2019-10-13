@@ -24,7 +24,7 @@ pip install --upgrade filem
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`core2pkgs` | `19.10.4.1` | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
+`core2pkgs` | `19.10.13.0` | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
 `pandas` | `0.25.1` | ![PyPI](https://img.shields.io/pypi/v/pandas) |
 `xmltodict` | `0.12.0` | ![PyPI](https://img.shields.io/pypi/v/xmltodict) |
 
@@ -60,4 +60,4 @@ pip install --upgrade filem
 
 | Файлы/скрипты | Аргументы командной строки | Описания |
 | ------------- | -------------------------- | -------- |
-| [load_json.py](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/load_xml.py)<br>`filem_load_xml` | `--file str` - путь_к_файлу_XML<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Загрузка XML файла |
+| [load_xml.py](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/samples/load_xml.py)<br>`filem_load_xml` | `--file str` - путь_к_файлу_XML<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Загрузка XML файла |

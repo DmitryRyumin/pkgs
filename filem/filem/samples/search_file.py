@@ -15,7 +15,7 @@ import os  # Работа с файловой системой
 import argparse  # Парсинг аргументов и параметров командной строки
 
 # Персональные
-from trml.shell import Shell  # Работа с Shell
+from trml.shell import Shell                # Работа с Shell
 from filem.file_manager import FileManager  # Работа с файлами
 
 
@@ -26,6 +26,7 @@ def main():
     # Построение аргументов командой строки
     ap = argparse.ArgumentParser()
 
+    # Добавление аргументов в парсер командной строки
     ap.add_argument('--file', required=True, help='Путь к файлу')
     ap.add_argument('--create', action='store_true', help='Создание файла в случае его отсутствия')
     ap.add_argument('--no_clear_shell', action='store_false', help='Не очищать консоль перед выполнением')
