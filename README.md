@@ -16,5 +16,6 @@
 ## Дерево пакетов
 
 <h4 align="center">
+    ![Дерево пакетов](https://github.com/DmitryRyumin/pkgs/blob/master/Package_tree.svg)
     <img src="https://github.com/DmitryRyumin/pkgs/blob/master/Package_tree.svg" alt="Дерево пакетов" />
 </h4>
