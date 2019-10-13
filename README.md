@@ -14,3 +14,4 @@
 | [facesdet](https://github.com/DmitryRyumin/pkgs/tree/master/facesdet) | Поиск лиц | ![PyPI](https://img.shields.io/pypi/v/facesdet) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/facesdet) | ![PyPI - License](https://img.shields.io/pypi/l/facesdet) |
 
 ![Package tree](https://raw.githubusercontent.com/DmitryRyumin/pkgs/master/Package_tree.svg)
+<img src="https://raw.githubusercontent.com/DmitryRyumin/pkgs/master/Package_tree.svg">
