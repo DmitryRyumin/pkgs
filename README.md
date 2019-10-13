@@ -15,4 +15,6 @@
 
 ## Дерево пакетов
 
-<img src="https://github.com/DmitryRyumin/pkgs/blob/master/Package_tree.svg" style="margin: 0 auto;" />
+<h4 align="center">
+    <img src="https://github.com/DmitryRyumin/pkgs/blob/master/Package_tree.svg" alt="Дерево пакетов" />
+</h4>
