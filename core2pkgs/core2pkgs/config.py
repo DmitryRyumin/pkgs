@@ -70,3 +70,5 @@ class Messages(Color):
         self._format_time = '%Y-%m-%d %H:%M:%S'  # Формат времени
 
         self._invalid_arguments = '[{}{}{}] Неверные типы аргументов в "{}" ...'
+
+        self._invalid_file = '[{}{}{}] Необходимые значения в файле не найдены ...'
