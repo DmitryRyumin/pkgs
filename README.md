@@ -13,5 +13,5 @@
 | [pvv](https://github.com/DmitryRyumin/pkgs/tree/master/pvv) | Воспроизведение фото/видео данных | ![PyPI](https://img.shields.io/pypi/v/pvv) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pvv) | ![PyPI - License](https://img.shields.io/pypi/l/pvv) |
 | [facesdet](https://github.com/DmitryRyumin/pkgs/tree/master/facesdet) | Поиск лиц | ![PyPI](https://img.shields.io/pypi/v/facesdet) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/facesdet) | ![PyPI - License](https://img.shields.io/pypi/l/facesdet) |
 
-![Package tree](https://raw.githubusercontent.com/DmitryRyumin/pkgs/master/Package_tree.svg)
-<img src="https://raw.githubusercontent.com/DmitryRyumin/pkgs/master/Package_tree.svg">
+![Package tree](https://github.com/DmitryRyumin/pkgs/blob/master/Package_tree.svg)
+<img src="https://github.com/DmitryRyumin/pkgs/blob/master/Package_tree.svg">
