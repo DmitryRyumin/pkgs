@@ -115,22 +115,33 @@ class Run(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     # Построение аргументов командной строки
-    @staticmethod
-    def _build_args():
-        # Построение аргументов командой строки
-        ap = argparse.ArgumentParser()
+    def _build_args(self, conv_to_dict = True):
+        """
+        Построение аргументов командной строки
 
-        ap.add_argument('--file', required = True, help = 'Путь к фото/видео файлу')
-        ap.add_argument('--config', help = 'Путь к конфигурационному файлу')
-        ap.add_argument('--automatic_update', action = 'store_true',
-                        help = 'Автоматическая проверка конфигурационного файла в момент работы программы '
-                               '(работает при заданном --config')
-        ap.add_argument('--frames_to_update', type = int, default = 25,
-                        help = 'Через какое количество шагов проверять конфигурационный файл '
-                               '(работает при --automatic_update, значение по умолчанию: %(default)s)')
-        ap.add_argument('--no_clear_shell', action = 'store_false', help = 'Не очищать консоль перед выполнением')
+        ([bool]) -> None or dict
 
-        return vars(ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
+        Аргументы:
+           conv_to_dict - Преобразование списка аргументов командной строки в словарь
+
+        Возвращает: dict если парсер командной строки окончательный, в обратном случае None
+        """
+
+        super().build_args(False)  # Выполнение функции из суперкласса
+
+        # Добавление аргументов в парсер командной строки
+        self._ap.add_argument('--file', required = True, help = 'Путь к фото/видео файлу')
+        self._ap.add_argument('--config', help = 'Путь к конфигурационному файлу')
+        self._ap.add_argument('--automatic_update', action = 'store_true',
+                              help = 'Автоматическая проверка конфигурационного файла в момент работы программы '
+                              '(работает при заданном --config')
+        self._ap.add_argument('--frames_to_update', type = int, default = 25,
+                              help = 'Через какое количество шагов проверять конфигурационный файл '
+                              '(работает при --automatic_update, значение по умолчанию: %(default)s)')
+        self._ap.add_argument('--no_clear_shell', action = 'store_false', help = 'Не очищать консоль перед выполнением')
+
+        if conv_to_dict is True:
+            return vars(self._ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
 
     # Проверка JSON файла настроек на валидность
     def _valid_json_config(self, config, out = True):
@@ -152,7 +163,7 @@ class Run(Messages):
             if out is True:
                 print(self._invalid_arguments.format(
                     self.red, datetime.now().strftime(self._format_time),
-                    self.end, __class__.__name__ + '.' + self.__valid_json_config.__name__
+                    self.end, __class__.__name__ + '.' + self._valid_json_config.__name__
                 ))
 
             return False
@@ -280,6 +291,13 @@ class Run(Messages):
 
         # Проверка аргументов
         if type(out) is not bool or not isinstance(resources, ModuleType):
+            # Вывод сообщения
+            if out is True:
+                print(self._invalid_arguments.format(
+                    self.red, datetime.now().strftime(self._format_time),
+                    self.end, __class__.__name__ + '.' + self._load_config_json.__name__
+                ))
+
             return False
 
         # Конфигурационный файл передан
@@ -572,19 +590,27 @@ class Run(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     # Запуск
-    def run(self, metadata = pvv, resources = configs):
+    def run(self, metadata = pvv, resources = configs, out = True):
         """
         Запуск
 
-        ([module, module]) -> None
+        ([module, module, bool]) -> None
 
         Аргументы:
            metadata  - Модуль из которого необходимо извлечь информацию
            resources - Модуль с ресурсами
+           out       - Печатать процесс выполнения
         """
 
         # Проверка аргументов
-        if not isinstance(metadata, ModuleType) or not isinstance(resources, ModuleType):
+        if type(out) is not bool or not isinstance(metadata, ModuleType) or not isinstance(resources, ModuleType):
+            # Вывод сообщения
+            if out is True:
+                print(self._invalid_arguments.format(
+                    self.red, datetime.now().strftime(self._format_time),
+                    self.end, __class__.__name__ + '.' + self.run.__name__
+                ))
+
             return False
 
         self._args = self._build_args()  # Построение аргументов командной строки

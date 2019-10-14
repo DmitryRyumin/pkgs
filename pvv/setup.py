@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import pvv
 
 REQUIRED_PACKAGES = [
-    'filem >= 19.10.4.3',
+    'filem >= 19.10.13.0',
     'PyOpenGL >= 3.1.0',
     'opencv-contrib-python >= 4.1.1.26',
 ]
