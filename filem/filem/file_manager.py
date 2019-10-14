@@ -82,7 +82,7 @@ class FileManager(Messages):
             if out is True:
                 print(self._invalid_arguments.format(
                     self.red, datetime.now().strftime(self._format_time), self.end,
-                    __class__.__name__ + '.' + self.search.__name__
+                    __class__.__name__ + '.' + self.search_file.__name__
                 ))
 
             return False
