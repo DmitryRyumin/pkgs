@@ -535,11 +535,7 @@ class Run(Messages):
 
         # Выполнение функции/метода
         if func is not None and (type(func) is MethodType or type(func) is FunctionType):
-            frame_from_func = func()  # Результат выполнения операций над изображением
-
-            # Результат выполнения операций над изображением произведен успешно
-            if frame_from_func is not False:
-                self._curr_frame_copy = frame_from_func  # Новое изображение
+            func()  # Выполнение операций над изображением
 
         # Принудительная задержка для воспроизведения видеопотока с реальным количеством FPS
         if self._args['real_time'] is True and self._source != self._formats_data[2]:
