@@ -15,8 +15,8 @@ import os        # Работа с файловой системой
 import time      # Работа со временем
 import cv2       # Алгоритмы компьютерного зрения
 
-from datetime import datetime  # Работа со временем
-from types import ModuleType   # Проверка объектов на модуль
+from datetime import datetime                           # Работа со временем
+from types import ModuleType, FunctionType, MethodType  # Проверка объектов на модуль, метод, функцию
 
 # Персональные
 import pvv  # Воспроизведение фото/видео данных
@@ -487,14 +487,15 @@ class Run(Messages):
         return True
 
     # Циклическое получение кадров из видеопотока
-    def _loop(self, out = True):
+    def _loop(self, func = None, out = True):
         """
         Циклическое получение кадров из фото/видеопотока
 
         ([bool]) -> bool
 
         Аргументы:
-           out - Печатать процесс выполнения
+           func - Функция или метод
+           out  - Печатать процесс выполнения
 
         Возвращает: True если получение кадров осуществляется, в обратном случае False
         """
@@ -525,6 +526,10 @@ class Run(Messages):
         self._frame_count += 1  # Номер текущего кадра
 
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
+
+        # Выполнение функции/метода
+        if func is not None and (type(func) is MethodType or type(func) is FunctionType):
+            frame = func(frame)
 
         # Принудительная задержка для воспроизведения видеопотока с реальным количеством FPS
         if self._args['real_time'] is True and self._source != self._formats_data[2]:
