@@ -92,9 +92,13 @@ class Run(Messages):
         self._labels_padding = 10  # Внутренний отступ для текстов
         self._labels_distance = 10  # Расстояние между текстами
 
+        self._fps_point1 = (0, 0)  # Верхняя левая точка прямоугольника
+        self._fps_point2 = (0, 0)  # Нижняя правая точка прямоугольника
+
         self._cap = None  # Захват фото/видеоданных
         self._source = None  # Ресурс захвата фото/видеоданных
         self._curr_frame = None  # Текущий кадр
+        self._curr_frame_copy = None  # Копия текущего кадра (для рисования)
 
         self._viewer = Viewer()  # Воспроизведение фото/видео данных
 
@@ -525,11 +529,17 @@ class Run(Messages):
 
         self._frame_count += 1  # Номер текущего кадра
 
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
+        self._curr_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
+
+        self._curr_frame_copy = self._curr_frame.copy()  # Копия текущего кадра (для рисования)
 
         # Выполнение функции/метода
         if func is not None and (type(func) is MethodType or type(func) is FunctionType):
-            frame = func(frame)
+            frame_from_func = func()  # Результат выполнения операций над изображением
+
+            # Результат выполнения операций над изображением произведен успешно
+            if frame_from_func is not False:
+                self._curr_frame_copy = frame_from_func  # Новое изображение
 
         # Принудительная задержка для воспроизведения видеопотока с реальным количеством FPS
         if self._args['real_time'] is True and self._source != self._formats_data[2]:
@@ -556,18 +566,18 @@ class Run(Messages):
         )[0]
 
         # Верхняя левая точка прямоугольника
-        fps_point1 = (self._labels_base_coords[0], self._labels_base_coords[1])
+        self._fps_point1 = (self._labels_base_coords[0], self._labels_base_coords[1])
         # Нижняя правая точка прямоугольника
-        fps_point2 = (
+        self._fps_point2 = (
             self._labels_base_coords[0] + labels_size[0] + self._labels_padding * 2,
             self._labels_base_coords[1] + labels_size[1] + self._labels_padding * 2
         )
 
         # Рисование прямоугольной области в виде фона текста на изображении
         cv2.rectangle(
-            frame,  # Исходная копия изображения
-            fps_point1,  # Верхняя левая точка прямоугольника
-            fps_point2,  # Нижняя правая точка прямоугольника
+            self._curr_frame_copy,  # Исходная копия изображения
+            self._fps_point1,  # Верхняя левая точка прямоугольника
+            self._fps_point2,  # Нижняя правая точка прямоугольника
             # Цвет прямоугольника
             (self._args['background_color']['red'],
              self._args['background_color']['green'],
@@ -578,7 +588,7 @@ class Run(Messages):
 
         # Нанесение FPS на кадр
         cv2.putText(
-            frame, label_fps, (self._labels_base_coords[0] + self._labels_padding,
+            self._curr_frame_copy, label_fps, (self._labels_base_coords[0] + self._labels_padding,
              self._labels_base_coords[1] + self._labels_padding + labels_size[1]),
             self._labels_font, self._args['labels_scale'],
             (self._args['text_color']['red'], self._args['text_color']['green'], self._args['text_color']['blue']),
@@ -586,7 +596,7 @@ class Run(Messages):
             cv2.LINE_AA
         )
 
-        self._viewer.image_buffer = frame  # Отправка изображения в буфер
+        self._viewer.image_buffer = self._curr_frame_copy  # Отправка изображения в буфер
 
         return True
 
