@@ -13,7 +13,6 @@ python pvv/samples/play.py --file путь_к_фото_видео_файлу [--
 # ######################################################################################################################
 import os        # Работа с файловой системой
 import time      # Работа со временем
-import argparse  # Парсинг аргументов и параметров командной строки
 import cv2       # Алгоритмы компьютерного зрения
 
 from datetime import datetime  # Работа со временем
@@ -140,6 +139,7 @@ class Run(Messages):
                               '(работает при --automatic_update, значение по умолчанию: %(default)s)')
         self._ap.add_argument('--no_clear_shell', action = 'store_false', help = 'Не очищать консоль перед выполнением')
 
+        # Преобразование списка аргументов командной строки в словарь
         if conv_to_dict is True:
             return vars(self._ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
 
@@ -210,11 +210,11 @@ class Run(Messages):
                     if type(v) is not int or v < 0:
                         continue
 
-                    # Ширина изображения/окна для масштабирования
+                    # Ширина окна для масштабирования
                     if k == 'width':
                         curr_valid_layer_2 += 1
 
-                    # Высота изображения/окна для масштабирования
+                    # Высота окна для масштабирования
                     if k == 'height':
                         all_layer_2 += 1
                         curr_valid_layer_2 += 1
@@ -239,8 +239,8 @@ class Run(Messages):
                         continue
 
                     # 1. Красный
-                    # 1. Зеленый
-                    # 1. Синий
+                    # 2. Зеленый
+                    # 3. Синий
                     if k == 'red' or k == 'green' or k == 'blue':
                         curr_valid_layer_2 += 1
 
@@ -590,20 +590,22 @@ class Run(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     # Запуск
-    def run(self, metadata = pvv, resources = configs, out = True):
+    def run(self, metadata = pvv, resources = configs, start = True, out = True):
         """
         Запуск
 
-        ([module, module, bool]) -> None
+        ([module, module, bool, bool]) -> None
 
         Аргументы:
            metadata  - Модуль из которого необходимо извлечь информацию
            resources - Модуль с ресурсами
+           start     - Запуск процесса извлечения изображений
            out       - Печатать процесс выполнения
         """
 
         # Проверка аргументов
-        if type(out) is not bool or not isinstance(metadata, ModuleType) or not isinstance(resources, ModuleType):
+        if type(out) is not bool or type(start) is not bool or not isinstance(metadata, ModuleType)\
+                or not isinstance(resources, ModuleType):
             # Вывод сообщения
             if out is True:
                 print(self._invalid_arguments.format(
@@ -645,8 +647,10 @@ class Run(Messages):
         self._viewer.window_width = self._args['resize']['width']  # Установка ширины окна 
         self._viewer.window_height = self._args['resize']['height']  # Установка высоты окна
 
-        self._viewer.set_loop(self._loop)  # Циклическая функция извлечения изображений
-        self._viewer.start()  # Запуск
+        # Запуск процесса извлечения изображений
+        if start is True:
+            self._viewer.set_loop(self._loop)  # Циклическая функция извлечения изображений
+            self._viewer.start()  # Запуск
 
 
 def main():
