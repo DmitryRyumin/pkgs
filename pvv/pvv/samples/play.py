@@ -98,7 +98,6 @@ class Run(Messages):
         self._cap = None  # Захват фото/видеоданных
         self._source = None  # Ресурс захвата фото/видеоданных
         self._curr_frame = None  # Текущий кадр
-        self._curr_frame_copy = None  # Копия текущего кадра (для рисования)
 
         self._viewer = Viewer()  # Воспроизведение фото/видео данных
 
@@ -543,8 +542,6 @@ class Run(Messages):
 
         self._curr_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
 
-        self._curr_frame_copy = self._curr_frame.copy()  # Копия текущего кадра (для рисования)
-
         # Выполнение функции/метода
         if func is not None and (type(func) is MethodType or type(func) is FunctionType):
             func()  # Выполнение операций над изображением
@@ -583,7 +580,7 @@ class Run(Messages):
 
         # Рисование прямоугольной области в виде фона текста на изображении
         cv2.rectangle(
-            self._curr_frame_copy,  # Исходная копия изображения
+            self._curr_frame,  # Исходная копия изображения
             self._fps_point1,  # Верхняя левая точка прямоугольника
             self._fps_point2,  # Нижняя правая точка прямоугольника
             # Цвет прямоугольника
@@ -596,15 +593,15 @@ class Run(Messages):
 
         # Нанесение FPS на кадр
         cv2.putText(
-            self._curr_frame_copy, label_fps, (self._labels_base_coords[0] + self._labels_padding,
-             self._labels_base_coords[1] + self._labels_padding + labels_size[1]),
+            self._curr_frame, label_fps, (self._labels_base_coords[0] + self._labels_padding,
+                                          self._labels_base_coords[1] + self._labels_padding + labels_size[1]),
             self._labels_font, self._args['labels_scale'],
             (self._args['text_color']['red'], self._args['text_color']['green'], self._args['text_color']['blue']),
             self._labels_thickness,
             cv2.LINE_AA
         )
 
-        self._viewer.image_buffer = self._curr_frame_copy  # Отправка изображения в буфер
+        self._viewer.image_buffer = self._curr_frame  # Отправка изображения в буфер
 
         return True
 
