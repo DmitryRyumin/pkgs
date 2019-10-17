@@ -330,20 +330,30 @@ class Run(Messages):
         return True
 
     # Автоматическая проверка конфигурационного файла в момент работы программы
-    def _update_config_json(self):
+    def _update_config_json(self, set_window_name = True):
         """
         Автоматическая проверка конфигурационного файла в момент работы программы
 
-        () -> None
+        ([bool]) -> bool
 
-        Возвращает: None
+        Аргументы:
+            set_window_name - Установка имени окна
+
+        Возвращает: True если аргументы переданы верно, в обратном случае False
         """
+
+        # Проверка аргументов
+        if type(set_window_name) is not bool:
+            return False
 
         # Автоматическая проверка конфигурационного файла в момент работы программы
         if self._args['automatic_update'] is True and self._frames_to_update % self._args['frames_to_update'] is 0:
             self._frames_to_update = 0  # Сброс счетчика автоматической проверки конфигурационного файла
 
-            curr_window_name = self._args['window_name']  # Текущее значение имени окна
+            # Установка имени окна
+            if set_window_name is True:
+                curr_window_name = self._args['window_name']  # Текущее значение имени окна
+
             curr_resize = self._args['resize']  # Текущее значение размеров окна
 
             # Загрузка и проверка конфигурационного файла не прошла
@@ -356,8 +366,8 @@ class Run(Messages):
                 # Необходимые значения в конфигурационном файле найдены в момент работы программы
                 self._automatic_update['invalid_config_file'] = False
 
-                # Имя окна было изменено
-                if curr_window_name != self._args['window_name']:
+                # Установка имени окна и имя окна было изменено
+                if set_window_name is True and curr_window_name != self._args['window_name']:
                     self._viewer.set_window_name(self._args['window_name'])  # Установка имени окна
 
                 # Ширина и высота нулевые
@@ -375,6 +385,8 @@ class Run(Messages):
 
         # Увеличение счетчика автоматической проверки конфигурационного файла в момент работы программ
         self._frames_to_update += 1
+
+        return True
 
     # Захват фото/видеоданных
     def _grab_data(self, out = True):
