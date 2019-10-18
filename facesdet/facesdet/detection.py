@@ -8,10 +8,11 @@
 # ######################################################################################################################
 # Импорт необходимых инструментов
 # ######################################################################################################################
-import os           # Работа с файловой системой
-import numpy as np  # Научные вычисления
-import cv2          # Алгоритмы компьютерного зрения
-import dlib         # Распознавание лиц
+import os             # Работа с файловой системой
+import numpy as np    # Научные вычисления
+import cv2            # Алгоритмы компьютерного зрения
+import dlib           # Распознавание лиц
+import pkg_resources  # Работа с ресурсами внутри пакетов
 
 from datetime import datetime  # Работа со временем
 
@@ -69,7 +70,7 @@ class Detection(Messages):
 
         self._dnn = ('tf', 'caffe')  # Модели нейронной сети
 
-        # Названия методов
+        # Данные методов
         self._packages_functions = {
             'opencv_haar': {
                 'ru': 'Поиск лиц с помощью метода Виолы-Джонса в OpenCV',
@@ -89,11 +90,33 @@ class Detection(Messages):
             }
         }
 
+        # Названия моделей и их конфигурационных файлов
+        self._path_to_files_models = {
+            'opencv_haar': {
+                'path_to_model': 'haarcascade_frontalface_default.xml'
+            },
+            'opencv_dnn': {
+                'tf': {
+                    'path_to_model': 'opencv_face_detector_uint8.pb',
+                    'path_to_config_model': 'opencv_face_detector.pbtxt'
+                },
+                'caffe': {
+                    'path_to_model': 'res10_300x300_ssd_iter_140000_fp16.caffemodel',
+                    'path_to_config_model': 'deploy.prototxt'
+                }
+            },
+            'dlib_cnn': {
+                'path_to_model': 'mmod_human_face_detector.dat',
+            }
+        }
+
         self._model = None  # Модель
 
         self._file_manager = FileManager()  # Работа с файлами
 
         self.rectangle_color = rectangle_color  # Цвет рамки прямоугольника с лицами
+
+        self._path_to_models = pkg_resources.resource_filename('facesdet', 'models')  # Путь к моделям
 
     # ------------------------------------------------------------------------------------------------------------------
     # Свойства
@@ -201,7 +224,7 @@ class Detection(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     # Загрузка модели для метода Виолы-Джонса в OpenCV
-    def load_model_opencv_haar(self, path_to_model, out = True):
+    def load_model_opencv_haar(self, path_to_model = None, out = True):
         """
         Загрузка модели для метода Виолы-Джонса в OpenCV
 
@@ -213,6 +236,11 @@ class Detection(Messages):
 
         Возвращает: True если модель загружена, в обратном случае False
         """
+
+        # Путь к модели по умолчанию
+        if path_to_model is None:
+            path_to_model = self._path_to_models + '/haarcascades/'\
+                            + self._path_to_files_models['opencv_haar']['path_to_model']
 
         # Проверка аргументов
         if type(path_to_model) is not str or not path_to_model or type(out) is not bool:
@@ -226,7 +254,7 @@ class Detection(Messages):
             return False
 
         # Файл модели не найден
-        if self._file_manager.search(path_to_model, self._required_extension_models[0], False, out) is False:
+        if self._file_manager.search_file(path_to_model, self._required_extension_models[0], False, out) is False:
             return False
 
         # Вывод сообщения
@@ -253,7 +281,7 @@ class Detection(Messages):
         return True
 
     # Загрузка модели для глубокого обучения в OpenCV
-    def load_model_opencv_dnn(self, path_to_model, path_to_config_model, dnn, out = True):
+    def load_model_opencv_dnn(self, path_to_model = None, path_to_config_model = None, dnn = 'tf', out = True):
         """
         Загрузка модели для метода Виолы-Джонса в OpenCV
 
@@ -267,6 +295,16 @@ class Detection(Messages):
 
         Возвращает: True если модель загружена, в обратном случае False
         """
+
+        none = 'DL'  # Замена None
+
+        # Путь к модели по умолчанию
+        if path_to_model is None:
+            path_to_model = none
+
+        # Путь к конфигурационному файлу модели по умолчанию
+        if path_to_config_model is None:
+            path_to_config_model = none
 
         # Проверка аргументов
         if type(path_to_model) is not str or not path_to_model or type(path_to_config_model) is not str \
@@ -283,6 +321,15 @@ class Detection(Messages):
         # Модель нейронной сети не совпадает с необходимыми
         if dnn not in self._dnn:
             return False
+
+        # Путь к модели по умолчанию
+        if path_to_model is none:
+            path_to_model = self._path_to_models + '/' + self._path_to_files_models['opencv_dnn'][dnn]['path_to_model']
+
+        # Путь к конфигурационному файлу модели по умолчанию
+        if path_to_config_model is none:
+            path_to_config_model = self._path_to_models + '/' \
+                                   + self._path_to_files_models['opencv_dnn'][dnn]['path_to_config_model']
 
         required_extension_model = None  # Необходимое расширения файла модели
         required_extension_config_model = None  # Необходимое расширения конфигурационного файла модели
@@ -304,11 +351,11 @@ class Detection(Messages):
             required_extension_config_model = self._required_extension_models[3]
 
         # Файл модели не найден
-        if self._file_manager.search(path_to_model, required_extension_model, False, out) is False:
+        if self._file_manager.search_file(path_to_model, required_extension_model, False, out) is False:
             return False
 
         # Конфигурационный файл модели не найден
-        if self._file_manager.search(path_to_config_model, required_extension_config_model, False, out) is False:
+        if self._file_manager.search_file(path_to_config_model, required_extension_config_model, False, out) is False:
             return False
 
         # Вывод сообщения
@@ -382,7 +429,7 @@ class Detection(Messages):
         return True
 
     # Загрузка модели для Convolutional Neural Network в Dlib
-    def load_model_dlib_cnn(self, path_to_model, out = True):
+    def load_model_dlib_cnn(self, path_to_model = None, out = True):
         """
         Загрузка модели для метода Виолы-Джонса в OpenCV
 
@@ -394,6 +441,10 @@ class Detection(Messages):
 
         Возвращает: True если модель загружена, в обратном случае False
         """
+
+        # Путь к модели по умолчанию
+        if path_to_model is None:
+            path_to_model = self._path_to_models + '/' + self._path_to_files_models['dlib_cnn']['path_to_model']
 
         # Проверка аргументов
         if type(path_to_model) is not str or not path_to_model or type(out) is not bool:
@@ -407,7 +458,7 @@ class Detection(Messages):
             return False
 
         # Файл модели не найден
-        if self._file_manager.search(path_to_model, self._required_extension_models[5], False, out) is False:
+        if self._file_manager.search_file(path_to_model, self._required_extension_models[5], False, out) is False:
             return False
 
         # Вывод сообщения
@@ -577,7 +628,7 @@ class Detection(Messages):
 
         frame_clone = frame.copy()  # Копирование изображения
         frame_height = frame_clone.shape[0]  # Высота изображения
-        frame_width = frame_clone.shape[1]  # Ширина изображения
+        frame_width = frame_clone.shape[1]  # Ширина изображенияs
 
         # Параметр ширины не указан
         if not width:

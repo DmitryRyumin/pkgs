@@ -3,9 +3,9 @@ from setuptools import setup, find_packages
 import facesdet
 
 REQUIRED_PACKAGES = [
-    'pvv >= 19.10.4.1',
+    'pvv >= 19.10.17.1',
     'numpy >= 1.17.2',
-    'dlib >= 19.18.0',
+    'dlib >= 19.18.0'
 ]
 
 with open('README.md', 'r') as fh:
@@ -50,6 +50,7 @@ with open('README.md', 'r') as fh:
         python_requires = '>=3.7',
         entry_points = {
             'console_scripts': [
+                'facesdet_play = facesdet.samples.detection:main',
             ],
         },
     )

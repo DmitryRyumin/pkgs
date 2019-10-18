@@ -1,0 +1,3 @@
+include facesdet/configs/*.json
+include facesdet/models/*
+include facesdet/models/haarcascades/*
