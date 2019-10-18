@@ -45,8 +45,8 @@ pip install --upgrade facesdet
 | metadata | bool | Вывод метаданных | - |
 | window_name | str | Имя окна | - |
 | method | str | Метод детекции лиц | `opencv_haar`<br>`opencv_dnn`<br>`dlib_hog`<br>`dlib_cnn` |
-| min_neighbors<br>`"method" = opencv_haar` | int | Количество соседей для каждого прямоугольника | - |
-| dnn<br>`"method" = opencv_dnn` | str | Тип нейронной сети | `tf`<br>`caffe` |
+| min_neighbors | int | Количество соседей для каждого прямоугольника<br>`"method" = opencv_haar` | - |
+| dnn | str | Тип нейронной сети<br>`"method" = opencv_dnn` | `tf`<br>`caffe` |
 | size | dict | Размер изображения для масштабирования | - |
 | resize | dict | Размер окна для масштабирования | - |
 | text_color | dict | Цвет текстов | От `0` до `255` |
@@ -55,5 +55,5 @@ pip install --upgrade facesdet
 | label_scale | float | Коэффициент масштабирования шрифта | От `0.0` до `2.0` |
 | clear_image_buffer | bool | Очистка буфера с изображением | - |
 | real_time | bool | Воспроизведение фото/видеопотока с реальным количеством FPS | - |
-| conf_threshold<br>`"method" = opencv_dnn` | float | Доверительный порог детекции лиц | - |
-| draw_precent<br>`"method" = opencv_dnn` | bool | Рисование на изображении процентов для каждого детектированного лица | - |
+| conf_threshold | float | Доверительный порог детекции лиц<br>`"method" = opencv_dnn` | - |
+| draw_precent | bool | Рисование на изображении процентов для каждого детектированного лица<br>`"method" = opencv_dnn` | - |
