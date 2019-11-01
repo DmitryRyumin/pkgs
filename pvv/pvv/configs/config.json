@@ -16,6 +16,12 @@
         "blue": 255
     },
     "labels_scale": 1.05,
-    "clear_image_buffer": false,
-    "real_time": true
+    "labels_thickness": 1,
+    "labels_base_coords": {
+        "left": 10,
+        "top": 10
+    },
+    "labels_padding": 10,
+    "clear_image_buffer": true,
+    "real_time": false
 }

@@ -86,11 +86,6 @@ class Run(Messages):
         self._supported_photo_formats = ('png', 'jpg')
 
         self._labels_font = cv2.FONT_HERSHEY_SIMPLEX  # Шрифт
-        self._labels_thickness = 1  # Толщина линии шрифта
-
-        self._labels_base_coords = (10, 10)  # Базовые координаты текстов
-        self._labels_padding = 10  # Внутренний отступ для текстов
-        self._labels_distance = 10  # Расстояние между текстами
 
         self._fps_point1 = (0, 0)  # Верхняя левая точка прямоугольника
         self._fps_point2 = (0, 0)  # Нижняя правая точка прямоугольника
@@ -183,7 +178,7 @@ class Run(Messages):
         if out is True:
             print(self._check_config_file_valid.format(datetime.now().strftime(self._format_time)))
 
-        all_layer = 8  # Общее количество разделов
+        all_layer = 11  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
@@ -261,7 +256,46 @@ class Run(Messages):
             # Коэффициент масштабирования шрифта, который умножается на размер шрифта
             if key == 'labels_scale':
                 # Проверка значения
-                if type(val) is not float or val < 0.0 or val > 2.0:
+                if type(val) is not float or val <= 0.0 or val > 2.0:
+                    continue
+
+                curr_valid_layer += 1
+
+            # Толщина линии шрифта
+            if key == 'labels_thickness':
+                # Проверка значения
+                if type(val) is not int or val <= 0 or val > 4:
+                    continue
+
+                curr_valid_layer += 1
+
+            # Базовые координаты текстов
+            if key == 'labels_base_coords':
+                all_layer_2 = 2  # Общее количество подразделов в текущем разделе
+                curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+
+                # Проверка значения
+                if type(val) is not dict or len(val) is 0:
+                    continue
+
+                # Проход по всем подразделам текущего раздела
+                for k, v in val.items():
+                    # Проверка значения
+                    if type(v) is not int or v < 0 or v > 100:
+                        continue
+
+                    # 1. Лево
+                    # 2. Вверх
+                    if k == 'left' or k == 'top':
+                        curr_valid_layer_2 += 1
+
+                if all_layer_2 == curr_valid_layer_2:
+                    curr_valid_layer += 1
+
+            # Внутренний отступ для текстов
+            if key == 'labels_padding':
+                # Проверка значения
+                if type(val) is not int or val < 0 or val > 30:
                     continue
 
                 curr_valid_layer += 1
@@ -567,15 +601,15 @@ class Run(Messages):
         # Процесс нанесения информации на изображение
         # Размеры текста
         labels_size = cv2.getTextSize(
-            label_fps, self._labels_font, self._args['labels_scale'], self._labels_thickness
+            label_fps, self._labels_font, self._args['labels_scale'], self._args['labels_thickness']
         )[0]
 
         # Верхняя левая точка прямоугольника
-        self._fps_point1 = (self._labels_base_coords[0], self._labels_base_coords[1])
+        self._fps_point1 = (self._args['labels_base_coords']['left'], self._args['labels_base_coords']['top'])
         # Нижняя правая точка прямоугольника
         self._fps_point2 = (
-            self._labels_base_coords[0] + labels_size[0] + self._labels_padding * 2,
-            self._labels_base_coords[1] + labels_size[1] + self._labels_padding * 2
+            self._args['labels_base_coords']['left'] + labels_size[0] + self._args['labels_padding'] * 2,
+            self._args['labels_base_coords']['top'] + labels_size[1] + self._args['labels_padding'] * 2
         )
 
         # Рисование прямоугольной области в виде фона текста на изображении
@@ -593,11 +627,12 @@ class Run(Messages):
 
         # Нанесение FPS на кадр
         cv2.putText(
-            self._curr_frame, label_fps, (self._labels_base_coords[0] + self._labels_padding,
-                                          self._labels_base_coords[1] + self._labels_padding + labels_size[1]),
+            self._curr_frame, label_fps, (self._args['labels_base_coords']['left'] + self._args['labels_padding'],
+                                          self._args['labels_base_coords']['top']
+                                          + self._args['labels_padding'] + labels_size[1]),
             self._labels_font, self._args['labels_scale'],
             (self._args['text_color']['red'], self._args['text_color']['green'], self._args['text_color']['blue']),
-            self._labels_thickness,
+            self._args['labels_thickness'],
             cv2.LINE_AA
         )
 
