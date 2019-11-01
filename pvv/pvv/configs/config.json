@@ -22,6 +22,6 @@
         "top": 10
     },
     "labels_padding": 10,
-    "clear_image_buffer": true,
-    "real_time": false
+    "clear_image_buffer": false,
+    "real_time": true
 }

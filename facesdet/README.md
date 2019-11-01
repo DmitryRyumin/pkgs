@@ -24,7 +24,7 @@ pip install --upgrade facesdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `19.10.17.1` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`pvv` | `19.11.1.1` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.17.2` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
 `dlib` | `19.18.0` | ![PyPI](https://img.shields.io/pypi/v/dlib) |
 
@@ -52,7 +52,11 @@ pip install --upgrade facesdet
 | text_color | dict | Цвет текстов | От `0` до `255` |
 | background_color | dict | Цвет фона текстов | От `0` до `255` |
 | rectangle_color | dict | Цвет рамки прямоугольника с лицами | От `0` до `255` |
-| label_scale | float | Коэффициент масштабирования шрифта | От `0.0` до `2.0` |
+| label_scale | float | Коэффициент масштабирования шрифта | От `>0.0` до `2.0` |
+| labels_thickness | int | Толщина линии шрифта | От `1` до `4` |
+| labels_base_coords | int | Начальные координаты текстов | От `0` до `100` |
+| labels_padding | int | Внутренний отступ для текстов | От `0` до `30` |
+| labels_distance | int | Расстояние между текстами | От `0` до `50` |
 | clear_image_buffer | bool | Очистка буфера с изображением | - |
 | real_time | bool | Воспроизведение фото/видеопотока с реальным количеством FPS | - |
 | conf_threshold | float | Доверительный порог детекции лиц<br>`"method" = opencv_dnn` | - |

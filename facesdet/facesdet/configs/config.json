@@ -5,8 +5,8 @@
     "min_neighbors" : 3,
     "dnn" : "caffe",
     "size" : {
-        "width": 300,
-        "height": 300
+        "width": 0,
+        "height": 0
     },
     "resize" : {
         "width": 0,
@@ -28,6 +28,13 @@
         "blue": 0
     },
     "labels_scale": 0.65,
+    "labels_thickness": 1,
+    "labels_base_coords": {
+        "left": 10,
+        "top": 10
+    },
+    "labels_padding": 10,
+    "labels_distance": 10,
     "clear_image_buffer": true,
     "real_time": false,
     "conf_threshold" : 0.7,

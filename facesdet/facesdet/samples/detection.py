@@ -95,7 +95,7 @@ class Run(Messages):
         if super()._valid_json_config(config, out) is False:
             return False
 
-        all_layer = 7  # Общее количество разделов
+        all_layer = 8  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
@@ -234,6 +234,14 @@ class Run(Messages):
 
                 if all_layer_2 == curr_valid_layer_2:
                     curr_valid_layer += 1
+
+            # Расстояние между текстами
+            if key == 'labels_distance':
+                # Проверка значения
+                if type(val) is not int or val < 0 or val > 50:
+                    continue
+
+                curr_valid_layer += 1
 
         # Сравнение общего количества разделов и валидных разделов в конфигурационном файле
         if all_layer != curr_valid_layer:
@@ -405,20 +413,20 @@ class Run(Messages):
         # Процесс нанесения информации на изображение
         # Размеры текста
         labels_size = cv2.getTextSize(
-            label_faces, self._labels_font, self._args['labels_scale'], self._labels_thickness
+            label_faces, self._labels_font, self._args['labels_scale'], self._args['labels_thickness']
         )[0]
 
         # Нижняя правая точка прямоугольника
         self._faces_point2 = (
-            self._labels_base_coords[0] + labels_size[0] + self._labels_padding * 2,
-            self._fps_point2[1] + self._labels_distance + labels_size[1] + self._labels_padding * 2
+            self._args['labels_base_coords']['left'] + labels_size[0] + self._args['labels_padding'] * 2,
+            self._fps_point2[1] + self._args['labels_distance'] + labels_size[1] + self._args['labels_padding'] * 2
         )
 
         # Рисование прямоугольной области в виде фона текста на изображении
         cv2.rectangle(
             self._curr_frame,  # Исходная копия изображения
             # Верхняя левая точка прямоугольника
-            (self._fps_point1[0], self._fps_point2[1] + self._labels_distance),
+            (self._fps_point1[0], self._fps_point2[1] + self._args['labels_distance']),
             # Нижняя правая точка прямоугольника
             self._faces_point2,
             # Цвет прямоугольника
@@ -432,11 +440,11 @@ class Run(Messages):
         # Нанесение количества найденных лиц на кадр
         cv2.putText(
             self._curr_frame, label_faces,
-            (self._labels_base_coords[0] + self._labels_padding,
-             self._fps_point2[1] + self._labels_distance + labels_size[1] + self._labels_padding),
+            (self._args['labels_base_coords']['left'] + self._args['labels_padding'],
+             self._fps_point2[1] + self._args['labels_distance'] + labels_size[1] + self._args['labels_padding']),
             self._labels_font, self._args['labels_scale'],
             (self._args['text_color']['red'], self._args['text_color']['green'], self._args['text_color']['blue']),
-            self._labels_thickness,
+            self._args['labels_thickness'],
             cv2.LINE_AA
         )
 
