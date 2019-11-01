@@ -8,8 +8,9 @@
 # ######################################################################################################################
 # Импорт необходимых инструментов
 # ######################################################################################################################
-import time       # Работа со временем
-import threading  # Многопоточность
+import time         # Работа со временем
+import threading    # Многопоточность
+import cv2          # Алгоритмы компьютерного зрения
 
 from datetime import datetime  # Работа со временем
 from OpenGL import GL, GLUT    # Работа с графикой
@@ -306,6 +307,58 @@ class Viewer(Messages):
     # ------------------------------------------------------------------------------------------------------------------
     # Внешние методы
     # ------------------------------------------------------------------------------------------------------------------
+
+    # Изменение размеров изображения
+    def resize_frame(self, width, height, out = True):
+        """
+        Изменение размеров изображения
+
+        (int, int [, bool]) -> tuple
+
+        Аргументы:
+            width  - Ширина изображения для масштабирования
+            height - Высота изображения для масштабирования
+            out    - Печатать процесс выполнения
+
+        Возвращает кортеж:
+            1. Масштабированное изображение
+            2. Во сколько раз масштабировалось изображение по ширине
+            3. Во сколько раз масштабировалось изображение по высоте
+        """
+
+        # Проверка аргументов
+        if type(height) is not int or height < 0 or type(width) is not int or width < 0 or type(out) is not bool:
+            # Вывод сообщения
+            if out is True:
+                print(self._invalid_arguments.format(
+                    self.red, datetime.now().strftime(self._format_time), self.end,
+                    __class__.__name__ + '.' + self.resize_frame.__name__
+                ))
+
+            return None
+
+        frame_clone = self.image_buffer.copy()  # Копирование изображения
+
+        frame_width = frame_clone.shape[1]  # Ширина изображения
+        frame_height = frame_clone.shape[0]  # Высота изображения
+
+        # Ширина изображения нулевая
+        if not width:
+            width = frame_width
+
+        # Высота изображения нулевая
+        if not height:
+            height = int(frame_height * width / frame_width)  # Масштабирование ширины относительно изначальной ширины
+
+        # Получение значений во сколько раз масштабировалось изображение меньше/больше исходного изображения
+        scale_width = frame_width / width  # Ширина
+        scale_height = frame_height / height  # Высота
+
+        # Изменение размера изображения
+        frame_resize = cv2.resize(frame_clone, (width, height), interpolation = cv2.INTER_LINEAR)
+
+        # Результат
+        return frame_resize, scale_width, scale_height
 
     # Циклическое извлечение изображений
     def set_loop(self, func):
