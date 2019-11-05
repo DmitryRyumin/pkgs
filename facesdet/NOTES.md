@@ -1,6 +1,18 @@
 # Поиск лиц
 
-## 1 ноября 2019 года
+## 5 ноября 2019 года
+
+> `19.11.5.0`
+
+<h4><span style="color:#008000;">Что нового</span></h4>
+
+- В конфигурационный файл добавлены следующие параметры: `rectangle_thickness`, `precent_scale`, `precent_thickness`, `precent_text_color`, `precent_background_color`, `precent_padding`, `precent_margin_bottom`
+
+<h4><span style="color:#DB534F;">Исправления</span></h4>
+
+- Исправлены мелкие ошибки
+
+## ~~1 ноября 2019 года~~
 
 > `19.11.1.0`
 

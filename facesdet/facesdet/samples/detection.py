@@ -95,7 +95,7 @@ class Run(Messages):
         if super()._valid_json_config(config, out) is False:
             return False
 
-        all_layer = 8  # Общее количество разделов
+        all_layer = 15  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
@@ -114,7 +114,13 @@ class Run(Messages):
                     #     1. Тип нейронной сети
                     #     2. Доверительный порог поиска лица
                     #     3. Рисование на изображении процентов для каждого найденного лица
-                    all_layer -= 3
+                    #     4. Коэффициент масштабирования шрифта (проценты)
+                    #     5. Толщина линии шрифта (проценты)
+                    #     6. Цвет текста процентов
+                    #     7. Цвет фона процентов
+                    #     8. Внутренний отступ для процентов
+                    #     9. Внешний нижний отступ для процентов
+                    all_layer -= 9
 
                 # Поиск лиц с помощью глубокого обучения в OpenCV
                 if val == 'opencv_dnn':
@@ -133,18 +139,30 @@ class Run(Messages):
                     #     2. Тип нейронной сети
                     #     3. Доверительный порог поиска лица
                     #     4. Рисование на изображении процентов для каждого найденного лица
-                    all_layer -= 4
+                    #     5. Коэффициент масштабирования шрифта (проценты)
+                    #     6. Толщина линии шрифта (проценты)
+                    #     7. Цвет текста процентов
+                    #     8. Цвет фона процентов
+                    #     9. Внутренний отступ для процентов
+                    #     10. Внешний нижний отступ для процентов
+                    all_layer -= 10
 
                 # Поиск лиц с помошью Convolutional Neural Network в Dlib
                 if val == 'dlib_cnn':
                     curr_valid_layer += 1
 
                     # Отсекаем:
-                    #     2. Количество соседей для каждого прямоугольника
-                    #     3. Тип нейронной сети
-                    #     4. Доверительный порог поиска лица
-                    #     5. Рисование на изображении процентов для каждого найденного лица
-                    all_layer -= 4
+                    #     1. Количество соседей для каждого прямоугольника
+                    #     2. Тип нейронной сети
+                    #     3. Доверительный порог поиска лица
+                    #     4. Рисование на изображении процентов для каждого найденного лица
+                    #     5. Коэффициент масштабирования шрифта (проценты)
+                    #     6. Толщина линии шрифта (проценты)
+                    #     7. Цвет текста процентов
+                    #     8. Цвет фона процентов
+                    #     9. Внутренний отступ для процентов
+                    #     10. Внешний нижний отступ для процентов
+                    all_layer -= 10
 
             # Размер изображения для масштабирования
             if key == 'size':
@@ -211,6 +229,56 @@ class Run(Messages):
 
                     curr_valid_layer += 1
 
+                # Коэффициент масштабирования шрифта (проценты), работает при "method" = opencv_dnn
+                if key == 'precent_scale':
+                    # Проверка значения
+                    if type(val) is not float or val <= 0.0 or val > 2.0:
+                        continue
+
+                    curr_valid_layer += 1
+
+                # Толщина линии шрифта (проценты)
+                if key == 'precent_thickness':
+                    # Проверка значения
+                    if type(val) is not int or val <= 0 or val > 4:
+                        continue
+
+                    curr_valid_layer += 1
+
+                # 1. Цвет текста процентов
+                # 2. Цвет фона процентов
+                if key == 'precent_text_color' or key == 'precent_background_color':
+                    all_layer_2 = 3  # Общее количество подразделов в текущем разделе
+                    curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+
+                    # Проверка значения
+                    if type(val) is not dict or len(val) is 0:
+                        continue
+
+                    # Проход по всем подразделам текущего раздела
+                    for k, v in val.items():
+                        # Проверка значения
+                        if type(v) is not int or v < 0 or v > 255:
+                            continue
+
+                        # 1. Красный
+                        # 2. Зеленый
+                        # 3. Синий
+                        if k == 'red' or k == 'green' or k == 'blue':
+                            curr_valid_layer_2 += 1
+
+                    if all_layer_2 == curr_valid_layer_2:
+                        curr_valid_layer += 1
+
+                # 1. Внутренний отступ для процентов
+                # 2. Внешний нижний отступ для процентов
+                if key == 'precent_padding' or key == 'precent_margin_bottom':
+                    # Проверка значения
+                    if type(val) is not int or val < 0 or val > 30:
+                        continue
+
+                    curr_valid_layer += 1
+
             # Цвет рамки прямоугольника с лицами
             if key == 'rectangle_color':
                 all_layer_2 = 3  # Общее количество подразделов в текущем разделе
@@ -234,6 +302,14 @@ class Run(Messages):
 
                 if all_layer_2 == curr_valid_layer_2:
                     curr_valid_layer += 1
+
+            # Толщина рамки прямоугольника с лицами
+            if key == 'rectangle_thickness':
+                # Проверка значения
+                if type(val) is not int or val <= 0 or val > 10:
+                    continue
+
+                curr_valid_layer += 1
 
             # Расстояние между текстами
             if key == 'labels_distance':
@@ -353,6 +429,9 @@ class Run(Messages):
             self._args['rectangle_color']['blue']
         )
 
+        # Толщина рамки прямоугольника с лицами
+        self._detection.rectangle_thickness = self._args['rectangle_thickness']
+
         # Метод Виолы-Джонса в OpenCV
         if self._args['method'] == self._methods_data[0]:
             res_detection = self._detection.opencv_haar(
@@ -367,6 +446,24 @@ class Run(Messages):
 
         # Глубокое обучение в OpenCV
         if self._args['method'] == self._methods_data[1]:
+            self._detection.precent_scale = self._args['precent_scale']  # Коэффициент масштабирования шрифта (проценты)
+            self._detection.precent_thickness = self._args['precent_thickness']  # Толщина линии шрифта (проценты)
+            # Цвет текста процентов
+            self._detection.precent_text_color = (
+                self._args['precent_text_color']['red'],
+                self._args['precent_text_color']['green'],
+                self._args['precent_text_color']['blue']
+            )
+            # Цвет фона процентов
+            self._detection.precent_background_color = (
+                self._args['precent_background_color']['red'],
+                self._args['precent_background_color']['green'],
+                self._args['precent_background_color']['blue']
+            )
+            self._detection.precent_padding = self._args['precent_padding']  # Внутренний отступ для процентов
+            # Внешний нижний отступ для процентов
+            self._detection.precent_margin_bottom = self._args['precent_margin_bottom']
+
             res_detection = self._detection.opencv_dnn(
                 net = self._detection.model,
                 frame = self._curr_frame,

@@ -39,6 +39,7 @@ class Messages(cfg.Messages):
         self._face_not_found = '[{}{}{}] Лица не найдены ...'
         self._load_model = '[{}] Загрузка модели "{}" ...'
         self._model_not_load = '[{}{}{}] Модель "{}" не загружена ...'
+        self._precent = '{:.2f}%'
 
 
 # ######################################################################################################################
@@ -53,7 +54,14 @@ class Detection(Messages):
 
     def __init__(
             self,
-            rectangle_color = (0, 255, 0)  # Цвет рамки прямоугольника с лицами
+            rectangle_color = (0, 255, 0),           # Цвет рамки прямоугольника с лицами
+            rectangle_thickness = 2,                 # Толщина рамки прямоугольника с лицами
+            precent_scale = 0.45,                    # Коэффициент масштабирования шрифта с процентами
+            precent_thickness = 1,                   # Толщина линии шрифта (проценты)
+            precent_text_color = (255, 255, 255),    # Цвет текста процентов
+            precent_background_color = (0, 0, 255),  # Цвет фона процентов
+            precent_padding = 5,                     # Внутренний отступ для процентов
+            precent_margin_bottom = 5                # Внешний нижний отступ для процентов
     ):
         super().__init__()  # Выполнение конструктора из суперкласса
 
@@ -116,6 +124,15 @@ class Detection(Messages):
 
         self.rectangle_color = rectangle_color  # Цвет рамки прямоугольника с лицами
 
+        self.rectangle_thickness = rectangle_thickness  # Толщина рамки прямоугольника с лицами
+
+        self.precent_scale = precent_scale  # Коэффициент масштабирования шрифта с процентами
+        self.precent_thickness = precent_thickness  # Толщина линии шрифта (проценты)
+        self.precent_text_color = precent_text_color  # Цвет текста процентов
+        self.precent_background_color = precent_background_color  # Цвет фона процентов
+        self.precent_padding = precent_padding  # Внутренний отступ для процентов
+        self.precent_margin_bottom = precent_margin_bottom  # Внешний нижний отступ для процентов
+
         self._path_to_models = pkg_resources.resource_filename('facesdet', 'models')  # Путь к моделям
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -161,6 +178,76 @@ class Detection(Messages):
     @rectangle_color.setter
     def rectangle_color(self, color):
         self._rectangle_color = color
+
+    # Получение толщины рамки прямоугольника с лицами
+    @property
+    def rectangle_thickness(self):
+        return self._rectangle_thickness
+
+    # Установка толщины рамки прямоугольника с лицами
+    @rectangle_thickness.setter
+    def rectangle_thickness(self, thickness):
+        self._rectangle_thickness = thickness
+
+    # Получение коэффициента масштабирования шрифта с процентами
+    @property
+    def precent_scale(self):
+        return self._precent_scale
+
+    # Установка коэффициента масштабирования шрифта с процентами
+    @precent_scale.setter
+    def precent_scale(self, scale):
+        self._precent_scale = scale
+
+    # Получение толщины линии шрифта (проценты)
+    @property
+    def precent_thickness(self):
+        return self._precent_thickness
+
+    # Установка толщины линии шрифта (проценты)
+    @precent_thickness.setter
+    def precent_thickness(self, thickness):
+        self._precent_thickness = thickness
+
+    # Получение цвета текста процентов
+    @property
+    def precent_text_color(self):
+        return self._precent_text_color
+
+    # Установка цвета текста процентов
+    @precent_text_color.setter
+    def precent_text_color(self, color):
+        self._precent_text_color = color
+
+    # Получение цвета фона процентов
+    @property
+    def precent_background_color(self):
+        return self._precent_background_color
+
+    # Установка цвета фона процентов
+    @precent_background_color.setter
+    def precent_background_color(self, color):
+        self._precent_background_color = color
+
+    # Получение внутреннего отступа для процентов
+    @property
+    def precent_padding(self):
+        return self._precent_padding
+
+    # Установка внутреннего отступа для процентов
+    @precent_padding.setter
+    def precent_padding(self, padding):
+        self._precent_padding = padding
+
+    # Получение внешнего нижнего отступа для процентов
+    @property
+    def precent_margin_bottom(self):
+        return self._precent_margin_bottom
+
+    # Установка внешнего нижнего отступа для процентов
+    @precent_margin_bottom.setter
+    def precent_margin_bottom(self, margin_bottom):
+        self._precent_margin_bottom = margin_bottom
 
     # ------------------------------------------------------------------------------------------------------------------
     #  Внутренние методы
@@ -574,7 +661,7 @@ class Detection(Messages):
                     (rect[0], rect[1]),  # Верхняя левая точка прямоугольника
                     (rect[2], rect[3]),  # Нижняя правая точка прямоугольника
                     self.rectangle_color,  # Цвет прямоугольника
-                    2,  # Толщина рамки прямоугольника
+                    self.rectangle_thickness,  # Толщина рамки прямоугольника
                     cv2.LINE_4  # Тип линии
                 )
 
@@ -663,64 +750,56 @@ class Detection(Messages):
 
                 # Рисование прямоугольной области с лицом на изображении
                 if draw is True:
-                    border_thickness = 2  # Толщина рамки прямоугольника
-
                     cv2.rectangle(
                         frame_clone,  # Исходная копия изображения
                         (x1, y1),  # Верхняя левая точка прямоугольника
                         (x2, y2),  # Нижняя правая точка прямоугольника
                         self.rectangle_color,  # Цвет прямоугольника
-                        border_thickness,  # Толщина рамки прямоугольника
+                        self.rectangle_thickness,  # Толщина рамки прямоугольника
                         cv2.LINE_4  # Тип линии
                     )
 
                     # Рисование на изображении процентов для каждого найденного лица
                     if draw_precent is True:
-                        precent = '{:.2f}%'.format(confidence * 100)  # Процент лица
+                        label_face = self._precent.format(confidence * 100)  # Процент лица
 
                         labels_font = cv2.FONT_HERSHEY_SIMPLEX  # Шрифт
-                        labels_scale = 0.45  # Коэффициент масштабирования шрифта, который умножается на размер шрифта
-                        labels_thickness = 1  # Толщина линии шрифта
-                        text_color = (255, 255, 255)  # Цвет текста
-                        background_color = (0, 0, 255)  # Цвет фона текстов
-                        labels_padding = 5  # Внутренний отступ для текстов
 
                         # Размеры текста
-                        precent_size = cv2.getTextSize(precent, labels_font, labels_scale, labels_thickness)[0]
+                        precent_size = cv2.getTextSize(
+                            label_face, labels_font, self.precent_scale, self.precent_thickness
+                        )[0]
 
                         x = x1
-                        # Вычисление позиции текста относительно координаты "y"
-                        if y1 - precent_size[1] - labels_padding * 2 - border_thickness < 0:
-                            x = x2 + int(border_thickness * 2)
-                            y = y1 + precent_size[1] + labels_padding - int(border_thickness / 2)
-                        else:
-                            y = y1 - precent_size[1]
+
+                        y = y1 - self.rectangle_thickness - self.precent_margin_bottom
 
                         # Вычисление позиции текста относительно координаты "x"
-                        if x1 + precent_size[0] + labels_padding * 2 + border_thickness > frame_width:
-                            x = x1 - precent_size[0] - labels_padding * 2 - border_thickness
+                        if x1 + precent_size[0] + self.precent_padding * 2 + self.rectangle_thickness > frame_width:
+                            x = x1 - precent_size[0] - self.precent_padding * 2 - self.rectangle_thickness
 
                         # Базовые координаты текста
-                        labels_base_coords = (x + (labels_padding - int(border_thickness / 2)), y)
+                        labels_base_coords = (x + (self.precent_padding - int(self.rectangle_thickness / 2)),
+                                              y - self.precent_padding)
 
                         # Рисование прямоугольной области в виде фона текста на изображении
                         cv2.rectangle(
                             frame_clone,  # Исходная копия изображения
                             # Верхняя левая точка прямоугольника
-                            (labels_base_coords[0] - labels_padding,
-                             labels_base_coords[1] - labels_padding - precent_size[1]),
+                            (labels_base_coords[0] - self.precent_padding,
+                             labels_base_coords[1] - self.precent_padding - precent_size[1]),
                             # Нижняя правая точка прямоугольника
-                            (labels_base_coords[0] + precent_size[0] + labels_padding,
-                             labels_base_coords[1] + labels_padding),
-                            background_color,  # Цвет прямоугольника
+                            (labels_base_coords[0] + precent_size[0] + self.precent_padding,
+                             labels_base_coords[1] + self.precent_padding),
+                            self.precent_background_color,  # Цвет прямоугольника
                             cv2.FILLED,  # Толщина рамки прямоугольника
                             cv2.LINE_AA  # Тип линии
                         )
 
                         # Нанесение процентов на кадр
                         cv2.putText(
-                            frame_clone, precent, labels_base_coords, labels_font, labels_scale, text_color,
-                            labels_thickness, cv2.LINE_AA
+                            frame_clone, label_face, labels_base_coords, labels_font, self.precent_scale,
+                            self.precent_text_color, self.precent_thickness, cv2.LINE_AA
                         )
 
         # Вывод сообщения
@@ -804,14 +883,12 @@ class Detection(Messages):
 
             # Рисование прямоугольной области с лицом на изображении
             if draw is True:
-                border_thickness = 2  # Толщина рамки прямоугольника
-
                 cv2.rectangle(
                     frame_clone,  # Исходная копия изображения
                     (rect[0], rect[1]),  # Верхняя левая точка прямоугольника
                     (rect[2], rect[3]),  # Нижняя правая точка прямоугольника
                     self.rectangle_color,  # Цвет прямоугольника
-                    border_thickness,  # Толщина рамки прямоугольника
+                    self.rectangle_thickness,  # Толщина рамки прямоугольника
                     cv2.LINE_4  # Тип линии
                 )
 
@@ -896,14 +973,12 @@ class Detection(Messages):
 
             # Рисование прямоугольной области с лицом на изображении
             if draw is True:
-                border_thickness = 2  # Толщина рамки прямоугольника
-
                 cv2.rectangle(
                     frame_clone,  # Исходная копия изображения
                     (rect[0], rect[1]),  # Верхняя левая точка прямоугольника
                     (rect[2], rect[3]),  # Нижняя правая точка прямоугольника
                     self.rectangle_color,  # Цвет прямоугольника
-                    border_thickness,  # Толщина рамки прямоугольника
+                    self.rectangle_thickness,  # Толщина рамки прямоугольника
                     cv2.LINE_4  # Тип линии
                 )
 

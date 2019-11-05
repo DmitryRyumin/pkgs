@@ -52,6 +52,7 @@ pip install --upgrade facesdet
 | text_color | dict | Цвет текстов | От `0` до `255` |
 | background_color | dict | Цвет фона текстов | От `0` до `255` |
 | rectangle_color | dict | Цвет рамки прямоугольника с лицами | От `0` до `255` |
+| rectangle_thickness | int | Толщина рамки прямоугольника с лицами | От `1` до `10` |
 | label_scale | float | Коэффициент масштабирования шрифта | От `>0.0` до `2.0` |
 | labels_thickness | int | Толщина линии шрифта | От `1` до `4` |
 | labels_base_coords | int | Начальные координаты текстов | От `0` до `100` |
@@ -59,5 +60,11 @@ pip install --upgrade facesdet
 | labels_distance | int | Расстояние между текстами | От `0` до `50` |
 | clear_image_buffer | bool | Очистка буфера с изображением | - |
 | real_time | bool | Воспроизведение фото/видеопотока с реальным количеством FPS | - |
-| conf_threshold | float | Доверительный порог детекции лиц<br>`"method" = opencv_dnn` | - |
+| conf_threshold | float | Доверительный порог детекции лиц<br>`"method" = opencv_dnn` | От `0.0` до `1.0` |
 | draw_precent | bool | Рисование на изображении процентов для каждого детектированного лица<br>`"method" = opencv_dnn` | - |
+| precent_scale | float | Коэффициент масштабирования шрифта (проценты)<br>`"method" = opencv_dnn` | От `>0.0` до `2.0` |
+| precent_thickness | int | Толщина линии шрифта (проценты)<br>`"method" = opencv_dnn` | От `1` до `4` |
+| precent_text_color | dict | Цвет текста процентов<br>`"method" = opencv_dnn` | От `0` до `255` |
+| precent_background_color | dict | Цвет фона процентов<br>`"method" = opencv_dnn` | От `0` до `255` |
+| precent_padding | int | Внутренний отступ для процентов<br>`"method" = opencv_dnn` | От `0` до `30` |
+| precent_margin_bottom | int | Внешний нижний отступ для процентов<br>`"method" = opencv_dnn` | От `0` до `30` |
