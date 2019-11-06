@@ -11,9 +11,9 @@ python pvv/samples/play.py --file путь_к_фото_видео_файлу [--
 # ######################################################################################################################
 # Импорт необходимых инструментов
 # ######################################################################################################################
-import os        # Работа с файловой системой
-import time      # Работа со временем
-import cv2       # Алгоритмы компьютерного зрения
+import os    # Работа с файловой системой
+import time  # Работа со временем
+import cv2   # Алгоритмы компьютерного зрения
 
 from datetime import datetime                           # Работа со временем
 from types import ModuleType, FunctionType, MethodType  # Проверка объектов на модуль, метод, функцию
@@ -555,7 +555,8 @@ class Run(Messages):
 
         start_time = time.time()  # Отсчет времени выполнения
 
-        self._update_config_json()  # Автоматическая проверка конфигурационного файла в момент работы программы
+        # Автоматическая проверка конфигурационного файла в момент работы программы
+        res_update_config_json = self._update_config_json()
 
         # Блокировка отображения повторных раз фото
         if self._frame_count > 1 and self._source == self._formats_data[2] and self._viewer.clear_image_buffer is False:
@@ -577,7 +578,8 @@ class Run(Messages):
         self._curr_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
 
         # Выполнение функции/метода
-        if func is not None and (type(func) is MethodType or type(func) is FunctionType):
+        if func is not None and (type(func) is MethodType or type(func) is FunctionType) and res_update_config_json \
+                is True:
             func()  # Выполнение операций над изображением
 
         # Принудительная задержка для воспроизведения видеопотока с реальным количеством FPS
