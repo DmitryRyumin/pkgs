@@ -57,6 +57,8 @@ class Messages(core.Core):
         self._config_empty = '[{}{}{}]  Файл пуст ...'
         self._check_config_file_valid = '[{}] Проверка данных на валидность ...'
 
+        self._check_config_file_not_valid = 'Error in config file ...'
+
 
 # ######################################################################################################################
 # Выполняем только в том случае, если файл запущен сам по себе
@@ -535,6 +537,48 @@ class Run(Messages):
 
         return True
 
+    # Нанесение уведомления на кадр
+    def _err_notification(self):
+        """
+        Нанесение уведомления на кадр
+        """
+
+        height = self._curr_frame.shape[0]  # Высота
+
+        # Размеры текста
+        labels_config_file_not_valid = cv2.getTextSize(
+            self._check_config_file_not_valid, self._labels_font, self._args['labels_scale'],
+            self._args['labels_thickness']
+        )[0]
+
+        padding = [5, round(10 * self._args['labels_scale'])]  # Внутренние отступы для уведомления
+
+        # Для символов нижнего регистра
+        if padding[1] < 12:
+            padding[1] = 12
+
+        # Рисование прямоугольной области в виде фона текста на изображении
+        cv2.rectangle(
+            self._curr_frame,  # Исходная копия изображения
+            (0, height - labels_config_file_not_valid[1] - padding[1] * 2),  # Верхняя левая точка
+            # прямоугольника
+            (labels_config_file_not_valid[0] + padding[0] * 2, height),  # Нижняя правая точка прямоугольника
+            # Цвет прямоугольника
+            (150, 0, 24),
+            cv2.FILLED,  # Толщина рамки прямоугольника
+            cv2.LINE_AA  # Тип линии
+        )
+
+        # Нанесение уведомления на кадр
+        cv2.putText(
+            self._curr_frame, self._check_config_file_not_valid,
+            (padding[0], height - padding[1]),
+            self._labels_font, self._args['labels_scale'],
+            (255, 255, 255),
+            1,
+            cv2.LINE_AA
+        )
+
     # Циклическое получение кадров из видеопотока
     def _loop(self, func = None, out = True):
         """
@@ -637,6 +681,10 @@ class Run(Messages):
             self._args['labels_thickness'],
             cv2.LINE_AA
         )
+
+        # Автоматическая проверка конфигурационного файла в момент работы программы произведена с ошибкой
+        if self._automatic_update['invalid_config_file'] == True or res_update_config_json is False:
+            self._err_notification()  # Нанесение уведомления на кадр
 
         self._viewer.image_buffer = self._curr_frame  # Отправка изображения в буфер
 

@@ -15,13 +15,13 @@
         "green": 255,
         "blue": 255
     },
-    "labels_scale": 1.05,
+    "labels_scale": 1.25,
     "labels_thickness": 1,
     "labels_base_coords": {
         "left": 10,
         "top": 10
     },
     "labels_padding": 10,
-    "clear_image_buffer": false,
-    "real_time": true
+    "clear_image_buffer": true,
+    "real_time": false
 }
