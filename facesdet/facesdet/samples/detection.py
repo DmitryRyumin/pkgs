@@ -359,6 +359,7 @@ class Run(Messages):
         if self._automatic_update['invalid_config_file'] is False:
             # 1. Метод был изменен
             # 2. Размер окна был изменен
+            # 3. Размеры изображения были изменены
             if curr_method != self._args['method'] or curr_dnn != self._args['dnn']\
                     or curr_size['width'] != self._args['size']['width']\
                     or curr_size['height'] != self._args['size']['height']:
