@@ -7,7 +7,7 @@ __title__ = 'facesdet'
 __summary__ = 'Поиск лиц'
 __uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/facesdet'
 
-__version__ = '19.11.7.1'
+__version__ = '19.11.7.2'
 
 __author__ = 'Dmitry Ryumin'
 __email__ = 'dl_03.03.1991@mail.ru'

@@ -5,7 +5,7 @@ import facesdet
 REQUIRED_PACKAGES = [
     'pvv >= 19.11.7.2',
     'numpy >= 1.17.2',
-    'dlib >= 19.18.0'
+    'dlib >= 19.17.0'
 ]
 
 with open('README.md', 'r') as fh:
