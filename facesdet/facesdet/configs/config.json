@@ -23,7 +23,7 @@
         "blue": 255
     },
     "rectangle_color" : {
-        "red": 0,
+        "red": 255,
         "green": 255,
         "blue": 0
     },

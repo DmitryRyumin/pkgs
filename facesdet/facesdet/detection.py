@@ -15,6 +15,7 @@ import dlib           # Распознавание лиц
 import pkg_resources  # Работа с ресурсами внутри пакетов
 
 from datetime import datetime  # Работа со временем
+from decimal import Decimal, ROUND_HALF_UP  # Округление по математическому закону
 
 # Персональные
 from core2pkgs import config as cfg         # Глобальный файл настроек
@@ -770,27 +771,32 @@ class Detection(Messages):
                             label_face, labels_font, self.precent_scale, self.precent_thickness
                         )[0]
 
-                        x = x1
+                        # Толщина рамки прямоугольника с объектами минимальная
+                        if self.rectangle_thickness == 1:
+                            rectangle_thickness = 0
+                            margin_bottom = 2  # Дополнительный отступ
+                        else:
+                            # Округление толщины рамки прямоугольника с объектами
+                            rectangle_thickness = int(
+                                Decimal(self.rectangle_thickness / 2).to_integral_value(rounding=ROUND_HALF_UP)
+                            )
+                            margin_bottom = 1  # Дополнительный отступ
 
-                        y = y1 - self.rectangle_thickness - self.precent_margin_bottom
-
-                        # Вычисление позиции текста относительно координаты "x"
-                        if x1 + precent_size[0] + self.precent_padding * 2 + self.rectangle_thickness > frame_width:
-                            x = x1 - precent_size[0] - self.precent_padding * 2 - self.rectangle_thickness
-
-                        # Базовые координаты текста
-                        labels_base_coords = (x + (self.precent_padding - int(self.rectangle_thickness / 2)),
-                                              y - self.precent_padding)
+                        # Верхняя левая точка прямоугольника
+                        labels_base_coords = (
+                            x1 - rectangle_thickness,
+                            y1 - rectangle_thickness - (self.precent_padding * 2) - self.precent_margin_bottom
+                            - precent_size[1] - margin_bottom
+                        )
 
                         # Рисование прямоугольной области в виде фона текста на изображении
                         cv2.rectangle(
                             frame_clone,  # Исходная копия изображения
                             # Верхняя левая точка прямоугольника
-                            (labels_base_coords[0] - self.precent_padding,
-                             labels_base_coords[1] - self.precent_padding - precent_size[1]),
+                            (labels_base_coords[0], labels_base_coords[1]),
                             # Нижняя правая точка прямоугольника
-                            (labels_base_coords[0] + precent_size[0] + self.precent_padding,
-                             labels_base_coords[1] + self.precent_padding),
+                            (labels_base_coords[0] + (self.precent_padding * 2) + precent_size[0],
+                             labels_base_coords[1] + (self.precent_padding * 2) + precent_size[1]),
                             self.precent_background_color,  # Цвет прямоугольника
                             cv2.FILLED,  # Толщина рамки прямоугольника
                             cv2.LINE_AA  # Тип линии
@@ -798,7 +804,11 @@ class Detection(Messages):
 
                         # Нанесение процентов на кадр
                         cv2.putText(
-                            frame_clone, label_face, labels_base_coords, labels_font, self.precent_scale,
+                            frame_clone, label_face,
+                            (x1 + self.precent_padding - rectangle_thickness,
+                             y1 - self.precent_margin_bottom - self.precent_padding - rectangle_thickness
+                             - margin_bottom),
+                            labels_font, self.precent_scale,
                             self.precent_text_color, self.precent_thickness, cv2.LINE_AA
                         )
 
