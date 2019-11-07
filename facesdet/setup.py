@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import facesdet
 
 REQUIRED_PACKAGES = [
-    'pvv >= 19.11.6.1',
+    'pvv >= 19.11.7.2',
     'numpy >= 1.17.2',
     'dlib >= 19.18.0'
 ]

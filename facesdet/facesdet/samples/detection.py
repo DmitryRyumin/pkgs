@@ -38,6 +38,8 @@ class Messages(play.Run):
 
         self._total_faces = 'Total found faces: {}'
 
+        self._check_load_model = 'Error loading model ...'
+
 
 # ######################################################################################################################
 # Выполняем только в том случае, если файл запущен сам по себе
@@ -377,9 +379,6 @@ class Run(Messages):
                     or curr_size['height'] != self._args['size']['height']:
                 # Загрузка модели
                 if self._load_model() is False:
-                    # Так как текущая модель не загружена, то используем старую модель
-                    self._args['method'] = curr_method
-
                     # Модель была загружена на прошлой проверке
                     if self._automatic_update['model_not_load'] is False:
                         # Модель не загружена в момент работы программы
@@ -559,24 +558,29 @@ class Run(Messages):
         )
 
     # Нанесение уведомления на кадр
-    def _err_notification(self, text, out=True):
+    def _err_notification(self, condition, text, out = True):
         """
         Нанесение уведомления на кадр
 
-        (str [, bool]) -> None
+        (str [, bool, bool]) -> None
 
         Аргументы:
-           text - Текст уведомления
-           out  - Печатать процесс выполнения
+           condition - Условие
+           text      - Текст уведомления если условие True
+           out       - Печатать процесс выполнения
 
         Возвращает: True если уведомление не применено, в обратном случае False
         """
 
         # Выполнение функции из суперкласса с отрицательным результатом
-        if super()._err_notification(text, out) is False:
+        if super()._err_notification(condition, text, out) is False:
             return False
 
+        # Выполнение функции из суперкласса с заданными параметрами и отрицательным результатом
+        if super()._err_notification(self._automatic_update['model_not_load'], self._check_load_model, out) is False:
+            return False
 
+        return True
 
     # Циклическое получение кадров из видеопотока
     def _loop(self, func = None, out = True):
