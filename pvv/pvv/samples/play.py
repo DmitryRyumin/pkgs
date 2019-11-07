@@ -538,21 +538,22 @@ class Run(Messages):
         return True
 
     # Нанесение уведомления на кадр
-    def _err_notification(self, text, out = True):
+    def _err_notification(self, condition, text, out = True):
         """
         Нанесение уведомления на кадр
 
-        (str [, bool]) -> None
+        (str [, bool, bool]) -> None
 
         Аргументы:
-           text - Текст уведомления
-           out  - Печатать процесс выполнения
+           condition - Условие
+           text      - Текст уведомления если условие True
+           out       - Печатать процесс выполнения
 
         Возвращает: True если уведомление не применено, в обратном случае False
         """
 
         # Проверка аргументов
-        if type(text) is not str or not text or type(out) is not bool:
+        if type(text) is not str or not text or type(out) is not bool or type(condition) is not bool:
             # Вывод сообщения
             if out is True:
                 print(self._invalid_arguments.format(
@@ -563,7 +564,7 @@ class Run(Messages):
             return False
 
         # Автоматическая проверка конфигурационного файла в момент работы программы произведена с ошибкой
-        if self._automatic_update['invalid_config_file'] is True:
+        if condition is True:
             height = self._curr_frame.shape[0]  # Высота
 
             # Размеры текста
@@ -707,7 +708,8 @@ class Run(Messages):
             cv2.LINE_AA
         )
 
-        self._err_notification(self._check_config_file_not_valid)  # Нанесение уведомления на кадр
+        # Нанесение уведомления на кадр
+        self._err_notification(self._automatic_update['invalid_config_file'], self._check_config_file_not_valid)
 
         self._viewer.image_buffer = self._curr_frame  # Отправка изображения в буфер
 

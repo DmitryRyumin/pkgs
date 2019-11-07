@@ -91,6 +91,18 @@ class Run(Messages):
 
     # Проверка JSON файла настроек на валидность
     def _valid_json_config(self, config, out = True):
+        """
+        Проверка настроек JSON на валидность
+
+        (dict [, bool]) -> bool
+
+        Аргументы:
+           config - Словарь из JSON файла
+           out    - Печатать процесс выполнения
+
+        Возвращает: True если файл валидный, в обратном случае False
+        """
+
         # Выполнение функции из суперкласса с отрицательным результатом
         if super()._valid_json_config(config, out) is False:
             return False
@@ -545,6 +557,26 @@ class Run(Messages):
             self._args['labels_thickness'],
             cv2.LINE_AA
         )
+
+    # Нанесение уведомления на кадр
+    def _err_notification(self, text, out=True):
+        """
+        Нанесение уведомления на кадр
+
+        (str [, bool]) -> None
+
+        Аргументы:
+           text - Текст уведомления
+           out  - Печатать процесс выполнения
+
+        Возвращает: True если уведомление не применено, в обратном случае False
+        """
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._err_notification(text, out) is False:
+            return False
+
+
 
     # Циклическое получение кадров из видеопотока
     def _loop(self, func = None, out = True):
