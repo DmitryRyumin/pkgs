@@ -1,0 +1,3 @@
+include objdet/configs/*.json
+include objdet/models/*
+include objdet/models/coco/*

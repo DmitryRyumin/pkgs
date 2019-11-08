@@ -1,0 +1,56 @@
+{
+    "metadata": true,
+    "window_name": "Objects detection",
+    "path_to_model": "frozen_inference_graph.pb",
+    "path_to_labels": "mscoco_label_map.pbtxt",
+    "size" : {
+        "width": 0,
+        "height": 0
+    },
+    "resize" : {
+        "width": 1280,
+        "height": 720
+    },
+    "text_color" : {
+        "red": 0,
+        "green": 0,
+        "blue": 0
+    },
+    "background_color" : {
+        "red": 255,
+        "green": 255,
+        "blue": 255
+    },
+    "rectangle_color" : {
+        "red": 0,
+        "green": 255,
+        "blue": 0
+    },
+    "rectangle_thickness": 3,
+    "labels_scale": 1.65,
+    "labels_thickness": 1,
+    "labels_base_coords": {
+        "left": 10,
+        "top": 10
+    },
+    "labels_padding": 10,
+    "labels_distance": 10,
+    "clear_image_buffer": true,
+    "real_time": false,
+    "conf_threshold" : 0.7,
+    "draw_precent" : true,
+    "object_scale": 1.15,
+    "object_thickness": 1,
+    "object_text_color" : {
+        "red": 255,
+        "green": 255,
+        "blue": 255
+    },
+    "object_background_color" : {
+        "red": 0,
+        "green": 0,
+        "blue": 255
+    },
+    "object_padding": 10,
+    "object_margin_bottom": 10
+}

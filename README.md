@@ -12,6 +12,7 @@
 | [filem](https://github.com/DmitryRyumin/pkgs/tree/master/filem) | Работа с файлами | ![PyPI](https://img.shields.io/pypi/v/filem) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/filem) | ![PyPI - License](https://img.shields.io/pypi/l/filem) |
 | [pvv](https://github.com/DmitryRyumin/pkgs/tree/master/pvv) | Воспроизведение фото/видео данных | ![PyPI](https://img.shields.io/pypi/v/pvv) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pvv) | ![PyPI - License](https://img.shields.io/pypi/l/pvv) |
 | [facesdet](https://github.com/DmitryRyumin/pkgs/tree/master/facesdet) | Поиск лиц | ![PyPI](https://img.shields.io/pypi/v/facesdet) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/facesdet) | ![PyPI - License](https://img.shields.io/pypi/l/facesdet) |
+| [objdet](https://github.com/DmitryRyumin/pkgs/tree/master/objdet) | Поиск объектов | ![PyPI](https://img.shields.io/pypi/v/objdet) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/objdet) | ![PyPI - License](https://img.shields.io/pypi/l/objdet) |
 
 ## Дерево пакетов
 

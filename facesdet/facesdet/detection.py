@@ -771,12 +771,12 @@ class Detection(Messages):
                             label_face, labels_font, self.precent_scale, self.precent_thickness
                         )[0]
 
-                        # Толщина рамки прямоугольника с объектами минимальная
+                        # Толщина рамки прямоугольника с лицами минимальная
                         if self.rectangle_thickness == 1:
                             rectangle_thickness = 0
                             margin_bottom = 2  # Дополнительный отступ
                         else:
-                            # Округление толщины рамки прямоугольника с объектами
+                            # Округление толщины рамки прямоугольника с лицами
                             rectangle_thickness = int(
                                 Decimal(self.rectangle_thickness / 2).to_integral_value(rounding=ROUND_HALF_UP)
                             )
