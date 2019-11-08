@@ -27,7 +27,7 @@
         "blue": 0
     },
     "rectangle_thickness": 3,
-    "labels_scale": 1.65,
+    "labels_scale": 0.55,
     "labels_thickness": 1,
     "labels_base_coords": {
         "left": 10,

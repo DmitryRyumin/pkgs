@@ -88,11 +88,23 @@ class Run(Messages):
 
     # Проверка JSON файла настроек на валидность
     def _valid_json_config(self, config, out = True):
+        """
+        Проверка настроек JSON на валидность
+
+        (dict [, bool]) -> bool
+
+        Аргументы:
+           config - Словарь из JSON файла
+           out    - Печатать процесс выполнения
+
+        Возвращает: True если файл валидный, в обратном случае False
+        """
+
         # Выполнение функции из суперкласса с отрицательным результатом
         if super()._valid_json_config(config, out) is False:
             return False
 
-        all_layer = 14  # Общее количество разделов
+        all_layer = 12  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
@@ -100,11 +112,15 @@ class Run(Messages):
             # 1. Путь к модели
             # 2. Путь к конфигурационному файлу модели
             if key == 'path_to_model' or key == 'path_to_labels':
-                # Проверка значения
-                if type(val) is not str or not val:
-                    continue
+                # Конфигурационный файл передан
+                if self._args['config'] is not None:
+                    all_layer += 1  # Увеличение общего количества разделов
 
-                curr_valid_layer += 1
+                    # Проверка значения
+                    if type(val) is not str or not val:
+                        continue
+
+                    curr_valid_layer += 1
 
             # Размер изображения для масштабирования
             if key == 'size':
@@ -228,6 +244,26 @@ class Run(Messages):
 
         return True  # Результат
 
+    # Загрузка и проверка конфигурационного файла
+    def _load_config_json(self, resources=configs, out=True):
+        """
+        Загрузка и проверка конфигурационного файла
+
+        ([module, bool]) -> bool
+
+        Аргументы:
+            resources - Модуль с ресурсами
+            out       - Печатать процесс выполнения
+
+        Возвращает: True если файл загружен и валиден, в обратном случае False
+        """
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._load_config_json(resources, out) is False:
+            return False
+
+        return True
+
     # Автоматическая проверка конфигурационного файла в момент работы программы
     def _update_config_json(self, set_window_name = True):
         """
@@ -241,12 +277,12 @@ class Run(Messages):
         Возвращает: True если аргументы переданы верно, в обратном случае False
         """
 
-        curr_path_to_model = self._args['path_to_model']  # Текущий путь к модели
-        curr_path_to_labels = self._args['path_to_labels']  # Текущий путь к конфигурационному файлу модели
-
         # Выполнение функции из суперкласса с отрицательным результатом
         if super()._update_config_json(set_window_name) is False:
             return False
+
+        curr_path_to_model = self._args['path_to_model']  # Текущий путь к модели
+        curr_path_to_labels = self._args['path_to_labels']  # Текущий путь к конфигурационному файлу модели
 
         if self._automatic_update['invalid_config_file'] is False:
             # 1. Путь к модели был изменен

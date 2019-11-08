@@ -7,7 +7,7 @@ __title__ = 'objdet'
 __summary__ = 'Поиск объектов'
 __uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/objdet'
 
-__version__ = '19.10.28.1'
+__version__ = '19.11.9.0'
 
 __author__ = 'Dmitry Ryumin'
 __email__ = 'dl_03.03.1991@mail.ru'
