@@ -503,8 +503,8 @@ class Run(Messages):
         if self._detection.start() is False:
             return False
 
-        # Конфигурационный файл передан
-        if self._args['config'] is not None:
+        # Конфигурационный файл не передан
+        if self._args['config'] is None:
             self._args['path_to_model'] = None   # Путь к модели по умолчанию
             self._args['path_to_labels'] = None  # Путь к конфигурационному файлу модели по умолчанию
 
