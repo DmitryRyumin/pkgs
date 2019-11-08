@@ -11,6 +11,7 @@
 import time         # Работа со временем
 import threading    # Многопоточность
 import cv2          # Алгоритмы компьютерного зрения
+import numpy as np  # Научные вычисления
 
 from datetime import datetime  # Работа со временем
 from OpenGL import GL, GLUT    # Работа с графикой
@@ -309,13 +310,14 @@ class Viewer(Messages):
     # ------------------------------------------------------------------------------------------------------------------
 
     # Изменение размеров изображения
-    def resize_frame(self, width, height, out = True):
+    def resize_frame(self, frame, width, height, out = True):
         """
         Изменение размеров изображения
 
-        (int, int [, bool]) -> tuple
+        (numpy.ndarray, int, int [, bool]) -> tuple
 
         Аргументы:
+            frame  - Изображение
             width  - Ширина изображения для масштабирования
             height - Высота изображения для масштабирования
             out    - Печатать процесс выполнения
@@ -327,7 +329,8 @@ class Viewer(Messages):
         """
 
         # Проверка аргументов
-        if type(height) is not int or height < 0 or type(width) is not int or width < 0 or type(out) is not bool:
+        if type(frame) is not np.ndarray or len(frame) is 0 or type(height) is not int or height < 0 or type(width) is \
+                not int or width < 0 or type(out) is not bool:
             # Вывод сообщения
             if out is True:
                 print(self._invalid_arguments.format(
@@ -337,7 +340,7 @@ class Viewer(Messages):
 
             return None
 
-        frame_clone = self.image_buffer.copy()  # Копирование изображения
+        frame_clone = frame.copy()  # Копирование изображения
 
         frame_width = frame_clone.shape[1]  # Ширина изображения
         frame_height = frame_clone.shape[0]  # Высота изображения
