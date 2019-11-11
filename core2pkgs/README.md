@@ -24,7 +24,7 @@ pip install --upgrade core2pkgs
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`trml` | `19.10.4.0` | ![PyPI](https://img.shields.io/pypi/v/trml) |
+`trml` | `19.11.11.0` | ![PyPI](https://img.shields.io/pypi/v/trml) |
 `argparse` | `1.4.0` | ![PyPI](https://img.shields.io/pypi/v/argparse) | 
 
 ## Классы с глобальными настройками - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/core2pkgs/core2pkgs/config.py)
