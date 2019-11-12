@@ -130,7 +130,7 @@ class Xml(Messages):
         for key, val in data.items():
             #  Тег
             print(('\t' * cnt) + '"' + key + '": ' +
-                  ('' if val is not None else self.red + 'Empty' + self.end))
+                  (('' if type(val) is not str else val) if val is not None else self.red + 'Empty' + self.end))
 
             # Значение внутри списка
             if type(val) is list:
