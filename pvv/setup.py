@@ -58,7 +58,7 @@ with open('README.md', 'r') as fh:
         keywords = ['pvv'],
         include_package_data = True,
         classifiers = [_f for _f in CLASSIFIERS.split('\n') if _f],
-        python_requires = '>=3.7',
+        python_requires = '>=3.7, <3.8',
         entry_points = {
             'console_scripts': [
                 'pvv_play = pvv.samples.play:main',
