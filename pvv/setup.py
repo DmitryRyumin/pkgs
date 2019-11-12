@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 
 MIN_PYTHON_VERSION = (3, 7)
 
-if sys.version_info[:2] < MIN_PYTHON_VERSION:
-    raise RuntimeError("Требуется версия Python >= {}.{}".format(MIN_PYTHON_VERSION[0], MIN_PYTHON_VERSION[1]))
+if sys.version_info[:2] != MIN_PYTHON_VERSION:
+    raise RuntimeError("Требуется версия Python = {}.{}".format(MIN_PYTHON_VERSION[0], MIN_PYTHON_VERSION[1]))
 
 import pvv
 
@@ -26,7 +26,6 @@ License :: OSI Approved :: MIT License
 Programming Language :: Python
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3.7
-Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3 :: Only
 Programming Language :: Python :: Implementation :: CPython
 Topic :: Scientific/Engineering
