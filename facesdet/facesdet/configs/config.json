@@ -37,7 +37,7 @@
     "labels_padding": 10,
     "labels_distance": 10,
     "clear_image_buffer": true,
-    "real_time": true,
+    "real_time": false,
     "conf_threshold" : 0.7,
     "draw_precent" : true,
     "precent_scale": 0.55,

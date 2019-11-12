@@ -24,9 +24,9 @@ pip install --upgrade facesdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `19.11.7.2` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
-`numpy` | `1.17.2` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
-`dlib` | `19.17.0` | ![PyPI](https://img.shields.io/pypi/v/dlib) |
+`pvv` | `19.11.12.2` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
+`dlib` | `19.18.0` | ![PyPI](https://img.shields.io/pypi/v/dlib) |
 
 ## Класс для поиска лиц - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/facesdet/facesdet/detection.py)
 
