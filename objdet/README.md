@@ -24,8 +24,8 @@ pip install --upgrade objdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `19.11.8.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
-`numpy` | `1.17.2` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
+`pvv` | `19.11.12.2` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
 `tensorflow` | `2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow) |
 
 ## Класс для поиска объектов - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/detection.py)
