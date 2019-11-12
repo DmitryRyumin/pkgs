@@ -2,8 +2,8 @@
     "metadata": true,
     "window_name": "Window",
     "resize" : {
-        "width": 0,
-        "height": 0
+        "width": 1280,
+        "height": 720
     },
     "text_color" : {
         "red": 0,
