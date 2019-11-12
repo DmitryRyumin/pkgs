@@ -24,8 +24,8 @@ pip install --upgrade filem
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`core2pkgs` | `19.10.13.0` | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
-`pandas` | `0.25.1` | ![PyPI](https://img.shields.io/pypi/v/pandas) |
+`core2pkgs` | `19.11.11.0` | ![PyPI](https://img.shields.io/pypi/v/core2pkgs) | 
+`pandas` | `0.25.3` | ![PyPI](https://img.shields.io/pypi/v/pandas) |
 `xmltodict` | `0.12.0` | ![PyPI](https://img.shields.io/pypi/v/xmltodict) |
 
 ## Класс для работы с файлами - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/filem/filem/file_manager.py)
