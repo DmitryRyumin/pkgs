@@ -42,8 +42,7 @@ pip install --upgrade objdet --gpu  # GPU (Linux или Windows)
 | ------ | ------------------ | -------------- |
 `pvv` | `19.11.12.2` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
-`tensorflow` | `2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow) |
-`tensorflow-gpu` (если ОС Linux или Windows и передан аргумент `--gpu`) | `2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
+`tensorflow`<br>`tensorflow-gpu` | `2.0.0`<br>`2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
 
 ## Класс для поиска объектов - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/detection.py)
 
