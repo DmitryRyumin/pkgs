@@ -10,14 +10,30 @@
 
 ## Установка
 
+### Вариант 1
+
 ```shell script
-pip install objdet
+pip install objdet  # CPU
+```
+
+### Вариант 2
+
+```shell script
+pip install objdet --gpu  # GPU (Linux или Windows)
 ```
 
 ## Обновление
 
+### Вариант 1
+
 ```shell script
-pip install --upgrade objdet
+pip install --upgrade objdet  # CPU
+```
+
+### Вариант 2
+
+```shell script
+pip install --upgrade objdet --gpu  # GPU (Linux или Windows)
 ```
 
 ## Зависимости
