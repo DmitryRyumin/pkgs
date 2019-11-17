@@ -10,30 +10,14 @@
 
 ## Установка
 
-### Вариант 1
-
 ```shell script
-pip install objdet  # CPU
-```
-
-### Вариант 2
-
-```shell script
-pip install objdet --gpu  # GPU (Linux или Windows)
+pip install objdet
 ```
 
 ## Обновление
 
-### Вариант 1
-
 ```shell script
-pip install --upgrade objdet  # CPU
-```
-
-### Вариант 2
-
-```shell script
-pip install --upgrade objdet --gpu  # GPU (Linux или Windows)
+pip install --upgrade objdet
 ```
 
 ## Зависимости
@@ -42,7 +26,7 @@ pip install --upgrade objdet --gpu  # GPU (Linux или Windows)
 | ------ | ------------------ | -------------- |
 `pvv` | `19.11.12.2` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
-`tensorflow`<br>`tensorflow-gpu` | `2.0.0`<br>`2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
+`tensorflow` | `2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow) |
 
 ## Класс для поиска объектов - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/detection.py)
 
