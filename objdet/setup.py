@@ -9,12 +9,9 @@ if sys.version_info[:2] != MIN_PYTHON_VERSION:
 
 import objdet
 
-TF_VERSION = '2.0.0'  # Версия TensorFlow
-
 REQUIRED_PACKAGES = [
     'pvv >= 19.11.12.2',
-    'numpy >= 1.17.4',
-    'tensorflow >= ' + TF_VERSION
+    'numpy >= 1.17.4'
 ]
 
 CLASSIFIERS = """\

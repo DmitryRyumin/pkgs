@@ -12,6 +12,10 @@
 
 ```shell script
 pip install objdet
+
+pip install tensorflow # CPU
+# Или
+pip install tensorflow-gpu # GPU
 ```
 
 ## Обновление
@@ -26,7 +30,7 @@ pip install --upgrade objdet
 | ------ | ------------------ | -------------- |
 `pvv` | `19.11.12.2` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
-`tensorflow` | `2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow) |
+`tensorflow`<br><br>`tensorflow-gpu` | `2.0.0`<br><br>`2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br><br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
 
 ## Класс для поиска объектов - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/detection.py)
 
