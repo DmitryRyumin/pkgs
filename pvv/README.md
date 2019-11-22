@@ -25,7 +25,7 @@ pip install --upgrade pvv
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
 `filem` | `19.11.12.1` | ![PyPI](https://img.shields.io/pypi/v/filem) |
-`opencv-contrib-python` | `4.1.1.26` | ![PyPI](https://img.shields.io/pypi/v/opencv-contrib-python) | 
+`opencv-contrib-python` | `4.1.2.30` | ![PyPI](https://img.shields.io/pypi/v/opencv-contrib-python) | 
 `PyOpenGL` | `3.1.0` | ![PyPI](https://img.shields.io/pypi/v/PyOpenGL) |
 
 ## Класс для воспроизведения фото/видео данных - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/pvv/pvv/viewer.py)
