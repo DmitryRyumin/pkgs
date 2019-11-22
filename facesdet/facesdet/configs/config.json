@@ -1,5 +1,5 @@
 {
-    "metadata": false,
+    "metadata": true,
     "window_name": "Window",
     "method" : "opencv_dnn",
     "min_neighbors" : 3,
@@ -28,7 +28,7 @@
         "blue": 0
     },
     "rectangle_thickness": 2,
-    "labels_scale": 0.75,
+    "labels_scale": 1.25,
     "labels_thickness": 1,
     "labels_base_coords": {
         "left": 10,
