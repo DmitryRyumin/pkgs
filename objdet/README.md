@@ -28,7 +28,7 @@ pip install --upgrade objdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `19.11.12.2` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`pvv` | `19.11.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
 `tensorflow`<br><br>`tensorflow-gpu` | `2.0.0`<br><br>`2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br><br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
 
