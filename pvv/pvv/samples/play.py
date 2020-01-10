@@ -109,6 +109,8 @@ class Run(Messages):
             'invalid_config_file': False  # Результат поиска необходимых значений в конфигурационном файле
         }
 
+        self._prev_fps = 0  # Частота кадра
+
     # ------------------------------------------------------------------------------------------------------------------
     #  Внутренние методы
     # ------------------------------------------------------------------------------------------------------------------
@@ -674,7 +676,12 @@ class Run(Messages):
             if delay > end_time:
                 time.sleep(delay - end_time)  # Принудительная задержка
 
-        fps = round(1 / (time.time() - start_time), 2)  # FPS
+        try:
+            fps = round(1 / (time.time() - start_time), 2)  # FPS
+
+            self._prev_fps = fps  # Частота кадра
+        except ZeroDivisionError:
+            fps = self._prev_fps  # Предыдущая частота кадра
 
         # Количество кадров больше 60
         if fps > 60 and self._args['real_time'] is False:

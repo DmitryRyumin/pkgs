@@ -14,6 +14,16 @@
 pip install pvv
 ```
 
+### Примечание для Windows
+
+1. Удалить `PyOpenGL`
+
+    ```shell script
+    pip uninstall PyOpenGL
+    ```
+
+2. Установить [PyOpenGL](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
+
 ## Обновление
 
 ```shell script
