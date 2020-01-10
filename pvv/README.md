@@ -22,7 +22,7 @@ pip install pvv
     pip uninstall PyOpenGL
     ```
 
-2. Установить [PyOpenGL](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
+2. Скачать и установить [PyOpenGL](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
 
 ## Обновление
 
