@@ -23,5 +23,6 @@
     },
     "labels_padding": 10,
     "clear_image_buffer": true,
-    "real_time": false
+    "real_time": true,
+    "fps": 0
 }
