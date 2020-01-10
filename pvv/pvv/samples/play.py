@@ -180,7 +180,7 @@ class Run(Messages):
         if out is True:
             print(self._check_config_file_valid.format(datetime.now().strftime(self._format_time)))
 
-        all_layer = 11  # Общее количество разделов
+        all_layer = 12  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
@@ -298,6 +298,14 @@ class Run(Messages):
             if key == 'labels_padding':
                 # Проверка значения
                 if type(val) is not int or val < 0 or val > 30:
+                    continue
+
+                curr_valid_layer += 1
+
+            # Частота кадров
+            if key == 'fps':
+                # Проверка значения
+                if type(val) is not int or val < 0 or val > 60:
                     continue
 
                 curr_valid_layer += 1
@@ -656,7 +664,11 @@ class Run(Messages):
         if self._args['real_time'] is True and self._source != self._formats_data[2]:
             end_time = time.time() - start_time  # Конец времени выполнения
 
-            delay = 1 / self._cap.get(cv2.CAP_PROP_FPS)  # Задержка
+            # Получение реальной частоты кадров
+            if self._args['fps'] == 0 or self._source is self._formats_data[0]:
+                self._args['fps'] = self._cap.get(cv2.CAP_PROP_FPS)
+
+            delay = 1 / self._args['fps']  # Задержка
 
             # Необходимо произвести задержку видеопотока
             if delay > end_time:

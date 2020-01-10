@@ -26,7 +26,7 @@ pip install --upgrade pvv
 | ------ | ------------------ | -------------- |
 `filem` | `19.11.12.1` | ![PyPI](https://img.shields.io/pypi/v/filem) |
 `opencv-contrib-python` | `4.1.2.30` | ![PyPI](https://img.shields.io/pypi/v/opencv-contrib-python) | 
-`PyOpenGL` | `3.1.0` | ![PyPI](https://img.shields.io/pypi/v/PyOpenGL) |
+`PyOpenGL` | `3.1.5` | ![PyPI](https://img.shields.io/pypi/v/PyOpenGL) |
 
 ## Класс для воспроизведения фото/видео данных - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/pvv/pvv/viewer.py)
 
@@ -44,7 +44,7 @@ pip install --upgrade pvv
 | ---------------- | ---  | -------- | ------------------- |
 | metadata | bool | Вывод метаданных | - |
 | window_name | str | Имя окна | - |
-| resize | dict | Размер окна для масштабирования | - |
+| resize | dict | Размер окна для масштабирования | От `0` до `∞` |
 | text_color | dict | Цвет текстов | От `0` до `255` |
 | background_color | dict | Цвет фона текстов | От `0` до `255` |
 | label_scale | float | Коэффициент масштабирования шрифта | От `>0.0` до `2.0` |
@@ -53,3 +53,4 @@ pip install --upgrade pvv
 | labels_padding | int | Внутренний отступ для текстов | От `0` до `30` |
 | clear_image_buffer | bool | Очистка буфера с изображением | - |
 | real_time | bool | Воспроизведение фото/видеопотока с реальным количеством FPS | - |
+| fps | int | Пользовательский FPS<br>`"real_time" = true` | От `0` до `60` |

@@ -11,7 +11,7 @@ import pvv
 
 REQUIRED_PACKAGES = [
     'filem >= 19.11.12.1',
-    'PyOpenGL >= 3.1.0',
+    'PyOpenGL >= 3.1.5',
     'opencv-contrib-python >= 4.1.2.30',
 ]
 
