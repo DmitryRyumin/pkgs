@@ -10,9 +10,9 @@ if sys.version_info[:2] != MIN_PYTHON_VERSION:
 import facesdet
 
 REQUIRED_PACKAGES = [
-    'pvv >= 19.11.22.0',
-    'numpy >= 1.17.4',
-    'dlib >= 19.18.0'
+    'pvv >= 20.1.22.0',
+    'numpy >= 1.18.1',
+    'dlib >= 19.19.0'
 ]
 
 CLASSIFIERS = """\

@@ -38,6 +38,8 @@
     "labels_distance": 10,
     "clear_image_buffer": true,
     "real_time": false,
+    "repeat": true,
+    "fps": 40,
     "conf_threshold" : 0.7,
     "draw_precent" : true,
     "precent_scale": 0.55,

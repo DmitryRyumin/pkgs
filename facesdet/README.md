@@ -14,6 +14,16 @@
 pip install facesdet
 ```
 
+### Примечание для Windows
+
+1. Удалить `PyOpenGL`
+
+    ```shell script
+    pip uninstall PyOpenGL
+    ```
+
+2. Скачать и установить [PyOpenGL](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
+
 ## Обновление
 
 ```shell script
@@ -24,9 +34,9 @@ pip install --upgrade facesdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `19.11.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
-`numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
-`dlib` | `19.18.0` | ![PyPI](https://img.shields.io/pypi/v/dlib) |
+`pvv` | `20.1.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`numpy` | `1.18.1` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
+`dlib` | `19.19.0` | ![PyPI](https://img.shields.io/pypi/v/dlib) |
 
 ## Класс для поиска лиц - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/facesdet/facesdet/detection.py)
 
@@ -60,6 +70,8 @@ pip install --upgrade facesdet
 | labels_distance | int | Расстояние между текстами | От `0` до `50` |
 | clear_image_buffer | bool | Очистка буфера с изображением | - |
 | real_time | bool | Воспроизведение фото/видеопотока с реальным количеством FPS | - |
+| repeat | bool | Повторение воспроизведения видеопотока | - |
+| fps | int | Пользовательский FPS<br>`"real_time" = true` | От `0` до `60` |
 | conf_threshold | float | Доверительный порог детекции лиц<br>`"method" = opencv_dnn` | От `0.0` до `1.0` |
 | draw_precent | bool | Рисование на изображении процентов для каждого детектированного лица<br>`"method" = opencv_dnn` | - |
 | precent_scale | float | Коэффициент масштабирования шрифта (проценты)<br>`"method" = opencv_dnn` | От `>0.0` до `2.0` |
@@ -68,3 +80,10 @@ pip install --upgrade facesdet
 | precent_background_color | dict | Цвет фона процентов<br>`"method" = opencv_dnn` | От `0` до `255` |
 | precent_padding | int | Внутренний отступ для процентов<br>`"method" = opencv_dnn` | От `0` до `30` |
 | precent_margin_bottom | int | Внешний нижний отступ для процентов<br>`"method" = opencv_dnn` | От `0` до `30` |
+
+#### Горячие клавиши
+
+| Клавиши | Сценарий |
+| ------- | -------  |
+| `esc` | Закрытие окна приложения |
+| `r` | Повторение воспроизведения видеопотока |
