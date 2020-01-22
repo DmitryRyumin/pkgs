@@ -24,5 +24,6 @@
     "labels_padding": 10,
     "clear_image_buffer": true,
     "real_time": true,
+    "repeat": false,
     "fps": 0
 }

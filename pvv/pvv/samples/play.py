@@ -100,6 +100,7 @@ class Run(Messages):
 
         self._json = Json()  # Работа с JSON
 
+        self._all_frame_count = 0  # Всего кадров (только для видеопотока)
         self._frame_count = 0  # Счетчик кадров
 
         self._frames_to_update = 0  # Счетчик автоматической проверки конфигурационного файла в момент работы программ
@@ -182,7 +183,7 @@ class Run(Messages):
         if out is True:
             print(self._check_config_file_valid.format(datetime.now().strftime(self._format_time)))
 
-        all_layer = 12  # Общее количество разделов
+        all_layer = 13  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
@@ -190,7 +191,8 @@ class Run(Messages):
             # 1. Отображение метаданных
             # 2. Очистка буфера с изображением
             # 3. Воспроизведение видеопотока с реальным количеством FPS
-            if key == 'metadata' or key == 'clear_image_buffer' or key == 'real_time':
+            # 4. Повторение воспроизведения видеопотока
+            if key == 'metadata' or key == 'clear_image_buffer' or key == 'real_time' or key == 'repeat':
                 # Проверка значения
                 if type(val) is not bool:
                     continue
@@ -518,6 +520,8 @@ class Run(Messages):
 
                     return False
 
+                self._all_frame_count = int(self._cap.get(cv2.CAP_PROP_FRAME_COUNT))  # Всего кадров в видеопотоке
+
                 self._source = self._formats_data[1]  # Воспроизведение с видеофайла
 
             # Воспроизведение фото данных
@@ -644,6 +648,17 @@ class Run(Messages):
 
         # Распознавание лиц на видеопотоке или WEB-камере
         if self._source != self._formats_data[2]:
+            # Повторение воспроизведения видеопотока
+            if self._source is self._formats_data[1] and self._frame_count == (self._all_frame_count - 1) and \
+                    (self._viewer.repeat is True or self._args['repeat'] is True):
+                self._cap.set(cv2.CAP_PROP_POS_FRAMES, 1)  # Сброс видеопотока в начальную позицию
+
+                self._frame_count = 0  # Сброс счетчика кадров в начальную позицию
+
+                self._viewer.repeat = False  # Повторное воспроизведения видеофайла отключено
+
+            self._viewer.repeat = False  # Повторное воспроизведения видеофайла отключено
+
             has_frame, frame = self._cap.read()  # Захват, декодирование и возврат кадра
 
             # Текущий кадр не получен

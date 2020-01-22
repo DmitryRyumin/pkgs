@@ -49,14 +49,15 @@ class Viewer(Messages):
 
     def __init__(
             self,
-            window_name = 'Window',    # Имя окна
-            window_width = 1280,       # Ширина окна
-            window_height = 720,       # Высота окна
-            min_window_width = 100,    # Минимальная ширина окна
-            min_window_height = 100,   # Минимальная высота окна
-            move_window_x = 30,        # Перемещение окна по оси X
-            move_window_y = 30,        # Перемещение окна по оси Y
-            clear_image_buffer = True  # Очистка буфера с изображением
+            window_name = 'Window',     # Имя окна
+            window_width = 1280,        # Ширина окна
+            window_height = 720,        # Высота окна
+            min_window_width = 100,     # Минимальная ширина окна
+            min_window_height = 100,    # Минимальная высота окна
+            move_window_x = 30,         # Перемещение окна по оси X
+            move_window_y = 30,         # Перемещение окна по оси Y
+            clear_image_buffer = True,  # Очистка буфера с изображением
+            repeat = False              # Повтор видеофайла
     ):
         super().__init__()  # Выполнение конструктора из суперкласса
 
@@ -72,6 +73,8 @@ class Viewer(Messages):
         self.move_window_y = move_window_y
 
         self.clear_image_buffer = clear_image_buffer
+
+        self.repeat = repeat
 
         self.image_buffer = None  # Буфер с изображением
         self._cnt = 0  # Счетчик кадров
@@ -173,6 +176,16 @@ class Viewer(Messages):
     @property
     def cnt(self):
         return self._cnt
+
+    # Получение результата повторного воспроизведения видеофайла
+    @property
+    def repeat(self):
+        return self._repeat
+
+    # Установка результата повторного воспроизведения видеофайла
+    @repeat.setter
+    def repeat(self, r):
+        self._repeat = r
 
     # ------------------------------------------------------------------------------------------------------------------
     # Внутренние методы
@@ -300,6 +313,11 @@ class Viewer(Messages):
         else:
             key = 0x0100 + key
 
+        #  Клавиша r
+        if key == 114 or key == b'r':
+            self.repeat = True  # Повторное воспроизведения видеофайла
+
+        # Клавиша Esc
         if key == 27 or key == b'\x1b':
             raise SystemExit(self._program_close.format(
                 datetime.now().strftime(self._format_time)
@@ -401,7 +419,7 @@ class Viewer(Messages):
 
         GLUT.glutReshapeFunc(self.__resize)  # Изменение размеров окна
 
-        # Обработка нажатий на клавиатуру (клавиши Backspace, Delete и Escape)
+        # Обработка нажатий на клавиатуру (клавиша Escape)
         GLUT.glutKeyboardFunc(self.__keyboard)
         GLUT.glutSpecialFunc(self.__keyboard)  # Обработка нажатий на клавиатуру
 
