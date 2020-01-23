@@ -64,7 +64,7 @@ class Detection(Messages):
     def __init__(self):
         super().__init__()  # Выполнение конструктора из суперкласса
 
-        self._min_tf_version = '2.0.0'  # Минимальная версия TensorFlow
+        self._min_tf_version = '2.1.0'  # Минимальная версия TensorFlow
 
         self.title_ru = 'Поиск объектов'  # Установка названия на русском
         self.title_en = 'Objects detection'  # Установка названия на английском
