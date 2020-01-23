@@ -40,7 +40,7 @@ pip install --upgrade objdet
 | ------ | ------------------ | -------------- |
 `pvv` | `20.1.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.18.1` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
-`tensorflow`<br><br>`tensorflow-gpu` | `2.1.0`<br><br>`2.1.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br><br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
+`tensorflow`<br><br>`tensorflow-gpu` | `1.15.0`<br><br>`1.15.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br><br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
 
 ## Класс для поиска объектов - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/detection.py)
 
