@@ -363,6 +363,8 @@ class Run(Messages):
         if super()._load_config_json(resources, out) is False:
             return False
 
+        return True
+
     # Автоматическая проверка конфигурационного файла в момент работы программы
     def _update_config_json(self, set_window_name = True):
         """
