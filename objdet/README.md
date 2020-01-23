@@ -18,6 +18,16 @@ pip install tensorflow # CPU
 pip install tensorflow-gpu # GPU
 ```
 
+### Примечание для Windows
+
+1. Удалить `PyOpenGL`
+
+    ```shell script
+    pip uninstall PyOpenGL
+    ```
+
+2. Скачать и установить [PyOpenGL](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
+
 ## Обновление
 
 ```shell script
@@ -28,9 +38,9 @@ pip install --upgrade objdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `19.11.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
-`numpy` | `1.17.4` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
-`tensorflow`<br><br>`tensorflow-gpu` | `2.0.0`<br><br>`2.0.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br><br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
+`pvv` | `20.1.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`numpy` | `1.18.1` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
+`tensorflow`<br><br>`tensorflow-gpu` | `2.1.0`<br><br>`2.1.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br><br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
 
 ## Класс для поиска объектов - [смотреть](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/detection.py)
 
@@ -63,6 +73,8 @@ pip install --upgrade objdet
 | labels_distance | int | Расстояние между текстами | От `0` до `50` |
 | clear_image_buffer | bool | Очистка буфера с изображением | - |
 | real_time | bool | Воспроизведение фото/видеопотока с реальным количеством FPS | - |
+| repeat | bool | Повторение воспроизведения видеопотока | - |
+| fps | int | Пользовательский FPS<br>`"real_time" = true` | От `0` до `60` |
 | conf_threshold | float | Доверительный порог детекции объектами | От `0.0` до `1.0` |
 | draw_precent | bool | Рисование на изображении процентов для каждого детектированного объекта | - |
 | object_scale | float | Коэффициент масштабирования шрифта (объект - проценты) | От `>0.0` до `2.0` |
@@ -71,3 +83,10 @@ pip install --upgrade objdet
 | object_background_color | dict | Цвет фона объекта - процентов | От `0` до `255` |
 | object_padding | int | Внутренний отступ для объектов - процентов | От `0` до `30` |
 | object_margin_bottom | int | Внешний нижний отступ для объектов - процентов | От `0` до `30` |
+
+#### Горячие клавиши
+
+| Клавиши | Сценарий |
+| ------- | -------  |
+| `esc` | Закрытие окна приложения |
+| `r` | Повторение воспроизведения видеопотока |

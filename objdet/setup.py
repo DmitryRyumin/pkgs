@@ -10,8 +10,8 @@ if sys.version_info[:2] != MIN_PYTHON_VERSION:
 import objdet
 
 REQUIRED_PACKAGES = [
-    'pvv >= 19.11.22.0',
-    'numpy >= 1.17.4'
+    'pvv >= 20.1.22.0',
+    'numpy >= 1.18.1'
 ]
 
 CLASSIFIERS = """\

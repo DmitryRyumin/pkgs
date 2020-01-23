@@ -245,7 +245,7 @@ class Run(Messages):
         return True  # Результат
 
     # Загрузка и проверка конфигурационного файла
-    def _load_config_json(self, resources=configs, out=True):
+    def _load_config_json(self, resources = configs, out = True):
         """
         Загрузка и проверка конфигурационного файла
 
