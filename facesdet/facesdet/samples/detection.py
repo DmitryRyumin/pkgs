@@ -345,6 +345,24 @@ class Run(Messages):
 
         return True  # Результат
 
+    # Загрузка и проверка конфигурационного файла
+    def _load_config_json(self, resources = configs, out = True):
+        """
+        Загрузка и проверка конфигурационного файла
+
+        ([module, bool]) -> bool
+
+        Аргументы:
+            resources - Модуль с ресурсами
+            out       - Печатать процесс выполнения
+
+        Возвращает: True если файл загружен и валиден, в обратном случае False
+        """
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._load_config_json(resources, out) is False:
+            return False
+
     # Автоматическая проверка конфигурационного файла в момент работы программы
     def _update_config_json(self, set_window_name = True):
         """
