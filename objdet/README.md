@@ -13,9 +13,9 @@
 ```shell script
 pip install objdet
 
-pip install tensorflow # CPU
+pip install tensorflow==1.15.0 # CPU
 # Или
-pip install tensorflow-gpu # GPU
+pip install tensorflow-gpu==1.15.0 # GPU
 ```
 
 ### Примечание для Windows

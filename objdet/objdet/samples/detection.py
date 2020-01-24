@@ -277,17 +277,12 @@ class Run(Messages):
         Возвращает: True если аргументы переданы верно, в обратном случае False
         """
 
+        curr_path_to_model = self._args['path_to_model']  # Текущий путь к модели
+        curr_path_to_labels = self._args['path_to_labels']  # Текущий путь к конфигурационному файлу модели
+
         # Выполнение функции из суперкласса с отрицательным результатом
         if super()._update_config_json(set_window_name) is False:
             return False
-
-        # Конфигурационный файл не передан
-        if self._args['config'] is None:
-            self._args['path_to_model'] = None  # Путь к модели по умолчанию
-            self._args['path_to_labels'] = None  # Путь к конфигурационному файлу модели по умолчанию
-
-        curr_path_to_model = self._args['path_to_model']  # Текущий путь к модели
-        curr_path_to_labels = self._args['path_to_labels']  # Текущий путь к конфигурационному файлу модели
 
         if self._automatic_update['invalid_config_file'] is False:
             # 1. Путь к модели был изменен
@@ -543,11 +538,6 @@ class Run(Messages):
         # Запуск алгоритма для поиска объектов
         if self._detection.start() is False:
             return False
-
-        # Конфигурационный файл не передан
-        if self._args['config'] is None:
-            self._args['path_to_model'] = None   # Путь к модели по умолчанию
-            self._args['path_to_labels'] = None  # Путь к конфигурационному файлу модели по умолчанию
 
         # Загрузка модели для поиска объектов
         if self._detection.load_model(self._args['path_to_model'], self._args['path_to_labels']) is False:

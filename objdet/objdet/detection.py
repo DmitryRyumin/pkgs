@@ -49,6 +49,7 @@ class Messages(cfg.Messages):
         self._not_load_model = '[{}{}{}] Модель не загружена ...'
         self._load_labels = '[{}] Загрузка меток ...'
         self._not_load_labels = '[{}{}{}] Метки не загружены ...'
+        self._not_info_object = '[{}{}{}] Информация об объектах не получена ...'
 
 
 # ######################################################################################################################
@@ -92,6 +93,11 @@ class Detection(Messages):
                 'path_to_model': 'coco/frozen_inference_graph.pb',
                 'path_to_config_model': 'coco/mscoco_label_map.pbtxt'
             },
+        }
+
+        # Варианты ошибок при поиске объектов
+        self._errors = {
+            'not_info_object': False  # Информация об объектах не получена
         }
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -271,16 +277,6 @@ class Detection(Messages):
         Возвращает: True если модель загружена, в обратном случае False
         """
 
-        none = 'DL'  # Замена None
-
-        # Путь к модели по умолчанию
-        if path_to_model is None:
-            path_to_model = none
-
-        # Путь к конфигурационному файлу модели по умолчанию
-        if path_to_config_model is None:
-            path_to_config_model = none
-
         # Проверка аргументов
         if type(path_to_model) is not str or not path_to_model or type(path_to_config_model) is not str \
                 or not path_to_config_model or type(out) is not bool:
@@ -294,11 +290,11 @@ class Detection(Messages):
             return False
 
         # Путь к модели по умолчанию
-        if path_to_model is none:
+        if os.path.exists(path_to_model) is False:
             path_to_model = self._path_to_models + '/' + self._path_to_files_models['coco']['path_to_model']
 
         # Путь к конфигурационному файлу модели по умолчанию
-        if path_to_config_model is none:
+        if os.path.exists(path_to_config_model) is False:
             path_to_config_model = self._path_to_models + '/' \
                                    + self._path_to_files_models['coco']['path_to_config_model']
 
@@ -364,6 +360,8 @@ class Detection(Messages):
         self._sess = tf.compat.v1.Session(graph=self._detection_graph)  # Начало сеанса для выполнения операций
 
         self._labels = labels  # Метки объектов
+
+        self._errors['not_info_object'] = False  # Информация об объектах получена
 
         return True
 
@@ -454,12 +452,23 @@ class Detection(Messages):
                         (x_min * frame.shape[1], x_max * frame.shape[1], y_min * frame.shape[0], y_max * frame.shape[0])
                     ))
 
-                # Информация об объекте
-                info_object = {
-                    'id': self.labels.get(value)['id'],                      # Идентификатор
-                    'scores': output_dict['detection_scores'][index],        # Точность
-                    'boxes': [int(left), int(right), int(top), int(bottom)]  # Координаты
-                }
+                try:
+                    # Информация об объекте
+                    info_object = {
+                        'id': self.labels.get(value)['id'],                      # Идентификатор
+                        'scores': output_dict['detection_scores'][index],        # Точность
+                        'boxes': [int(left), int(right), int(top), int(bottom)]  # Координаты
+                    }
+                except TypeError:
+                    # Вывод сообщения
+                    if out is True and self._errors['not_info_object'] is False:
+                        print(self._not_info_object.format(
+                            self.red, datetime.now().strftime(self._format_time), self.end
+                        ))
+
+                        self._errors['not_info_object'] = True  # Информация об объектах не получена
+
+                    return None
 
                 # В словаре текущего объекта не найдено
                 if objects.get(self.labels.get(value)['name']) is None:
