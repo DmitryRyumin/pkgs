@@ -34,7 +34,7 @@ pip install --upgrade facesdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `20.1.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`pvv` | `20.1.27.1` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.18.1` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
 `dlib` | `19.19.0` | ![PyPI](https://img.shields.io/pypi/v/dlib) |
 
