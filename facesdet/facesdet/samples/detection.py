@@ -4,7 +4,7 @@
 """
 Поиск лиц
 
-python facesdet/samples/detection.py --file путь_к_фото_видео_файлу [--config путь_к_конфигурационному_файлу
+python facesdet/samples/detection.py [--file путь_к_фото_видео_файлу --config путь_к_конфигурационному_файлу
     --automatic_update --frames_to_update 25 --no_clear_shell]
 """
 

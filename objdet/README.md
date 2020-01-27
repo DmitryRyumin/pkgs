@@ -38,7 +38,7 @@ pip install --upgrade objdet
 
 | Пакеты | Минимальная версия | Текущая версия |
 | ------ | ------------------ | -------------- |
-`pvv` | `20.1.22.0` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
+`pvv` | `20.1.27.1` | ![PyPI](https://img.shields.io/pypi/v/pvv) |
 `numpy` | `1.18.1` | ![PyPI](https://img.shields.io/pypi/v/numpy) | 
 `tensorflow`<br><br>`tensorflow-gpu` | `1.15.0`<br><br>`1.15.0` | ![PyPI](https://img.shields.io/pypi/v/tensorflow)<br><br>![PyPI](https://img.shields.io/pypi/v/tensorflow-gpu) |
 
@@ -48,7 +48,7 @@ pip install --upgrade objdet
 
 | Файлы/скрипты | Аргументы командной строки | Описания |
 | ------------- | -------------------------- | -------- |
-| [detection.py](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/samples/detection.py)<br>`objdet_play` | `--file str` - Путь к файлу<br>`--config str` - Путь к конфигурационному файлу<br>`--automatic_update` - Автоматическая проверка конфигурационного файла в момент работы программы (работает при заданном `--config`)<br>`--frames_to_update int=25` - Через какое количество шагов проверять конфигурационный файл (работает при `--automatic_update`)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Поиск объектов |
+| [detection.py](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/samples/detection.py)<br>`objdet_play` | `--file str=0` - Путь к файлу<br>`--config str` - Путь к конфигурационному файлу<br>`--automatic_update` - Автоматическая проверка конфигурационного файла в момент работы программы (работает при заданном `--config`)<br>`--frames_to_update int=25` - Через какое количество шагов проверять конфигурационный файл (работает при `--automatic_update`)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Поиск объектов |
 
 ### [Конфигурационный файл](https://github.com/DmitryRyumin/pkgs/blob/master/objdet/objdet/configs/config.json)
 

@@ -10,7 +10,7 @@ if sys.version_info[:2] != MIN_PYTHON_VERSION:
 import objdet
 
 REQUIRED_PACKAGES = [
-    'pvv >= 20.1.22.0',
+    'pvv >= 20.1.27.1',
     'numpy >= 1.18.1'
 ]
 
