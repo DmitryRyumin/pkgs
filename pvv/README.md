@@ -44,7 +44,7 @@ pip install --upgrade pvv
 
 | Файлы/скрипты | Аргументы командной строки | Описания |
 | ------------- | -------------------------- | -------- |
-| [play.py](https://github.com/DmitryRyumin/pkgs/blob/master/pvv/pvv/samples/play.py)<br>`pvv_play` | `--file str` - Путь к файлу<br>`--config str` - Путь к конфигурационному файлу<br>`--automatic_update` - Автоматическая проверка конфигурационного файла в момент работы программы (работает при заданном `--config`)<br>`--frames_to_update int=25` - Через какое количество шагов проверять конфигурационный файл (работает при `--automatic_update`)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Воспроизведение фото/видео данных |
+| [play.py](https://github.com/DmitryRyumin/pkgs/blob/master/pvv/pvv/samples/play.py)<br>`pvv_play` | `--file str` - Путь к файлу<br>`--config str=0` - Путь к конфигурационному файлу<br>`--automatic_update` - Автоматическая проверка конфигурационного файла в момент работы программы (работает при заданном `--config`)<br>`--frames_to_update int=25` - Через какое количество шагов проверять конфигурационный файл (работает при `--automatic_update`)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Воспроизведение фото/видео данных |
 
 ### [Конфигурационный файл](https://github.com/DmitryRyumin/pkgs/blob/master/pvv/pvv/configs/config.json)
 

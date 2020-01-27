@@ -4,7 +4,7 @@
 """
 Воспроизведение фото/видео данных
 
-python pvv/samples/play.py --file путь_к_фото_видео_файлу [--config путь_к_конфигурационному_файлу --automatic_update
+python pvv/samples/play.py [--file путь_к_фото_видео_файлу --config путь_к_конфигурационному_файлу --automatic_update
     --frames_to_update 25 --no_clear_shell]
 """
 
@@ -132,7 +132,7 @@ class Run(Messages):
         super().build_args(False)  # Выполнение функции из суперкласса
 
         # Добавление аргументов в парсер командной строки
-        self._ap.add_argument('--file', required = True, help = 'Путь к фото/видео файлу')
+        self._ap.add_argument('--file', default = 0, help = 'Путь к фото/видео файлу')
         self._ap.add_argument('--config', help = 'Путь к конфигурационному файлу')
         self._ap.add_argument('--automatic_update', action = 'store_true',
                               help = 'Автоматическая проверка конфигурационного файла в момент работы программы '
