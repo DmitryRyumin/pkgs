@@ -112,6 +112,8 @@ class Run(Messages):
 
         self._prev_fps = 0  # Частота кадра
 
+        self._cap_prop_fps = 0  # Частота кадра ресурса извлечения фото/видеоданных
+
     # ------------------------------------------------------------------------------------------------------------------
     #  Внутренние методы
     # ------------------------------------------------------------------------------------------------------------------
@@ -687,7 +689,7 @@ class Run(Messages):
 
             # Получение реальной частоты кадров
             if self._args['fps'] == 0 or self._source is self._formats_data[0]:
-                self._args['fps'] = self._cap.get(cv2.CAP_PROP_FPS)
+                self._args['fps'] = self._cap.get(cv2.CAP_PROP_FPS) if other_source is None else self._cap_prop_fps
 
             try:
                 delay = 1 / self._args['fps']  # Задержка
