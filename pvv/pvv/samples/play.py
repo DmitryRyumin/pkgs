@@ -685,7 +685,10 @@ class Run(Messages):
             if self._args['fps'] == 0 or self._source is self._formats_data[0]:
                 self._args['fps'] = self._cap.get(cv2.CAP_PROP_FPS)
 
-            delay = 1 / self._args['fps']  # Задержка
+            try:
+                delay = 1 / self._args['fps']  # Задержка
+            except ZeroDivisionError:
+                delay = 0.03  # Задержка (на случай если частота кадров 0 FPS)
 
             # Необходимо произвести задержку видеопотока
             if delay > end_time:
