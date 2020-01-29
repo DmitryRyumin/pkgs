@@ -603,7 +603,7 @@ class Run(Messages):
         return True
 
     # Циклическое получение кадров из видеопотока
-    def _loop(self, func = None, out = True):
+    def _loop(self, other_source = None, func = None, out = True):
         """
         Циклическое получение кадров из фото/видеопотока
 
@@ -617,7 +617,7 @@ class Run(Messages):
         """
 
         # Выполнение функции из суперкласса с отрицательным результатом
-        if super()._loop(self._faces_detection, out) is False:
+        if super()._loop(other_source, self._faces_detection, out) is False:
             return False
 
         return True

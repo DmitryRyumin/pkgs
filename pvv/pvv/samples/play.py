@@ -112,6 +112,8 @@ class Run(Messages):
 
         self._prev_fps = 0  # Частота кадра
 
+        self._cap_prop_fps = 0  # Частота кадра ресурса извлечения фото/видеоданных
+
     # ------------------------------------------------------------------------------------------------------------------
     #  Внутренние методы
     # ------------------------------------------------------------------------------------------------------------------
@@ -620,15 +622,16 @@ class Run(Messages):
         return True
 
     # Циклическое получение кадров из видеопотока
-    def _loop(self, func = None, out = True):
+    def _loop(self, other_source = None, func = None, out = True):
         """
         Циклическое получение кадров из фото/видеопотока
 
         ([bool]) -> bool
 
         Аргументы:
-           func - Функция или метод
-           out  - Печатать процесс выполнения
+           other_source - Ресурс извлечения фото/видеоданных
+           func         - Функция или метод которые выполняют операцию над изображением
+           out          - Печатать процесс выполнения
 
         Возвращает: True если получение кадров осуществляется, в обратном случае False
         """
@@ -642,35 +645,38 @@ class Run(Messages):
         # Автоматическая проверка конфигурационного файла в момент работы программы
         self._update_config_json()
 
-        # Блокировка отображения повторных раз фото
-        if self._frame_count > 1 and self._source == self._formats_data[2] and self._viewer.clear_image_buffer is False:
-            return True
+        if other_source is None:
+            # Блокировка отображения повторных раз фото
+            if self._frame_count > 1 and self._source == self._formats_data[2] and self._viewer.clear_image_buffer is False:
+                return True
 
-        # Распознавание лиц на видеопотоке или WEB-камере
-        if self._source != self._formats_data[2]:
-            # Повторение воспроизведения видеопотока
-            if self._source is self._formats_data[1] and self._frame_count == (self._all_frame_count - 1) and \
-                    (self._viewer.repeat is True or self._args['repeat'] is True):
-                self._cap.set(cv2.CAP_PROP_POS_FRAMES, 1)  # Сброс видеопотока в начальную позицию
+            # Распознавание лиц на видеопотоке или WEB-камере
+            if self._source != self._formats_data[2]:
+                # Повторение воспроизведения видеопотока
+                if self._source is self._formats_data[1] and self._frame_count == (self._all_frame_count - 1) and \
+                        (self._viewer.repeat is True or self._args['repeat'] is True):
+                    self._cap.set(cv2.CAP_PROP_POS_FRAMES, 1)  # Сброс видеопотока в начальную позицию
 
-                self._frame_count = 0  # Сброс счетчика кадров в начальную позицию
+                    self._frame_count = 0  # Сброс счетчика кадров в начальную позицию
+
+                    self._viewer.repeat = False  # Повторное воспроизведения видеофайла отключено
 
                 self._viewer.repeat = False  # Повторное воспроизведения видеофайла отключено
 
-            self._viewer.repeat = False  # Повторное воспроизведения видеофайла отключено
+                has_frame, frame = self._cap.read()  # Захват, декодирование и возврат кадра
 
-            has_frame, frame = self._cap.read()  # Захват, декодирование и возврат кадра
+                # Текущий кадр не получен
+                if not has_frame:
+                    return -1  # Прерывание цикла
+            else:
+                frame = self._cap  # Изображение
+                self._viewer.clear_image_buffer = self._args['clear_image_buffer']  # Очистка буфера с изображением
 
-            # Текущий кадр не получен
-            if not has_frame:
-                return -1  # Прерывание цикла
+            self._frame_count += 1  # Номер текущего кадра
+
+            self._curr_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
         else:
-            frame = self._cap  # Изображение
-            self._viewer.clear_image_buffer = self._args['clear_image_buffer']  # Очистка буфера с изображением
-
-        self._frame_count += 1  # Номер текущего кадра
-
-        self._curr_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Преобразование изображения
+            other_source()  # Извлечение фото/видеоданных из сторонего ресурса
 
         # Выполнение функции/метода
         if func is not None and (type(func) is MethodType or type(func) is FunctionType) and \
@@ -683,12 +689,12 @@ class Run(Messages):
 
             # Получение реальной частоты кадров
             if self._args['fps'] == 0 or self._source is self._formats_data[0]:
-                self._args['fps'] = self._cap.get(cv2.CAP_PROP_FPS)
+                self._args['fps'] = self._cap.get(cv2.CAP_PROP_FPS) if other_source is None else self._cap_prop_fps
 
             try:
                 delay = 1 / self._args['fps']  # Задержка
             except ZeroDivisionError:
-                delay = 0.03  # Задержка (на случай если частота кадров 0 FPS)
+                delay = 0.03 if other_source is None else 0.001  # Задержка (на случай если частота кадров 0 FPS)
 
             # Необходимо произвести задержку видеопотока
             if delay > end_time:
