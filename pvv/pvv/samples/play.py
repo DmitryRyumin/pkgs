@@ -694,7 +694,7 @@ class Run(Messages):
             try:
                 delay = 1 / self._args['fps']  # Задержка
             except ZeroDivisionError:
-                delay = 0.03  # Задержка (на случай если частота кадров 0 FPS)
+                delay = 0.03 if other_source is None else 0.001  # Задержка (на случай если частота кадров 0 FPS)
 
             # Необходимо произвести задержку видеопотока
             if delay > end_time:
