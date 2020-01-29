@@ -53,6 +53,8 @@ class Run(Messages):
     def __init__(self):
         super().__init__()  # Выполнение конструктора из суперкласса
 
+        self._curr_frame_depth = None  # Текущий кадр (карта глубины)
+
         self._kinect_viewer = KinectViewer()  # Воспроизведение видеоданных из сенсора Kinect 2
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -76,9 +78,247 @@ class Run(Messages):
 
         print(self._ap.parse_args())
 
-
         if conv_to_dict is True:
             return vars(self._ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
+
+    # Проверка JSON файла настроек на валидность
+    def _valid_json_config(self, config, out = True):
+        """
+        Проверка настроек JSON на валидность
+
+        (dict [, bool]) -> bool
+
+        Аргументы:
+           config - Словарь из JSON файла
+           out    - Печатать процесс выполнения
+
+        Возвращает: True если файл валидный, в обратном случае False
+        """
+
+        # Переопределение значений из конфигурационного файла (только те которые не нужны на данном этапе)
+        config['repeat'] = False  # Повторение воспроизведения видеопотока
+        config['clear_image_buffer'] = True  # Очистка буфера с изображением
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._valid_json_config(config, out) is False:
+            return False
+
+        all_layer = 3  # Общее количество разделов
+        curr_valid_layer = 0  # Валидное количество разделов
+
+        # Проход по всем разделам конфигурационного файла
+        for key, val in config.items():
+            # Отображение карты глубины
+            if key == 'show_depth':
+                # Проверка значения
+                if type(val) is not bool:
+                    continue
+
+                curr_valid_layer += 1
+
+            # Размер карты глубины для масштабирования
+            if key == 'resize_depth':
+                all_layer_2 = 1  # Общее количество подразделов в текущем разделе
+                curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+
+                # Проверка значения
+                if type(val) is not dict or len(val) is 0:
+                    continue
+
+                # Проход по всем подразделам текущего раздела
+                for k, v in val.items():
+                    # Проверка значения
+                    if type(v) is not int or v < 0 or v > 512:
+                        continue
+
+                    # Ширина изображения для масштабирования
+                    if k == 'width':
+                        curr_valid_layer_2 += 1
+
+                if all_layer_2 == curr_valid_layer_2:
+                    curr_valid_layer += 1
+
+            # Базовые координаты текстов
+            if key == 'labels_base_coords_depth':
+                all_layer_2 = 2  # Общее количество подразделов в текущем разделе
+                curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+
+                # Проверка значения
+                if type(val) is not dict or len(val) is 0:
+                    continue
+
+                # Проход по всем подразделам текущего раздела
+                for k, v in val.items():
+                    # Проверка значения
+                    if type(v) is not int or v < 0 or v > 100:
+                        continue
+
+                    # 1. Право
+                    # 2. Вверх
+                    if k == 'right' or k == 'top':
+                        curr_valid_layer_2 += 1
+
+                if all_layer_2 == curr_valid_layer_2:
+                    curr_valid_layer += 1
+
+        # Сравнение общего количества разделов и валидных разделов в конфигурационном файле
+        if all_layer != curr_valid_layer:
+            # Вывод сообщения
+            if out is True:
+                print(self._invalid_file.format(
+                    self.red, datetime.now().strftime(self._format_time), self.end
+                ))
+
+            return False
+
+        return True  # Результат
+
+    # Загрузка и проверка конфигурационного файла
+    def _load_config_json(self, resources = configs, out = True):
+        """
+        Загрузка и проверка конфигурационного файла
+
+        ([module, bool]) -> bool
+
+        Аргументы:
+            resources - Модуль с ресурсами
+            out       - Печатать процесс выполнения
+
+        Возвращает: True если файл загружен и валиден, в обратном случае False
+        """
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._load_config_json(resources, out) is False:
+            return False
+
+        return True
+
+    # Автоматическая проверка конфигурационного файла в момент работы программы
+    def _update_config_json(self, set_window_name = True):
+        """
+        Автоматическая проверка конфигурационного файла в момент работы программы
+
+        ([bool]) -> bool
+
+        Аргументы:
+            set_window_name - Установка имени окна
+
+        Возвращает: True если аргументы переданы верно, в обратном случае False
+        """
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._update_config_json(set_window_name) is False:
+            return False
+
+        return True
+
+    # Захват фото/видеоданных
+    def _grab_data(self, out = True):
+        """
+        Захват фото/видеоданных
+
+        ([bool]) -> bool
+
+        Аргументы:
+           out - Печатать процесс выполнения
+
+        Возвращает: True если захват фото/видеоданных произведен, в обратном случае False
+        """
+
+        # Запуск Kinect 2
+        if self._kinect_viewer.start() is False:
+            return False
+
+        return True
+
+    # Получение цветного кадра из Kinect 2
+    def _get_color_frame(self):
+        """
+        Получение цветного кадра из Kinect 2
+        """
+
+        self._curr_frame = self._kinect_viewer.get_color_frame()  # Получение цветного кадра из Kinect 2
+
+    # Получение карты глубины из Kinect 2
+    def _get_depth_frame(self):
+        """
+        Получение карты глубины из Kinect 2
+        """
+
+        self._curr_frame_depth = self._kinect_viewer.get_depth_frame()  # Получение карты глубины из Kinect 2
+
+        # Изменение размеров изображения карты глубины не стандартные
+        if self._args['resize_depth']['width'] is not 0:
+            # Изменение размера карты глубины
+            self._curr_frame_depth = self._viewer.resize_frame(
+                self._curr_frame_depth, self._args['resize_depth']['width'], 0
+            )
+
+            # Изображение уменьшилось
+            if self._curr_frame_depth is not None:
+                self._curr_frame_depth, _, _ = self._curr_frame_depth
+
+        # Правый отступ для карты глубины
+        right_margin = self._curr_frame.shape[1] - self._curr_frame_depth.shape[1]\
+                       - self._args['labels_base_coords_depth']['right']
+
+        # Вставка карты глубины в основное изображение
+        self._curr_frame[
+            self._args['labels_base_coords_depth']['top']:
+                self._args['labels_base_coords_depth']['top'] + self._curr_frame_depth.shape[0],
+            right_margin: right_margin + self._curr_frame_depth.shape[1]] = self._curr_frame_depth
+
+    # Операции над кадром
+    def _frame_o(self):
+        """
+        Операции над кадром
+        """
+
+        # Отображение карты глубины
+        if self._args['show_depth'] is True:
+            self._get_depth_frame()  # Получение карты глубины из Kinect 2
+
+    # Нанесение уведомления на кадр
+    def _err_notification(self, condition, text, out = True):
+        """
+        Нанесение уведомления на кадр
+
+        (str [, bool, bool]) -> None
+
+        Аргументы:
+           condition - Условие
+           text      - Текст уведомления если условие True
+           out       - Печатать процесс выполнения
+
+        Возвращает: True если уведомление не применено, в обратном случае False
+        """
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._err_notification(condition, text, out) is False:
+            return False
+
+        return True
+
+    # Циклическое получение кадров из видеопотока
+    def _loop(self, other_source = None, func = None, out = True):
+        """
+        Циклическое получение кадров из фото/видеопотока
+
+        ([bool]) -> bool
+
+        Аргументы:
+           other_source - Ресурс извлечения фото/видеоданных
+           func         - Функция или метод
+           out          - Печатать процесс выполнения
+
+        Возвращает: True если получение кадров осуществляется, в обратном случае False
+        """
+
+        # Выполнение функции из суперкласса с отрицательным результатом
+        if super()._loop(self._get_color_frame, self._frame_o, out) is False:
+            return False
+
+        return True
 
     # ------------------------------------------------------------------------------------------------------------------
     #  Внешние методы
@@ -102,9 +342,10 @@ class Run(Messages):
         if super().run(metadata, resources, False, out) is False:
             return False
 
-        # Запуск алгоритма для поиска объектов
-        if self._kinect_viewer.start() is False:
-            return False
+        # Запуск процесса извлечения изображений
+        if start is True:
+            self._viewer.set_loop(self._loop)  # Циклическая функция извлечения изображений
+            self._viewer.start()  # Запуск
 
 
 def main():
