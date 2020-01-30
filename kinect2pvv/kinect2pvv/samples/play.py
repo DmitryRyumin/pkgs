@@ -53,7 +53,10 @@ class Run(Messages):
     def __init__(self):
         super().__init__()  # Выполнение конструктора из суперкласса
 
-        self._curr_frame_depth = None  # Текущий кадр (карта глубины)
+        # Текущие кадры
+        self._curr_frame = None  # Цветной кадр
+        self._curr_frame_depth = None  # Карта глубины
+        self._curr_frame_infrared = None  # Инфракрасный кадр
 
         self._kinect_viewer = KinectViewer()  # Воспроизведение видеоданных из сенсора Kinect 2
 
@@ -103,62 +106,89 @@ class Run(Messages):
         if super()._valid_json_config(config, out) is False:
             return False
 
-        all_layer = 3  # Общее количество разделов
+        all_layer = 2  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
         for key, val in config.items():
-            # Отображение карты глубины
-            if key == 'show_depth':
+            # 1. Отображение карты глубины
+            # 2. Отображение инфракрасного кадра
+            if key == 'show_depth' or key == 'show_infrared':
                 # Проверка значения
                 if type(val) is not bool:
                     continue
 
                 curr_valid_layer += 1
 
-            # Размер карты глубины для масштабирования
-            if key == 'resize_depth':
-                all_layer_2 = 1  # Общее количество подразделов в текущем разделе
-                curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+            # Отображение карты глубины или инфракрасного кадра
+            if (('show_depth' in config and config['show_depth'] is True)
+                    or ('show_infrared' in config and config['show_infrared'] is True)):
+                # Размер карты глубины и инфракрасного кадра для масштабирования
+                if key == 'resize_depth_ir':
+                    # Добавляем:
+                    #     Размер карты глубины и инфракрасного кадра для масштабирования
+                    all_layer += 1
 
-                # Проверка значения
-                if type(val) is not dict or len(val) is 0:
-                    continue
+                    all_layer_2 = 1  # Общее количество подразделов в текущем разделе
+                    curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
 
-                # Проход по всем подразделам текущего раздела
-                for k, v in val.items():
                     # Проверка значения
-                    if type(v) is not int or v < 0 or v > 512:
+                    if type(val) is not dict or len(val) is 0:
                         continue
 
-                    # Ширина изображения для масштабирования
-                    if k == 'width':
-                        curr_valid_layer_2 += 1
+                    # Проход по всем подразделам текущего раздела
+                    for k, v in val.items():
+                        # Проверка значения
+                        if type(v) is not int or v < 0 or v > 512:
+                            continue
 
-                if all_layer_2 == curr_valid_layer_2:
-                    curr_valid_layer += 1
+                        # Ширина изображения для масштабирования
+                        if k == 'width':
+                            curr_valid_layer_2 += 1
 
-            # Базовые координаты текстов
-            if key == 'labels_base_coords_depth':
-                all_layer_2 = 2  # Общее количество подразделов в текущем разделе
-                curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+                    if all_layer_2 == curr_valid_layer_2:
+                        curr_valid_layer += 1
 
-                # Проверка значения
-                if type(val) is not dict or len(val) is 0:
-                    continue
+                # Базовые координаты карты глубины и инфракрасного кадра относительно верхнего правого угла
+                if key == 'labels_base_coords_depth_ir':
+                    # Добавляем:
+                    #     Базовые координаты карты глубины и инфракрасного кадра относительно верхнего правого угла
+                    all_layer += 1
 
-                # Проход по всем подразделам текущего раздела
-                for k, v in val.items():
+                    all_layer_2 = 2  # Общее количество подразделов в текущем разделе
+                    curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+
                     # Проверка значения
-                    if type(v) is not int or v < 0 or v > 100:
+                    if type(val) is not dict or len(val) is 0:
                         continue
 
-                    # 1. Право
-                    # 2. Вверх
-                    if k == 'right' or k == 'top':
-                        curr_valid_layer_2 += 1
+                    # Проход по всем подразделам текущего раздела
+                    for k, v in val.items():
+                        # Проверка значения
+                        if type(v) is not int or v < 0 or v > 100:
+                            continue
 
-                if all_layer_2 == curr_valid_layer_2:
+                        # 1. Право
+                        # 2. Вверх
+                        if k == 'right' or k == 'top':
+                            curr_valid_layer_2 += 1
+
+                    if all_layer_2 == curr_valid_layer_2:
+                        curr_valid_layer += 1
+
+            # Отображение карты глубины или инфракрасного кадра
+            if ('show_depth' in config and config['show_depth'] is True
+                    and 'show_infrared' in config and config['show_infrared'] is True):
+                # Расстояние между картой глубины и инфракрасным кадром
+                if key == 'distance_between_depth_ir':
+                    # Добавляем:
+                    #     Расстояние между картой глубины и инфракрасным кадром
+                    all_layer += 1
+
+                    # Проверка значения
+                    if type(val) is not int or val < 0 or val > 50:
+                        continue
+
                     curr_valid_layer += 1
 
         # Сравнение общего количества разделов и валидных разделов в конфигурационном файле
@@ -248,10 +278,10 @@ class Run(Messages):
         self._curr_frame_depth = self._kinect_viewer.get_depth_frame()  # Получение карты глубины из Kinect 2
 
         # Изменение размеров изображения карты глубины не стандартные
-        if self._args['resize_depth']['width'] is not 0:
+        if self._args['resize_depth_ir']['width'] is not 0:
             # Изменение размера карты глубины
             self._curr_frame_depth = self._viewer.resize_frame(
-                self._curr_frame_depth, self._args['resize_depth']['width'], 0
+                self._curr_frame_depth, self._args['resize_depth_ir']['width'], 0
             )
 
             # Изображение уменьшилось
@@ -260,13 +290,49 @@ class Run(Messages):
 
         # Правый отступ для карты глубины
         right_margin = self._curr_frame.shape[1] - self._curr_frame_depth.shape[1]\
-                       - self._args['labels_base_coords_depth']['right']
+                       - self._args['labels_base_coords_depth_ir']['right']
 
         # Вставка карты глубины в основное изображение
         self._curr_frame[
-            self._args['labels_base_coords_depth']['top']:
-                self._args['labels_base_coords_depth']['top'] + self._curr_frame_depth.shape[0],
+            self._args['labels_base_coords_depth_ir']['top']:
+                self._args['labels_base_coords_depth_ir']['top'] + self._curr_frame_depth.shape[0],
             right_margin: right_margin + self._curr_frame_depth.shape[1]] = self._curr_frame_depth
+
+    # Получение инфракрасного кадра из Kinect 2
+    def _get_infrared_frame(self):
+        """
+        Получение инфракрасного кадра из Kinect 2
+        """
+
+        # Получение инфракрасного кадра из Kinect 2
+        self._curr_frame_infrared = self._kinect_viewer.get_infrared_frame()
+
+        # Изменение размеров изображения карты глубины не стандартные
+        if self._args['resize_depth_ir']['width'] is not 0:
+            # Изменение размера карты глубины
+            self._curr_frame_infrared = self._viewer.resize_frame(
+                self._curr_frame_infrared, self._args['resize_depth_ir']['width'], 0
+            )
+
+            # Изображение уменьшилось
+            if self._curr_frame_infrared is not None:
+                self._curr_frame_infrared, _, _ = self._curr_frame_infrared
+
+        # Правый отступ для карты глубины
+        right_margin = self._curr_frame.shape[1] - self._curr_frame_infrared.shape[1]\
+                       - self._args['labels_base_coords_depth_ir']['right']
+
+        # Верхний отступ для инфракрасного кадра
+        top_margin = self._args['labels_base_coords_depth_ir']['top']
+
+        # Отображение карты глубины
+        if self._args['show_depth'] is True:
+            top_margin += self._curr_frame_depth.shape[0] + self._args['distance_between_depth_ir']
+
+        # Вставка карты глубины в основное изображение
+        self._curr_frame[
+            top_margin: top_margin + self._curr_frame_infrared.shape[0],
+            right_margin: right_margin + self._curr_frame_infrared.shape[1]] = self._curr_frame_infrared
 
     # Операции над кадром
     def _frame_o(self):
@@ -277,6 +343,10 @@ class Run(Messages):
         # Отображение карты глубины
         if self._args['show_depth'] is True:
             self._get_depth_frame()  # Получение карты глубины из Kinect 2
+
+        # Отображение инфракрасного кадра
+        if self._args['show_infrared'] is True:
+            self._get_infrared_frame()  # Получение инфракрасного кадра из Kinect 2
 
     # Нанесение уведомления на кадр
     def _err_notification(self, condition, text, out = True):

@@ -2,8 +2,8 @@
     "metadata": true,
     "window_name": "Kinect 2",
     "resize" : {
-        "width": 1280,
-        "height": 720
+        "width": 960,
+        "height": 540
     },
     "text_color" : {
         "red": 0,
@@ -24,12 +24,14 @@
     "labels_padding": 10,
     "real_time": true,
     "fps": 0,
-    "show_depth": true,
-    "resize_depth" : {
+    "show_depth": false,
+    "show_infrared": false,
+    "resize_depth_ir" : {
         "width": 300
     },
-    "labels_base_coords_depth": {
+    "labels_base_coords_depth_ir": {
         "right": 10,
         "top": 10
-    }
+    },
+    "distance_between_depth_ir": 10
 }

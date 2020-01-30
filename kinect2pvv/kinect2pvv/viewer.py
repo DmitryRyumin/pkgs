@@ -8,6 +8,7 @@
 # ######################################################################################################################
 # Импорт необходимых инструментов
 # ######################################################################################################################
+import time         # Работа со временем
 import numpy as np  # Научные вычисления
 import cv2          # Алгоритмы компьютерного зрения
 
@@ -32,6 +33,7 @@ class Messages(cfg.Messages):
         super().__init__()  # Выполнение конструктора из суперкласса
 
         self._run_kinect = '[{}] Запуск сенсора Kinect 2 ...'
+        self._kinect_not_found = '[{}{}{}] Достигнут лимит ожидания запуска сенсора Kinect 2 в {} секунд ...'
 
 
 # ######################################################################################################################
@@ -50,6 +52,8 @@ class KinectViewer(Messages):
         self._kinect = None  # Kinect 2
 
         self._run_error = 0  # Результат включения Kinect 2
+
+        self._wait = 10  # Количество секунд для ожидания включения Kinect 2
 
     # ------------------------------------------------------------------------------------------------------------------
     # Свойства
@@ -85,14 +89,40 @@ class KinectViewer(Messages):
         if out is True:
             print(self._run_kinect.format(datetime.now().strftime(self._format_time)))
 
-        # Инициализация Kinect на получение цветного изображения, карты глубины и скелетных моделей
+        # Инициализация Kinect 2 на получение цветного изображения, карты глубины и скелетных моделей
         # noinspection PyUnreachableCode
         self._kinect = PyKinectRuntime.PyKinectRuntime(
             PyKinectV2.FrameSourceTypes_Color
             | PyKinectV2.FrameSourceTypes_Body
             | PyKinectV2.FrameSourceTypes_Depth
+            | PyKinectV2.FrameSourceTypes_Infrared
             | PyKinectV2.FrameSourceTypes_BodyIndex
         )
+
+        start_time = time.time()  # Отсчет времени выполнения
+
+        cnt = 1
+
+        # Ожидаем получение информации из Kinect 2
+        while True:
+            if self._kinect.has_new_color_frame() and \
+                    self._kinect.has_new_depth_frame() and \
+                    self._kinect.has_new_infrared_frame():
+                cnt += 1
+
+                print(cnt)
+                break
+
+            end_time = round(time.time() - start_time, 2)  # Конец времени выполнения
+
+            if end_time >= self._wait:
+                # Вывод сообщения
+                if out is True:
+                    print(self._kinect_not_found.format(
+                        self.red, datetime.now().strftime(self._format_time), self.end, self._wait
+                    ))
+
+                return False
 
         return True
 
@@ -140,5 +170,24 @@ class KinectViewer(Messages):
         out_frame = out_frame.reshape(((424, 512))).astype(np.uint16)
 
         out_frame = cv2.applyColorMap(cv2.convertScaleAbs(out_frame, alpha = 255 / (4500 - 500)), cv2.COLORMAP_JET)
+
+        return out_frame  # Результат
+
+    # Получение инфракрасного кадра из Kinect 2
+    def get_infrared_frame(self):
+        """
+        Получение инфракрасного кадра из Kinect 2
+
+        () -> numpy.ndarray
+
+        Возвращает: Инфракрасный кадр преобразованный под цветной формат
+        """
+
+        out_frame = self.kinect.get_last_infrared_frame()  # Получение инфракрасного кадра с Kinect
+
+        # Преобразование инфракрасного кадра в необходимый формат (512, 424)
+        out_frame = out_frame.reshape(((424, 512))).astype(np.uint16)
+
+        out_frame = cv2.cvtColor(cv2.convertScaleAbs(out_frame, alpha = 255 / 65535), cv2.COLOR_GRAY2RGB)
 
         return out_frame  # Результат
