@@ -24,8 +24,8 @@
     "labels_padding": 10,
     "real_time": true,
     "fps": 0,
-    "show_depth": false,
-    "show_infrared": false,
+    "show_depth": true,
+    "show_infrared": true,
     "resize_depth_ir" : {
         "width": 300
     },

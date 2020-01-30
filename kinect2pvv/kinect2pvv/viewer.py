@@ -51,8 +51,6 @@ class KinectViewer(Messages):
 
         self._kinect = None  # Kinect 2
 
-        self._run_error = 0  # Результат включения Kinect 2
-
         self._wait = 10  # Количество секунд для ожидания включения Kinect 2
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -73,7 +71,7 @@ class KinectViewer(Messages):
         """
         Запуск Kinect 2
 
-        ([bool]) -> bool
+        ([bool, bool]) -> bool
 
         Аргументы:
            out - Печатать процесс выполнения
@@ -101,17 +99,12 @@ class KinectViewer(Messages):
 
         start_time = time.time()  # Отсчет времени выполнения
 
-        cnt = 1
-
         # Ожидаем получение информации из Kinect 2
         while True:
             if self._kinect.has_new_color_frame() and \
                     self._kinect.has_new_depth_frame() and \
                     self._kinect.has_new_infrared_frame():
-                cnt += 1
-
-                print(cnt)
-                break
+                return True
 
             end_time = round(time.time() - start_time, 2)  # Конец времени выполнения
 
@@ -124,8 +117,6 @@ class KinectViewer(Messages):
 
                 return False
 
-        return True
-
     # Получение цветного кадра из Kinect 2
     def get_color_frame(self):
         """
@@ -137,15 +128,6 @@ class KinectViewer(Messages):
         """
 
         out_frame = self.kinect.get_last_color_frame()  # Получение цветного кадра с Kinect
-
-        # Устройство Kinect 2 не запустилось
-        if self._run_error is 0:
-            # Кадр получен
-            if np.count_nonzero(out_frame) is 0:
-                self._run_error += 1  # Устройство Kinect 2 запустилось
-
-                self.kinect.close()  # Закрытие Kinect 2
-                self.start(False)  # Попытка запустить снова
 
         # Преобразование кадра в необходимый формат (1920, 1080, RGB)
         out_frame = cv2.cvtColor(

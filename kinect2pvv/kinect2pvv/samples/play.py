@@ -79,8 +79,6 @@ class Run(Messages):
 
         super()._build_args(False)  # Выполнение функции из суперкласса
 
-        print(self._ap.parse_args())
-
         if conv_to_dict is True:
             return vars(self._ap.parse_args())  # Преобразование списка аргументов командной строки в словарь
 
@@ -256,7 +254,7 @@ class Run(Messages):
         """
 
         # Запуск Kinect 2
-        if self._kinect_viewer.start() is False:
+        if self._kinect_viewer.start(out) is False:
             return False
 
         return True
