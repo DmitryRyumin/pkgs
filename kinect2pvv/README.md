@@ -67,6 +67,7 @@ pip install --upgrade kinect2pvv
 | resize_depth_ir | bool | Размер карты глубины и инфракрасного кадра для масштабирования<br>`"show_depth" = true` или `"show_infrared" = true` | От `0` до `512` |
 | labels_base_coords_depth_ir | int | Начальные координаты карты глубины и инфракрасного кадра относительно верхнего правого угла<br>`"show_depth" = true` или `"show_infrared" = true` | От `0` до `100` |
 | distance_between_depth_ir | int | Расстояние между картой глубины и инфракрасным кадром<br>`"show_depth" = true` и `"show_infrared" = true` | От `0` до `50` |
+| norm_infrared | float | Нормализация значений инфракрасной камеры<br>`"show_infrared" = true` | От `0.01` до `1.0` |
 
 #### Горячие клавиши
 

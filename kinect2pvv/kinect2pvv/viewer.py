@@ -25,6 +25,7 @@ import numpy as np  # Научные вычисления
 import cv2          # Алгоритмы компьютерного зрения
 
 from datetime import datetime  # Работа со временем
+from _testcapi import USHRT_MAX  # Максимально доступное число для формата ushort
 
 # Персональные
 from core2pkgs import config as cfg  # Глобальный файл настроек
@@ -168,20 +169,42 @@ class KinectViewer(Messages):
         return out_frame  # Результат
 
     # Получение инфракрасного кадра из Kinect 2
-    def get_infrared_frame(self):
+    def get_infrared_frame(self, norm = 0.32, out = True):
         """
         Получение инфракрасного кадра из Kinect 2
 
-        () -> numpy.ndarray
+        ([float]) -> numpy.ndarray
+
+        Аргументы:
+           norm - Нормализация значений инфракрасной камеры
 
         Возвращает: Инфракрасный кадр преобразованный под цветной формат
         """
+
+        # Проверка аргументов
+        if type(norm) is not float or norm < 0.01 or norm > 1 or type(out) is not bool:
+            # Вывод сообщения
+            if out is True:
+                print(self._invalid_arguments.format(
+                    self.red, datetime.now().strftime(self._format_time), self.end,
+                    __class__.__name__ + '.' + self.get_infrared_frame.__name__
+                ))
+
+            return None
 
         out_frame = self.kinect.get_last_infrared_frame()  # Получение инфракрасного кадра с Kinect
 
         # Преобразование инфракрасного кадра в необходимый формат (512, 424)
         out_frame = out_frame.reshape(((424, 512))).astype(np.uint16)
 
-        out_frame = cv2.cvtColor(cv2.convertScaleAbs(out_frame, alpha = 255 / 65535), cv2.COLOR_GRAY2RGB)
+        # Нормализация значений инфракрасной камеры
+        if norm < 1.0:
+            out_frame = cv2.max(
+                0.01, cv2.min(
+                    1.0, (out_frame / USHRT_MAX) / norm
+                )
+            ) * USHRT_MAX
+
+        out_frame = cv2.cvtColor(cv2.convertScaleAbs(out_frame, alpha = 255 / USHRT_MAX), cv2.COLOR_GRAY2RGB)
 
         return out_frame  # Результат

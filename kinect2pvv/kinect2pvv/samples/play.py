@@ -15,7 +15,7 @@ from datetime import datetime  # Работа со временем
 
 # Персональные
 import kinect2pvv  # Воспроизведение видеоданных из сенсора Kinect 2
-
+import cv2          # Алгоритмы компьютерного зрения
 from pvv.samples import play                # Пример воспроизведения фото/видео данных
 from kinect2pvv.viewer import KinectViewer  # Воспроизведение видеоданных из сенсора Kinect 2
 from kinect2pvv import configs              # Конфигурационные файлы
@@ -169,6 +169,20 @@ class Run(Messages):
                     if all_layer_2 == curr_valid_layer_2:
                         curr_valid_layer += 1
 
+                # Отображение инфракрасного кадра
+                if 'show_infrared' in config and config['show_infrared'] is True:
+                    # Нормализация значений инфракрасной камеры
+                    if key == 'norm_infrared':
+                        # Добавляем:
+                        #     Нормализация значений инфракрасной камеры
+                        all_layer += 1
+
+                        # Проверка значения
+                        if type(val) is not float or val < 0.01 or val > 1.0:
+                            continue
+
+                        curr_valid_layer += 1
+
             # Отображение карты глубины или инфракрасного кадра
             if ('show_depth' in config and config['show_depth'] is True
                     and 'show_infrared' in config and config['show_infrared'] is True):
@@ -298,7 +312,14 @@ class Run(Messages):
         """
 
         # Получение инфракрасного кадра из Kinect 2
-        self._curr_frame_infrared = self._kinect_viewer.get_infrared_frame()
+        self._curr_frame_infrared = self._kinect_viewer.get_infrared_frame(self._args['norm_infrared'])
+
+        # Инфракрасный кадр не получен
+        if self._curr_frame_infrared is None:
+            # Нанесение уведомления на кадр
+            self._err_notification(self._automatic_update['invalid_config_file'], self._check_config_file_not_valid)
+
+            return None
 
         # Изменение размеров изображения карты глубины не стандартные
         if self._args['resize_depth_ir']['width'] is not 0:
