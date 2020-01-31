@@ -11,12 +11,7 @@ python kinect2pvv/samples/play.py [--config путь_к_конфигурацио
 # ######################################################################################################################
 # Импорт необходимых инструментов
 # ######################################################################################################################
-from datetime import datetime                           # Работа со временем
-from types import ModuleType, FunctionType, MethodType  # Проверка объектов на модуль, метод, функцию
-
-import sys
-
-sys.path.append('C:/Users/NUC204/Desktop/GitHub/pkgs/kinect2pvv')
+from datetime import datetime  # Работа со временем
 
 # Персональные
 import kinect2pvv  # Воспроизведение видеоданных из сенсора Kinect 2
