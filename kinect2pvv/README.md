@@ -43,7 +43,7 @@ pip install --upgrade kinect2pvv
 
 | Файлы/скрипты | Аргументы командной строки | Описания |
 | ------------- | -------------------------- | -------- |
-| [play.py](https://github.com/DmitryRyumin/pkgs/blob/master/kinect2pvv/kinect2pvv/samples/play.py)<br>`kinect2pvv_play` | --config str` - Путь к конфигурационному файлу<br>`--automatic_update` - Автоматическая проверка конфигурационного файла в момент работы программы (работает при заданном `--config`)<br>`--frames_to_update int=25` - Через какое количество шагов проверять конфигурационный файл (работает при `--automatic_update`)<br>`--no_clear_shell` - Не очищать консоль перед выполнением | Воспроизведение видеоданных из сенсора Kinect 2 |
+| [play.py](https://github.com/DmitryRyumin/pkgs/blob/master/kinect2pvv/kinect2pvv/samples/play.py)<br>`kinect2pvv_play` | --config str` - Путь к конфигурационному файлу`<br>--automatic_update` - Автоматическая проверка конфигурационного файла в момент работы программы (работает при заданном `--config`)`<br>--frames_to_update int=25` - Через какое количество шагов проверять конфигурационный файл (работает при `--automatic_update`)`<br>--no_clear_shell` - Не очищать консоль перед выполнением | Воспроизведение видеоданных из сенсора Kinect 2 |
 
 ### [Конфигурационный файл](https://github.com/DmitryRyumin/pkgs/blob/master/kinect2pvv/kinect2pvv/configs/config.json)
 
