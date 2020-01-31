@@ -34,5 +34,5 @@
         "top": 10
     },
     "distance_between_depth_ir": 10,
-    "norm_infrared": 0.01
+    "norm_infrared": 0.07
 }
