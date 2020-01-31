@@ -4,6 +4,12 @@ from setuptools import setup, find_packages
 
 MIN_PYTHON_VERSION = (3, 7)
 
+MIN_OS_WINDOWS = (8, 0)
+
+# linux или OS X
+if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "darwin":
+    raise RuntimeError("Требуется операционная система Windows >= {}.{}".format(MIN_OS_WINDOWS[0], MIN_OS_WINDOWS[1]))
+
 if sys.version_info[:2] != MIN_PYTHON_VERSION:
     raise RuntimeError("Требуется версия Python = {}.{}".format(MIN_PYTHON_VERSION[0], MIN_PYTHON_VERSION[1]))
 
@@ -33,9 +39,7 @@ Topic :: Scientific/Engineering :: Mathematics
 Topic :: Software Development
 Topic :: Software Development :: Libraries
 Topic :: Software Development :: Libraries :: Python Modules
-Operating System :: MacOS :: MacOS X
 Operating System :: Microsoft :: Windows
-Operating System :: POSIX :: Linux
 """
 
 with open('README.md', 'r') as fh:

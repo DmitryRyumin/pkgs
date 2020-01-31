@@ -7,7 +7,7 @@ __title__ = 'kinect2pvv'
 __summary__ = 'Воспроизведение видеоданных из сенсора Kinect 2'
 __uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/kinect2pvv'
 
-__version__ = '20.1.31.0'
+__version__ = '20.1.31.3'
 
 __author__ = 'Dmitry Ryumin'
 __email__ = 'dl_03.03.1991@mail.ru'

@@ -14,7 +14,7 @@
 pip install kinect2pvv
 ```
 
-### Примечание для Windows
+### Примечание
 
 1. Удалить `PyOpenGL`
 
