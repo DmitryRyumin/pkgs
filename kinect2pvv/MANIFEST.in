@@ -1,0 +1,2 @@
+include kinect2pvv/configs/*.json
+include kinect2pvv/core/*

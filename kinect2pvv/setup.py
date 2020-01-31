@@ -10,7 +10,8 @@ if sys.version_info[:2] != MIN_PYTHON_VERSION:
 import kinect2pvv
 
 REQUIRED_PACKAGES = [
-
+    'pvv >= 20.1.29.0',
+    'comtypes >= 1.1.7'
 ]
 
 CLASSIFIERS = """\
@@ -60,7 +61,7 @@ with open('README.md', 'r') as fh:
         python_requires = '>=3.7',
         entry_points = {
             'console_scripts': [
-
+                'kinect2pvv_play = kinect2pvv.samples.play:main',
             ],
         }
     )
