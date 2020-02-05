@@ -99,7 +99,7 @@ class Run(Messages):
         if super()._valid_json_config(config, out) is False:
             return False
 
-        all_layer = 6  # Общее количество разделов
+        curr_all_layer = all_layer = 2  # Общее количество разделов
         curr_valid_layer = 0  # Валидное количество разделов
 
         # Проход по всем разделам конфигурационного файла
@@ -111,75 +111,97 @@ class Run(Messages):
                 if type(val) is not bool:
                     continue
 
-                curr_valid_layer += 1
+                # Общее количество разделов не изменялось
+                if curr_all_layer == all_layer:
+                    if config['show_infrared'] is True or config['show_depth'] is True:
+                        # Добавляем:
+                        #     1. Размер карты глубины и инфракрасного кадра для масштабирования
+                        #     2. Координаты карты глубины и инфракрасного кадра относительно верхнего правого угла
+                        all_layer += 2
 
-                # Отображение карты глубины отключено
-                if val is False:
-                    # Отсекаем:
-                    #     1. Расстояние между картой глубины и инфракрасным кадром
-                    #     2. Нормализация значений инфракрасной камеры
-                    all_layer -= 1
+                    if config['show_infrared'] is True:
+                        # Добавляем:
+                        #     Нормализация значений инфракрасной камеры
+                        all_layer += 1
+
+                        if config['show_depth'] is True:
+                            # Добавляем:
+                            #     Расстояние между картой глубины и инфракрасным кадром
+                            all_layer += 1
+
+                curr_valid_layer += 1
 
             # Размер карты глубины и инфракрасного кадра для масштабирования
             if key == 'resize_depth_ir':
-                all_layer_2 = 1  # Общее количество подразделов в текущем разделе
-                curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+                # Отображение карты глубины и/или инфракрасного кадра
+                if (('show_depth' in config and config['show_depth'] is True) or
+                        ('show_infrared' in config and config['show_infrared'] is True)):
+                    all_layer_2 = 1  # Общее количество подразделов в текущем разделе
+                    curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
 
-                # Проверка значения
-                if type(val) is not dict or len(val) is 0:
-                    continue
-
-                # Проход по всем подразделам текущего раздела
-                for k, v in val.items():
                     # Проверка значения
-                    if type(v) is not int or v < 0 or v > 512:
+                    if type(val) is not dict or len(val) is 0:
                         continue
 
-                    # Ширина изображения для масштабирования
-                    if k == 'width':
-                        curr_valid_layer_2 += 1
+                    # Проход по всем подразделам текущего раздела
+                    for k, v in val.items():
+                        # Проверка значения
+                        if type(v) is not int or v < 0 or v > 512:
+                            continue
 
-                if all_layer_2 == curr_valid_layer_2:
-                    curr_valid_layer += 1
+                        # Ширина изображения для масштабирования
+                        if k == 'width':
+                            curr_valid_layer_2 += 1
+
+                    if all_layer_2 == curr_valid_layer_2:
+                        curr_valid_layer += 1
 
             # Базовые координаты карты глубины и инфракрасного кадра относительно верхнего правого угла
             if key == 'labels_base_coords_depth_ir':
-                all_layer_2 = 2  # Общее количество подразделов в текущем разделе
-                curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
+                # Отображение карты глубины и/или инфракрасного кадра
+                if (('show_depth' in config and config['show_depth'] is True) or
+                        ('show_infrared' in config and config['show_infrared'] is True)):
+                    all_layer_2 = 2  # Общее количество подразделов в текущем разделе
+                    curr_valid_layer_2 = 0  # Валидное количество подразделов в текущем разделе
 
-                # Проверка значения
-                if type(val) is not dict or len(val) is 0:
-                    continue
-
-                # Проход по всем подразделам текущего раздела
-                for k, v in val.items():
                     # Проверка значения
-                    if type(v) is not int or v < 0 or v > 100:
+                    if type(val) is not dict or len(val) is 0:
                         continue
 
-                    # 1. Право
-                    # 2. Вверх
-                    if k == 'right' or k == 'top':
-                        curr_valid_layer_2 += 1
+                    # Проход по всем подразделам текущего раздела
+                    for k, v in val.items():
+                        # Проверка значения
+                        if type(v) is not int or v < 0 or v > 100:
+                            continue
 
-                if all_layer_2 == curr_valid_layer_2:
-                    curr_valid_layer += 1
+                        # 1. Право
+                        # 2. Вверх
+                        if k == 'right' or k == 'top':
+                            curr_valid_layer_2 += 1
+
+                    if all_layer_2 == curr_valid_layer_2:
+                        curr_valid_layer += 1
 
             # Расстояние между картой глубины и инфракрасным кадром
             if key == 'distance_between_depth_ir':
-                # Проверка значения
-                if type(val) is not int or val < 0 or val > 50:
-                    continue
+                # Отображение карты глубины и инфракрасного кадра
+                if ('show_depth' in config and config['show_depth'] is True and
+                        'show_infrared' in config and config['show_infrared'] is True):
+                    # Проверка значения
+                    if type(val) is not int or val < 0 or val > 50:
+                        continue
 
-                curr_valid_layer += 1
+                    curr_valid_layer += 1
 
             # Нормализация значений инфракрасной камеры
             if key == 'norm_infrared':
-                # Проверка значения
-                if type(val) is not float or val < 0.01 or val > 1.0:
-                    continue
+                # Отображение инфракрасного кадра
+                if 'show_infrared' in config and config['show_infrared'] is True:
+                    # Проверка значения
+                    if type(val) is not float or val < 0.01 or val > 1.0:
+                        continue
 
-                curr_valid_layer += 1
+                    curr_valid_layer += 1
 
         # Сравнение общего количества разделов и валидных разделов в конфигурационном файле
         if all_layer != curr_valid_layer:
