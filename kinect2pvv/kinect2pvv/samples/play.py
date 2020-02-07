@@ -13,6 +13,10 @@ python kinect2pvv/samples/play.py [--config путь_к_конфигурацио
 # ######################################################################################################################
 from datetime import datetime  # Работа со временем
 
+import sys
+
+sys.path.append('C:/Users/NUC204/Desktop/GitHub/pkgs/kinect2pvv')
+
 # Персональные
 import kinect2pvv  # Воспроизведение видеоданных из сенсора Kinect 2
 import cv2          # Алгоритмы компьютерного зрения
@@ -353,6 +357,14 @@ class Run(Messages):
             top_margin: top_margin + self._curr_frame_infrared.shape[0],
             right_margin: right_margin + self._curr_frame_infrared.shape[1]] = self._curr_frame_infrared
 
+    # Получение ориентиров скелета из Kinect 2
+    def _get_bodies(self):
+        """
+        Получение ориентиров скелета из Kinect 2
+        """
+
+        self._kinect_viewer.get_bodies()  # Получение ориентиров скелета из Kinect 2
+
     # Операции над кадром
     def _frame_o(self):
         """
@@ -366,6 +378,8 @@ class Run(Messages):
         # Отображение инфракрасного кадра
         if self._args['show_infrared'] is True:
             self._get_infrared_frame()  # Получение инфракрасного кадра из Kinect 2
+
+        self._get_bodies()  # Получение ориентиров скелета из Kinect 2
 
     # Нанесение уведомления на кадр
     def _err_notification(self, condition, text, out = True):
