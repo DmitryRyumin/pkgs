@@ -7,7 +7,7 @@ MIN_PYTHON_VERSION = (3, 7)
 if sys.version_info[:2] != MIN_PYTHON_VERSION:
     raise RuntimeError("Требуется версия Python = {}.{}".format(MIN_PYTHON_VERSION[0], MIN_PYTHON_VERSION[1]))
 
-import maskrcnn-keras
+import maskrcnnkeras
 
 REQUIRED_PACKAGES = [
 
@@ -41,20 +41,20 @@ with open('README.md', 'r', encoding='utf8') as fh:
     long_description = fh.read()
 
     setup(
-        name = maskrcnn-keras.__name__,
+        name = maskrcnnkeras.__name__,
         packages = find_packages(),
-        license = maskrcnn-keras.__license__,
-        version = maskrcnn-keras.__version__,
-        author = maskrcnn-keras.__author__,
-        author_email = maskrcnn-keras.__email__,
-        maintainer = maskrcnn-keras.__maintainer__,
-        maintainer_email = maskrcnn-keras.__maintainer_email__,
-        url = maskrcnn-keras.__uri__,
-        description = maskrcnn-keras.__summary__,
+        license = maskrcnnkeras.__license__,
+        version = maskrcnnkeras.__version__,
+        author = maskrcnnkeras.__author__,
+        author_email = maskrcnnkeras.__email__,
+        maintainer = maskrcnnkeras.__maintainer__,
+        maintainer_email = maskrcnnkeras.__maintainer_email__,
+        url = maskrcnnkeras.__uri__,
+        description = maskrcnnkeras.__summary__,
         long_description = long_description,
         long_description_content_type = 'text/markdown',
         install_requires=REQUIRED_PACKAGES,
-        keywords = ['maskrcnn-keras'],
+        keywords = ['maskrcnnkeras'],
         include_package_data = True,
         classifiers = [_f for _f in CLASSIFIERS.split('\n') if _f],
         python_requires = '>=3.7',

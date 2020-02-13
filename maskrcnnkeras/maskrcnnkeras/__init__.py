@@ -3,9 +3,9 @@ __all__ = (
     '__maintainer__', '__maintainer_email__'
 )
 
-__title__ = 'maskrcnn-keras'
+__title__ = 'maskrcnnkeras'
 __summary__ = 'Mask R-CNN'
-__uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/maskrcnn-keras'
+__uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/maskrcnnkeras'
 
 __version__ = '20.2.13.0'
 
