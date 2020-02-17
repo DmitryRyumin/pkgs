@@ -19,7 +19,6 @@ import skimage.transform  #
 import urllib.request     #
 import shutil             #
 import warnings           #
-import pkg_resources      # Работа с ресурсами внутри пакетов
 
 from distutils.version import LooseVersion  #
 
@@ -28,7 +27,8 @@ from distutils.version import LooseVersion  #
 # ######################################################################################################################
 
 # Путь к весам COCO
-COCO_MODEL_URL = pkg_resources.resource_filename('maskrcnnkeras', 'models') + '/coco/mask_rcnn_coco.h5'
+COCO_MODEL_URL =\
+    'https://github.com/DmitryRyumin/pkgs/blob/master/maskrcnnkeras/maskrcnnkeras/models/coco/mask_rcnn_coco.h5'
 
 
 # ######################################################################################################################
