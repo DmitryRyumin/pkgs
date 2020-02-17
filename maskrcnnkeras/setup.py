@@ -23,7 +23,8 @@ MIN_PIP_VERSION = (10, 0)    # Pip
 # Формирование данных для упаковки
 # ######################################################################################################################
 # Проверка версии Python
-if sys.version_info[:2] >= MIN_PYTHON_VERSION:
+print(sys.version_info[:2])
+if sys.version_info[:2] < MIN_PYTHON_VERSION:
     raise RuntimeError("Требуется версия Python >= {}.{}".format(MIN_PYTHON_VERSION[0], MIN_PYTHON_VERSION[1]))
 
 
