@@ -7,7 +7,7 @@ __title__ = 'maskrcnnkeras'
 __summary__ = 'Mask R-CNN'
 __uri__ = 'https://github.com/DmitryRyumin/pkgs/tree/master/maskrcnnkeras'
 
-__version__ = '20.2.13.0'
+__version__ = '20.2.17.0'
 
 __author__ = 'Dmitry Ryumin'
 __email__ = 'dl_03.03.1991@mail.ru'
